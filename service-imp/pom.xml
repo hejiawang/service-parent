@@ -1,0 +1,165 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	
+	<parent>
+		<groupId>com.wang</groupId>
+		<artifactId>service-parent</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	
+	<artifactId>service-imp</artifactId>
+	
+	<build>
+		<finalName>service-impl</finalName>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<includes>
+					<include>**/*.*</include>
+				</includes>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version-maven-jar-plugin}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>${version-maven-assembly-plugin}</version>
+				<executions>
+					<execution>
+						<id>make-binary-pacakge</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<finalName>job-deploy</finalName>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/resources/assemble-descriptor.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				
+				<pom.jdbc.shop.read.url>jdbc:mysql://localhost:3306/test?characterEncoding=utf8
+				</pom.jdbc.shop.read.url>
+				<pom.jdbc.shop.read.username>root</pom.jdbc.shop.read.username>
+				<pom.jdbc.shop.read.password>123456</pom.jdbc.shop.read.password>
+
+				<pom.jdbc.shop.write.url>jdbc:mysql://192.168.99.101:3306/test?characterEncoding=utf8
+				</pom.jdbc.shop.write.url>
+				<pom.jdbc.shop.write.username>root</pom.jdbc.shop.write.username>
+				<pom.jdbc.shop.write.password>123456</pom.jdbc.shop.write.password>
+
+				<pom.jvm.mem-opts/>
+
+				<pom.log.log4j-xml>log4j.xml</pom.log.log4j-xml>
+				<pom.log.dir>E://log/</pom.log.dir>
+				<pom.log.stdout-file>service-imp.log</pom.log.stdout-file>
+
+				<pom.log.root-level>ERROR</pom.log.root-level>
+				<pom.log.root-appender>file-log</pom.log.root-appender>
+				<pom.log.work-level>ERROR</pom.log.work-level>
+				<pom.log.work-appender>file-log</pom.log.work-appender>
+
+				<pom.logng.facility>LOCAL4</pom.logng.facility>
+
+				<pom.memcache.addr>xx.xx.xx.xx:11211</pom.memcache.addr>
+				<pom.php.memcache.addr>xx.xx.xx.xx</pom.php.memcache.addr>
+				<pom.php.memcache.port>xx.xx.xx.xx</pom.php.memcache.port>
+				<pom.mongo.addr/>
+				<pom.mongo.port>27017</pom.mongo.port>
+				<pom.python.addr/>
+				<pom.image.source.domain>xxx.com</pom.image.source.domain>
+			</properties>
+		</profile>
+	</profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.wang</groupId>
+			<artifactId>service-service</artifactId>
+		</dependency>
+		<!-- spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+		</dependency>
+
+		<!-- database -->
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.tomcat</groupId>
+			<artifactId>tomcat-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.dozer</groupId>
+			<artifactId>dozer</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>joda-time</groupId>
+			<artifactId>joda-time</artifactId>
+		</dependency>
+		<!---other -->
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>${guava.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
+	</dependencies>
+	
+</project>
