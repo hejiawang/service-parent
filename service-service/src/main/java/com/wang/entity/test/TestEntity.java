@@ -1,4 +1,4 @@
-package com.wang.param.test;
+package com.wang.entity.test;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.Date;
  * @author HeJiawang
  * @date   2016.09.13
  */
-public class Test implements Serializable {
+public class TestEntity implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	

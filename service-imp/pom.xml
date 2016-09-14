@@ -63,7 +63,7 @@
 				<pom.jdbc.shop.read.username>root</pom.jdbc.shop.read.username>
 				<pom.jdbc.shop.read.password>123456</pom.jdbc.shop.read.password>
 
-				<pom.jdbc.shop.write.url>jdbc:mysql://192.168.99.101:3306/test?characterEncoding=utf8
+				<pom.jdbc.shop.write.url>jdbc:mysql://localhost:3306/test?characterEncoding=utf8
 				</pom.jdbc.shop.write.url>
 				<pom.jdbc.shop.write.username>root</pom.jdbc.shop.write.username>
 				<pom.jdbc.shop.write.password>123456</pom.jdbc.shop.write.password>

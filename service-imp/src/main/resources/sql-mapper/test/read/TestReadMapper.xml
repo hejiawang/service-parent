@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wang.dao.test.read.TestReadDao">
-
+	
+  	<resultMap id="BaseResultMap" type="com.wang.entity.test.TestEntity">
+		<id column="ID" property="ID" jdbcType="INTEGER"/>
+		<result column="context" property="context" jdbcType="VARCHAR"/>
+		<result column="updateTime" property="updateTime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		ID, context, updateTime
+    </sql> 
+	
+	<select id="getTestById" resultMap="BaseResultMap" >
+		select
+			<include refid="getAllColumn"/> 
+		from test
+		where ID = #{ID,jdbcType=INTEGER}
+	</select>
+	
 </mapper>
