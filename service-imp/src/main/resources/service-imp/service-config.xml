@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd"
+       default-lazy-init="true">
+
+	<!-- 使用annotation 自动注册bean, 并保证@Required、@Autowired的属性被注入 -->
+	<context:component-scan base-package="com.wang.serviceimp">
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+
+    <bean id="shopReadSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="mapperLocations" value="classpath*:service-imp/sql-mapper/*/read/*.xml"/>
+			<property name="typeAliasesPackage" value="com.wang.service.entity" />
+			<property name="configLocation" value="classpath:service-imp/mybatis-config.xml"></property>
+			<property name="dataSource" ref="dsShopRead" />
+    </bean>
+
+    <bean id="shopWriteSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="mapperLocations" value="classpath*:service-imp/sql-mapper/*/write/*.xml"/>
+			<property name="typeAliasesPackage" value="com.wang.service.entity" />
+			<property name="configLocation" value="classpath:service-imp/mybatis-config.xml"></property>
+			<property name="dataSource" ref="dsShopWrite" />
+    </bean>
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dsShopWrite"/>
+	</bean>
+
+    <!--事务  -->
+	 <bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dsShopWrite" />
+	</bean>
+
+	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.wang.serviceimp.dao.*.read" />
+		<property name="annotationClass" value="com.wang.core.repository.myBatis.MyBatisRepository"/>
+		<property name="sqlSessionFactoryBeanName" value="shopReadSqlSessionFactory" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.wang.serviceimp.dao.*.write" />
+		<property name="annotationClass" value="com.wang.core.repository.myBatis.MyBatisRepository"/>
+		<property name="sqlSessionFactoryBeanName" value="shopWriteSqlSessionFactory" />
+	</bean>
+
+	<!-- 使用annotation定义事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+</beans>  

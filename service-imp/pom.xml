@@ -44,7 +44,7 @@
 							<finalName>job-deploy</finalName>
 							<appendAssemblyId>false</appendAssemblyId>
 							<descriptors>
-								<descriptor>src/main/resources/assemble-descriptor.xml</descriptor>
+								<descriptor>src/main/resources/service-imp/assemble-descriptor.xml</descriptor>
 							</descriptors>
 						</configuration>
 					</execution>

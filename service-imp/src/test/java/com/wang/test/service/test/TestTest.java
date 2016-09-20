@@ -1,7 +1,5 @@
 package com.wang.test.service.test;
 
-import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -10,8 +8,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.wang.core.ServiceResult;
-import com.wang.entity.test.TestEntity;
-import com.wang.service.test.TestService;
+import com.wang.service.entity.test.TestEntity;
+import com.wang.service.service.test.TestService;
 
 /**
  * 框架测试 
@@ -19,7 +17,7 @@ import com.wang.service.test.TestService;
  * @date   2016.09.14
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = "classpath:conf/service-deploy.xml")
+@ContextConfiguration(locations = "classpath:service-imp/conf/service-deploy.xml")
 public class TestTest {
 	
 	@Resource
