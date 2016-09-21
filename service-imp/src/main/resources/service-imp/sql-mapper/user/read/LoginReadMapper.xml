@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.user.read.LoginReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.test.TestEntity">
+		<id column="ID" property="ID" jdbcType="INTEGER"/>
+		<result column="loginName" property="loginName" jdbcType="VARCHAR"/>
+		<result column="passward" property="passward" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		ID, loginName, passward
+    </sql> 
+	
+	<select id="getUserEntityByLoginNameAndPwd" resultMap="BaseResultMap" >
+		select
+			<include refid="getAllColumn"/> 
+		from user
+		where loginName = #{loginName,jdbcType=VARCHAR}
+		and   passward = #{passward,jdbcType=VARCHAR}
+	</select>
+	
+</mapper>
