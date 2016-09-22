@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
@@ -19,6 +20,7 @@ import com.wang.serviceimp.dao.user.read.LoginReadDao;
  * @date   2016.09.21
  *
  */
+@Service
 public class LoginModel {
 
 	private final Logger logger = LoggerFactory.getLogger(LoginModel.class);

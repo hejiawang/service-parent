@@ -2,6 +2,7 @@ package com.wang.serviceimp.dao.user.read;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.entity.user.UserEntity;
 
 /**
@@ -12,6 +13,7 @@ import com.wang.service.entity.user.UserEntity;
  * @date   2016.09.21
  *
  */
+@MyBatisRepository
 public interface LoginReadDao {
 
 	/**

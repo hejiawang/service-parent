@@ -24,7 +24,7 @@ public class UserEntity implements Serializable {
 	/**
 	 * 密码
 	 */
-	private String  passward;
+	private String  password;
 
 	public Integer getID() {
 		return ID;
@@ -42,12 +42,12 @@ public class UserEntity implements Serializable {
 		this.loginName = loginName;
 	}
 
-	public String getPassward() {
-		return passward;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setPassward(String passward) {
-		this.passward = passward;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }
