@@ -74,4 +74,20 @@ public class PermissionOrgModel {
 		return map;
 	}
 
+	/**
+	 * 根据机构ID获取机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.10.10
+	 */
+	public Map<String, Object> getOrgByID(Integer orgID) {
+		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
+		if( StringUtil.empty(orgID) ){
+			throw new BusinessException("机构ID不能为空");
+		}
+		
+		return permissionOrgReadDao.getOrgByID(orgID);
+	}
+
 }

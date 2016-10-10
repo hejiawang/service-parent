@@ -3,6 +3,8 @@ package com.wang.serviceimp.dao.permission.read;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.param.permission.PermissionOrgParam;
 
@@ -25,5 +27,14 @@ public interface PermissionOrgReadDao {
 	 * @date   2016.10.10
 	 */
 	List<Map<String, Object>> getPageList(PermissionOrgParam org);
+	
+	/**
+	 * 根据机构ID获取机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.10.10
+	 */
+	Map<String, Object> getOrgByID(@Param("orgID") Integer orgID);
 
 }

@@ -59,4 +59,28 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 		return serviceResult;
 	}
 
+	/**
+	 * 根据机构ID获取机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.10.10
+	 */
+	@Override
+	public ServiceResult<Map<String, Object>> getOrgByID(Integer orgID) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<Map<String, Object>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionOrgModel.getOrgByID(orgID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

@@ -21,4 +21,13 @@ public interface PermissionOrgService {
 	 */
 	ServiceResult<Map<String, Object>> pageOrg(PermissionOrgParam org);
 
+	/**
+	 * 根据机构ID获取机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.10.10
+	 */
+	ServiceResult<Map<String, Object>> getOrgByID(Integer orgID);
+
 }

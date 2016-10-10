@@ -42,4 +42,14 @@
 		order by a.sortNum asc 
 	</select>
 	
+	<select id="getOrgByID" resultType="java.util.Map">
+		select
+			a.orgID as orgID, a.orgCode as orgCode, a.orgName as orgName, a.orgShortName as orgShortName, 
+			a.orgLevel as orgLevel, a.parentOrgID as parentOrgID, a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.createDT as createDT, a.theNote as theNote, b.orgName as parentOrgName
+		from permission_org a
+		left join permission_org b on a.parentOrgID = b.orgID
+		where a.isDelete=1 and a.orgID = #{orgID ,jdbcType=INTEGER}
+	</select>
+	
 </mapper>
