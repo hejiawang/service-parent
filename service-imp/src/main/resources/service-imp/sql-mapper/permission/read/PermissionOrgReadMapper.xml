@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionOrgReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionOrgEntity">
+		<id column="orgID" property="orgID" jdbcType="INTEGER"/>
+		<result column="orgCode" property="orgCode" jdbcType="VARCHAR"/>
+		<result column="orgName" property="orgName" jdbcType="VARCHAR"/>
+		<result column="orgShortName" property="orgShortName" jdbcType="VARCHAR"/>
+		<result column="orgLevel" property="orgLevel" jdbcType="INTEGER"/>
+		<result column="parentOrgID" property="parentOrgID" jdbcType="INTEGER"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="createDT" property="createDT" jdbcType="TIMESTAMP"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		orgID, orgCode, orgName, orgShortName, orgLevel, parentOrgID, sortNum, isCurrent, isDelete, createDT, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select
+			a.orgID as orgID, a.orgCode as orgCode, a.orgName as orgName, a.orgShortName as orgShortName, 
+			a.orgLevel as orgLevel, a.parentOrgID as parentOrgID, a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.createDT as createDT, a.theNote as theNote, b.orgName as parentOrgName
+		from permission_org a
+		left join permission_org b on a.parentOrgID = b.orgID
+		<where>
+			a.isDelete=1
+			<if test="orgID != null and orgID !=''">
+				and ( a.orgID = #{orgID ,jdbcType=INTEGER} or a.parentOrgID = #{orgID ,jdbcType=INTEGER} )
+			</if>
+			<if test="orgCode != null and orgCode !=''">
+				and a.orgCode like '%${orgCode}%'
+			</if>
+			<if test="orgName != null and orgName !=''">
+				and a.orgName like '%${orgName}%'
+			</if>
+		</where>
+		order by a.sortNum asc 
+	</select>
+	
+</mapper>

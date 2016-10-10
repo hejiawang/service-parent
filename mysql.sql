@@ -51,6 +51,10 @@ CREATE TABLE `permission_org` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`orgID`)
 ) DEFAULT CHARSET=utf8;
+/*为组织树添加跟节点*/
+insert into 
+	permission_org (orgID, orgCode, orgName, orgShortName, orgLevel, parentOrgID, sortNum, isCurrent, isDelete, createDT, theNote) 
+values ( 1001, 'ORG1001', '机构树', '机构树', 0, 0, 0, 1, 1, now(), '组织机构树根节点，请勿删除');
 
 /*岗位表*/
 DROP TABLE IF EXISTS `permission_post`;
