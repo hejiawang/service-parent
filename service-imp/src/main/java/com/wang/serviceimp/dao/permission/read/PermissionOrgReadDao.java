@@ -36,5 +36,32 @@ public interface PermissionOrgReadDao {
 	 * @date   2016.10.10
 	 */
 	Map<String, Object> getOrgByID(@Param("orgID") Integer orgID);
+	
+	/**
+	 * 检查是否被当做父机构引用
+	 * @param orgID 机构ID
+	 * @return 引用条数
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	Integer checkOrgFromParentOrg(@Param("orgID") Integer orgID);
+
+	/**
+	 * 在同一父机构下，检查机构名称是否重复
+	 * @param orgI		机构
+	 * @return 机构名称是否重复——true:重复
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	Integer checkExistOrgName(PermissionOrgParam org);
+	
+	/**
+	 * 在同一父机构下，检查机构编码是否重复
+	 * @param org		机构
+	 * @return 机构编码是否重复——true:重复
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	Integer checkExistOrgCode(PermissionOrgParam org);
 
 }

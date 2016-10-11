@@ -52,4 +52,36 @@
 		where a.isDelete=1 and a.orgID = #{orgID ,jdbcType=INTEGER}
 	</select>
 	
+	<select id="checkOrgFromParentOrg" resultType="java.lang.Integer">
+		select count(*)
+		from permission_org 
+		where parentOrgID = #{orgID ,jdbcType=INTEGER} and isDelete = 1
+	</select>
+	
+	<select id="checkExistOrgName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select count(*)
+		from permission_org 
+		<where>
+			isDelete = 1
+			and parentOrgID = #{parentOrgID ,jdbcType=INTEGER}
+			and orgName = #{orgName ,jdbcType=VARCHAR}
+			<if test="orgID != null and orgID !=''">
+				and orgID != #{orgID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
+	<select id="checkExistOrgCode" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select count(*)
+		from permission_org 
+		<where>
+			isDelete = 1
+			and parentOrgID = #{parentOrgID ,jdbcType=INTEGER}
+			and orgCode = #{orgCode ,jdbcType=VARCHAR}
+			<if test="orgID != null and orgID !=''">
+				and orgID != #{orgID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
 </mapper>

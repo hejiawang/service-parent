@@ -30,4 +30,41 @@ public interface PermissionOrgService {
 	 */
 	ServiceResult<Map<String, Object>> getOrgByID(Integer orgID);
 
+	/**
+	 * 删除机构</br>
+	 * 根机构不可删除——orgID:1001
+	 * @param orgID 机构ID
+	 * @return 返回信息: ServiceResult.success true--删除成功
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	ServiceResult<Void> deleteOrgByID(Integer orgID);
+	
+	/**
+	 * 检查机构是否被引用
+	 * @param orgID 机构ID
+	 * @return 返回信息: ServiceResult.success true--引用
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	ServiceResult<Void> checkOrgByID(Integer orgID);
+
+	/**
+	 * 新增机构
+	 * @param org 机构信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	ServiceResult<Void> addOrg(PermissionOrgParam org);
+
+	/**
+	 * 修改机构
+	 * @param org 机构信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	ServiceResult<Void> updateOrg(PermissionOrgParam org);
+
 }

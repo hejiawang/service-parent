@@ -83,4 +83,154 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 		return serviceResult;
 	}
 
+	/**
+	 * 删除机构
+	 * 根机构不可删除——orgID:1001
+	 * @param orgID 机构ID
+	 * @return 返回信息: ServiceResult.success true--删除成功
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	@Override
+	public ServiceResult<Void> deleteOrgByID(Integer orgID) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean checkResult = permissionOrgModel.checkOrgByID(orgID);
+			if( checkResult ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("该机构信息被引用,不可删除");
+			}else{
+				Boolean deleteResult = permissionOrgModel.deleteOrgByID(orgID);
+				if( deleteResult ){
+					serviceResult.setMessage("删除机构成功");
+				}else{
+					serviceResult.setMessage("删除机构失败");
+				}
+				serviceResult.setSuccess(deleteResult);
+			}
+			
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 检查机构是否被引用
+	 * @param orgID 机构ID
+	 * @return 返回信息: ServiceResult.success true--引用
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	@Override
+	public ServiceResult<Void> checkOrgByID(Integer orgID) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean checkResult = permissionOrgModel.checkOrgByID(orgID);
+			if( checkResult ){
+				serviceResult.setMessage("该机构信息被引用");
+			}else{
+				serviceResult.setMessage("该机构信息未被引用");
+			}
+			serviceResult.setSuccess(checkResult);
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 新增机构
+	 * @param org 机构信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	@Override
+	public ServiceResult<Void> addOrg(PermissionOrgParam org) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			
+			Boolean existOrgName = permissionOrgModel.checkExistOrgName(org);	//在同一父机构下，检查机构名称是否重复
+			if( existOrgName ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("机构名称重复,新增机构失败");
+			} else {
+				Boolean existOrgCode = permissionOrgModel.checkExistOrgCode(org);	//在同一父机构下，检查机构编码是否重复
+				if(existOrgCode){
+					serviceResult.setSuccess(false);
+					serviceResult.setMessage("机构编码重复,新增机构失败");
+				} else {
+					permissionOrgModel.addOrg(org);
+					serviceResult.setSuccess(true);
+					serviceResult.setMessage("新增机构成功");
+				}
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 修改机构
+	 * @param org 机构信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	@Override
+	public ServiceResult<Void> updateOrg(PermissionOrgParam org) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			
+			Boolean existOrgName = permissionOrgModel.checkExistOrgName(org);	//在同一父机构下，检查机构名称是否重复
+			if( existOrgName ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("机构名称重复,修改机构失败");
+			} else {
+				Boolean existOrgCode = permissionOrgModel.checkExistOrgCode(org);	//在同一父机构下，检查机构编码是否重复
+				if(existOrgCode){
+					serviceResult.setSuccess(false);
+					serviceResult.setMessage("机构编码重复,修改机构失败");
+				} else {
+					Boolean updateOrgResult = permissionOrgModel.updateOrg(org);
+					if(updateOrgResult){
+						serviceResult.setMessage("修改机构成功");
+					} else {
+						serviceResult.setMessage("修改机构失败");
+					}
+					serviceResult.setSuccess(updateOrgResult);
+				}
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }
