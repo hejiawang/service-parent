@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
-import com.wang.core.util.StringUtil;
 import com.wang.core.util.WebConstants;
 import com.wang.service.param.permission.PermissionOrgParam;
 import com.wang.serviceimp.dao.permission.read.PermissionOrgReadDao;
@@ -56,7 +55,7 @@ public class PermissionOrgModel {
 			throw new BusinessException("分页信息不能为空");
 		
 		//初始页面取跟节点
-		if(StringUtil.empty(org.getOrgID())){
+		if(org.getOrgID() == null){
 			org.setOrgID(WebConstants.OrgRootID);
 		}
 		
@@ -81,7 +80,7 @@ public class PermissionOrgModel {
 	 */
 	public Map<String, Object> getOrgByID(Integer orgID) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( StringUtil.empty(orgID) ) throw new BusinessException("机构ID不能为空");
+		if( orgID == null ) throw new BusinessException("机构ID不能为空");
 		
 		return permissionOrgReadDao.getOrgByID(orgID);
 	}
@@ -96,7 +95,7 @@ public class PermissionOrgModel {
 	 */
 	public Boolean deleteOrgByID(Integer orgID) {
 		Assert.notNull(permissionOrgWriteDao, "Property 'permissionOrgWriteDao' is required.");
-		if( StringUtil.empty(orgID) ) throw new BusinessException("机构ID不能为空");
+		if( orgID == null ) throw new BusinessException("机构ID不能为空");
 		if( orgID == 1001 ) throw new BusinessException("跟机构不可删除");
 		
 		Integer deleteResult = permissionOrgWriteDao.deleteOrgByID(orgID);
@@ -116,7 +115,7 @@ public class PermissionOrgModel {
 	 */
 	public Boolean checkOrgByID(Integer orgID) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( StringUtil.empty(orgID) ) throw new BusinessException("机构ID不能为空");
+		if( orgID == null ) throw new BusinessException("机构ID不能为空");
 		
 		Integer checkResult = permissionOrgReadDao.checkOrgFromParentOrg(orgID);	//检查是否被当做父机构引用
 		if( checkResult >= 1 ){
@@ -134,7 +133,7 @@ public class PermissionOrgModel {
 	 */
 	public void addOrg(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgWriteDao, "Property 'permissionOrgWriteDao' is required.");
-		if( StringUtil.empty(org) ) throw new BusinessException("机构不能为空");
+		if( org == null ) throw new BusinessException("机构不能为空");
 		
 		permissionOrgWriteDao.addOrg(org);
 	}
@@ -148,7 +147,7 @@ public class PermissionOrgModel {
 	 */
 	public Boolean updateOrg(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgWriteDao, "Property 'permissionOrgWriteDao' is required.");
-		if( StringUtil.empty(org) ) throw new BusinessException("机构不能为空");
+		if( org == null ) throw new BusinessException("机构不能为空");
 		if( org.getOrgID() == 1001 ) throw new BusinessException("跟机构不可修改");
 		
 		Integer updateResult = permissionOrgWriteDao.updateOrg(org);
@@ -168,8 +167,8 @@ public class PermissionOrgModel {
 	 */
 	public Boolean checkExistOrgName(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( StringUtil.empty(org) ) throw new BusinessException("机构不能为空");
-		if( StringUtil.empty(org.getParentOrgID()) ) throw new BusinessException("机构父ID不能为空");
+		if( org == null ) throw new BusinessException("机构不能为空");
+		if( org.getParentOrgID() == null  ) throw new BusinessException("机构父ID不能为空");
 		
 		Integer checkResult = permissionOrgReadDao.checkExistOrgName(org);
 		if( checkResult >= 1 ){
@@ -188,8 +187,8 @@ public class PermissionOrgModel {
 	 */
 	public Boolean checkExistOrgCode(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( StringUtil.empty(org) ) throw new BusinessException("机构不能为空");
-		if( StringUtil.empty(org.getParentOrgID()) ) throw new BusinessException("机构父ID不能为空");
+		if( org == null ) throw new BusinessException("机构不能为空");
+		if( org.getParentOrgID() == null ) throw new BusinessException("机构父ID不能为空");
 		
 		Integer checkResult = permissionOrgReadDao.checkExistOrgCode(org);
 		if( checkResult >= 1 ){
@@ -208,7 +207,7 @@ public class PermissionOrgModel {
 	 */
 	public List<PermissionOrgParam> findOrgForTree(Integer parentOrgID) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( StringUtil.empty(parentOrgID) ) throw new BusinessException("机构父ID不能为空");
+		if( parentOrgID == null ) throw new BusinessException("机构父ID不能为空");
 		
 		return permissionOrgReadDao.findOrgForTree(parentOrgID);
 	}
