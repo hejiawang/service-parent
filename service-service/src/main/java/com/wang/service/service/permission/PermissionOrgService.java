@@ -1,5 +1,6 @@
 package com.wang.service.service.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wang.core.ServiceResult;
@@ -66,5 +67,15 @@ public interface PermissionOrgService {
 	 * @date   2016.10.11
 	 */
 	ServiceResult<Void> updateOrg(PermissionOrgParam org);
+
+	
+	/**
+	 * 根据父机构ID获取机构树
+	 * @param id	父机构ID
+	 * @return		机构树
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	ServiceResult<List<PermissionOrgParam>> findOrgForTree(Integer parentOrgID);
 
 }

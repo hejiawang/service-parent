@@ -86,6 +86,21 @@ public class PermissionOrgParam implements Serializable {
 	 */
 	private Integer draw;
 	
+	/**
+	 * 是否为父机构</br>
+	 * 在生成机构树时用来判断是否为父机构</br>
+	 * Integer类型——0：不是父机构
+	 */
+	private Integer isParent;
+	
+	public Integer getIsParent() {
+		return isParent;
+	}
+
+	public void setIsParent(Integer isParent) {
+		this.isParent = isParent;
+	}
+
 	public Integer getPageSize() {
 		return pageSize;
 	}

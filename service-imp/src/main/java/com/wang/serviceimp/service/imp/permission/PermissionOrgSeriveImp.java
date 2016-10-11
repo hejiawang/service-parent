@@ -1,5 +1,6 @@
 package com.wang.serviceimp.service.imp.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -96,6 +97,12 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
+			if( orgID == 1001 ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("机构树信息不可删除");
+				return serviceResult;
+			}
+			
 			Boolean checkResult = permissionOrgModel.checkOrgByID(orgID);
 			if( checkResult ){
 				serviceResult.setSuccess(false);
@@ -202,6 +209,11 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
+			if( org.getOrgID() == 1001 ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("机构树信息不可修改");
+				return serviceResult;
+			}
 			
 			Boolean existOrgName = permissionOrgModel.checkExistOrgName(org);	//在同一父机构下，检查机构名称是否重复
 			if( existOrgName ){
@@ -222,6 +234,30 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 					serviceResult.setSuccess(updateOrgResult);
 				}
 			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据父机构ID获取机构树
+	 * @param id	父机构ID
+	 * @return		机构树
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	@Override
+	public ServiceResult<List<PermissionOrgParam>> findOrgForTree(Integer parentOrgID) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<List<PermissionOrgParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionOrgModel.findOrgForTree(parentOrgID));
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

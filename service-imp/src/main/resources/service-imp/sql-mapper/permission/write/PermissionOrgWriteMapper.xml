@@ -41,7 +41,7 @@
   		);
   	</insert>
   	
-  	<update id="deleteOrgByID" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+  	<update id="updateOrg" parameterType="com.wang.service.param.permission.PermissionOrgParam">
   		update 
   			permission_org 
   		set  

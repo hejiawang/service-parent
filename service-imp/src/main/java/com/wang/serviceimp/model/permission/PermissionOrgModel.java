@@ -149,6 +149,7 @@ public class PermissionOrgModel {
 	public Boolean updateOrg(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgWriteDao, "Property 'permissionOrgWriteDao' is required.");
 		if( StringUtil.empty(org) ) throw new BusinessException("机构不能为空");
+		if( org.getOrgID() == 1001 ) throw new BusinessException("跟机构不可修改");
 		
 		Integer updateResult = permissionOrgWriteDao.updateOrg(org);
 		if( updateResult >= 1 ){
@@ -196,6 +197,20 @@ public class PermissionOrgModel {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * 根据父机构ID获取机构树
+	 * @param id	父机构ID
+	 * @return		机构树
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	public List<PermissionOrgParam> findOrgForTree(Integer parentOrgID) {
+		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
+		if( StringUtil.empty(parentOrgID) ) throw new BusinessException("机构父ID不能为空");
+		
+		return permissionOrgReadDao.findOrgForTree(parentOrgID);
 	}
 
 }

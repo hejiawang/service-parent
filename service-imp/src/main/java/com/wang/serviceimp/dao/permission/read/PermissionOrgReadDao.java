@@ -63,5 +63,14 @@ public interface PermissionOrgReadDao {
 	 * @date   2016.10.11
 	 */
 	Integer checkExistOrgCode(PermissionOrgParam org);
+	
+	/**
+	 * 根据父机构ID获取机构树
+	 * @param id	父机构ID
+	 * @return		机构树
+	 * @author HeJiawang
+	 * @date   2016.10.11
+	 */
+	List<PermissionOrgParam> findOrgForTree( @Param("parentOrgID") Integer parentOrgID);
 
 }

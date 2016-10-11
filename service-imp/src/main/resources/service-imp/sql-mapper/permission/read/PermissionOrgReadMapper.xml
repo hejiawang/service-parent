@@ -84,4 +84,12 @@
 		</where>
 	</select>
 	
+	<select id="findOrgForTree" resultType="com.wang.service.param.permission.PermissionOrgParam">
+		select a.orgID as orgID,a.orgName as orgName,
+			(select count(*) from permission_org where isDelete=1 and parentOrgID = a.orgID) as isParent 
+		from  permission_org a 
+		where a.isDelete = 1 and a.parentOrgID = #{parentOrgID ,jdbcType=INTEGER} 
+		order by a.sortNum asc
+	</select>
+	
 </mapper>
