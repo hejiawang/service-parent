@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionPostWriteDao">
+		
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionPostEntity">
+		<id column="postID" property="postID" jdbcType="INTEGER"/>
+		<result column="postName" property="postName" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		postID, postName, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+  	
+</mapper>
