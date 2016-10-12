@@ -29,14 +29,14 @@
 			orgID = #{orgID,jdbcType=INTEGER} 
   	</update>
   	
-  	<insert id="insertBusinessPay" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+  	<insert id="addOrg" parameterType="com.wang.service.param.permission.PermissionOrgParam">
   		insert into permission_org ( 
   			orgCode, orgName, orgShortName, 
   			orgLevel, parentOrgID, sortNum, 
   			isCurrent, isDelete, createDT, theNote
   		) values ( 
-  			#{orgID,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{orgShortName,jdbcType=VARCHAR},
-  			#{orgLevel,jdbcType=INTEGER}, orgID = #{parentOrgID,jdbcType=INTEGER}, orgID = #{sortNum,jdbcType=INTEGER},
+  			#{orgCode,jdbcType=VARCHAR}, #{orgName,jdbcType=VARCHAR}, #{orgShortName,jdbcType=VARCHAR},
+  			#{orgLevel,jdbcType=INTEGER},#{parentOrgID,jdbcType=INTEGER}, #{sortNum,jdbcType=INTEGER},
   			1, 1, now(), #{theNote,jdbcType=VARCHAR}
   		);
   	</insert>
