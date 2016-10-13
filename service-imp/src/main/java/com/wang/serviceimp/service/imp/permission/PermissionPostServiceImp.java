@@ -1,10 +1,17 @@
 package com.wang.serviceimp.service.imp.permission;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
+import com.wang.core.Constants;
+import com.wang.core.ServiceResult;
+import com.wang.core.exception.BusinessException;
+import com.wang.service.param.permission.PermissionPostParam;
 import com.wang.service.service.permission.PermissionPostService;
 import com.wang.serviceimp.model.permission.PermissionPostModel;
 
@@ -27,4 +34,114 @@ public class PermissionPostServiceImp implements PermissionPostService {
 	 */
 	@Autowired
 	private PermissionPostModel permissionpostModel;
+
+	/**
+	 * 获取分页岗位
+	 * @param post  岗位参数
+	 * @return     岗位集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Map<String, Object>> pagePost(PermissionPostParam post) {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<Map<String, Object>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionpostModel.pagePost(post));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 查看岗位
+	 * @param postID 岗位ID
+	 * @return 岗位信息
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Map<String, Object>> getPostByID(Integer postID) {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<Map<String, Object>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionpostModel.getPostByID(postID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 删除岗位
+	 * @param postID 岗位ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Void> deletePostByID(Integer postID) {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean deleteResult = permissionpostModel.deletePostByID(postID);
+			if( deleteResult ){
+				serviceResult.setMessage("删除岗位成功");
+			}else{
+				serviceResult.setMessage("删除岗位失败");
+			}
+			serviceResult.setSuccess(deleteResult);
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 新增岗位
+	 * @param post 岗位信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Void> addPost(PermissionPostParam post) {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existName = permissionpostModel.checkExistPostName(post);	//检查岗位名称是否重复
+			if(existName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("机构编码重复,新增机构失败");
+			} else {
+				permissionpostModel.addPost(post);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("新增机构成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
 }

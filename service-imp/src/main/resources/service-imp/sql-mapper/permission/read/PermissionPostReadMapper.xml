@@ -15,4 +15,36 @@
 		postID, postName, sortNum, isCurrent, isDelete, theNote
     </sql> 
 	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionPostParam">
+		select
+			a.postID, a.postName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_post a
+		<where>
+			a.isDelete=1
+			<if test="postName != null and postName !=''">
+				and a.postName like '%${postName}%'
+			</if>
+		</where>
+		order by a.sortNum asc 
+	</select>
+	
+	<select id="getPostByID" resultType="java.util.Map">
+		select
+			a.postID, a.postName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_post a
+		where a.isDelete=1 and a.postID = #{postID ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="checkExistPostName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionPostParam">
+		select count(*)
+		from permission_post 
+		<where>
+			isDelete = 1
+			and orgName = #{orgName ,jdbcType=VARCHAR}
+			<if test="postID != null and postID !=''">
+				and postID != #{postID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
 </mapper>

@@ -93,3 +93,30 @@ CREATE TABLE `permission_role` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`roleID`)
 ) DEFAULT CHARSET=utf8;
+
+/*系统类型*/
+DROP TABLE IF EXISTS `permission_apptype`;
+CREATE TABLE `permission_apptype` (
+  `appTypeID` int(11) NOT NULL AUTO_INCREMENT COMMENT '系统类型ID',
+  `appTypeName` varchar(255) NOT NULL COMMENT '系统类型名称',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`appTypeID`)
+) CHARSET=utf8;
+
+/*应用系统*/
+DROP TABLE IF EXISTS `permission_app`;
+CREATE TABLE `permission_app` (
+  `appID` int(11) NOT NULL AUTO_INCREMENT COMMENT '应用系统ID',
+  `appTypeID` int(11) NOT NULL COMMENT '所属系统类型ID',
+  `appName` varchar(255) NOT NULL COMMENT '应用系统Name',
+  `url` varchar(255) NOT NULL COMMENT '应用系统url',
+  `iconStyle` varchar(255) DEFAULT NULL COMMENT '图标风格',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`appID`)
+) CHARSET=utf8;
