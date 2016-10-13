@@ -128,11 +128,43 @@ public class PermissionPostServiceImp implements PermissionPostService {
 			Boolean existName = permissionpostModel.checkExistPostName(post);	//检查岗位名称是否重复
 			if(existName){
 				serviceResult.setSuccess(false);
-				serviceResult.setMessage("机构编码重复,新增机构失败");
+				serviceResult.setMessage("岗位编码重复,新增岗位失败");
 			} else {
 				permissionpostModel.addPost(post);
 				serviceResult.setSuccess(true);
-				serviceResult.setMessage("新增机构成功");
+				serviceResult.setMessage("新增岗位成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 修改岗位
+	 * @param post 岗位信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Void> updatePost(PermissionPostParam post) {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existName = permissionpostModel.checkExistPostName(post);	//检查岗位名称是否重复
+			if(existName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("岗位编码重复,新增岗位失败");
+			} else {
+				permissionpostModel.updatePost(post);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("新增岗位成功");
 			}
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());

@@ -34,4 +34,13 @@ public interface PermissionPostWriteDao {
 	 */
 	void addPost(PermissionPostParam post);
 
+	/**
+	 * 修改岗位
+	 * @param post 岗位信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	void updatePost(PermissionPostParam post);
+
 }

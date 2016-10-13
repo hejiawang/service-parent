@@ -40,7 +40,7 @@
 		from permission_post 
 		<where>
 			isDelete = 1
-			and orgName = #{orgName ,jdbcType=VARCHAR}
+			and postName = #{postName ,jdbcType=VARCHAR}
 			<if test="postID != null and postID !=''">
 				and postID != #{postID ,jdbcType=INTEGER} 
 			</if>

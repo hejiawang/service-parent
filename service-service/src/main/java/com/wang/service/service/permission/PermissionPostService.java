@@ -48,4 +48,13 @@ public interface PermissionPostService {
 	 */
 	ServiceResult<Void> addPost(PermissionPostParam post);
 
+	/**
+	 * 修改岗位
+	 * @param post 岗位信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	ServiceResult<Void> updatePost(PermissionPostParam post);
+
 }

@@ -34,4 +34,15 @@
   		)
   	</insert>
   	
+  	<update id="updatePost" parameterType="com.wang.service.param.permission.PermissionPostParam">
+  		update 
+  			permission_post 
+  		set  
+  			postName = #{postName,jdbcType=VARCHAR}, sortNum = #{sortNum,jdbcType=INTEGER}, 
+  			theNote = #{theNote,jdbcType=VARCHAR}
+		where 
+			postID = #{postID,jdbcType=INTEGER} 
+  	</update>
+  	
+  	
 </mapper>

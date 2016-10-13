@@ -131,4 +131,18 @@ public class PermissionPostModel {
 		
 		permissionPostWriteDao.addPost(post);
 	}
+
+	/**
+	 * 修改岗位
+	 * @param post 岗位信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	public void updatePost(PermissionPostParam post) {
+		Assert.notNull(permissionPostWriteDao, "Property 'permissionPostWriteDao' is required.");
+		if( post == null ) throw new BusinessException("岗位不能为空");
+		
+		permissionPostWriteDao.updatePost(post);
+	}
 }
