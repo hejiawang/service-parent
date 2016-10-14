@@ -99,6 +99,14 @@ CREATE TABLE `permission_role` (
   PRIMARY KEY (`roleID`)
 ) DEFAULT CHARSET=utf8;
 
+/*角色权限*/
+DROP TABLE IF EXISTS `permission_role_permission`;
+CREATE TABLE `permission_role_permission` (
+  `roleID` int(11) NOT NULL COMMENT '角色Id',
+  `permissionID` int(11) NOT NULL COMMENT '权限Id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 /*系统类型*/
 DROP TABLE IF EXISTS `permission_apptype`;
 CREATE TABLE `permission_apptype` (
@@ -168,3 +176,32 @@ INSERT permission_operation (operationID, typeCode, operationName, fun) values (
 INSERT permission_operation (operationID, typeCode, operationName, fun) values (1010, "SYS_ELEMENTS", "删除", "doDelete");
 INSERT permission_operation (operationID, typeCode, operationName, fun) values (1011, "SYS_ELEMENTS", "修改", "doUpdate");
 INSERT permission_operation (operationID, typeCode, operationName, fun) values (1012, "SYS_ELEMENTS", "授权", "doGrant");
+
+/*菜单*/
+DROP TABLE IF EXISTS `permission_menu`;
+CREATE TABLE `permission_menu` (
+  `menuID` int(11) NOT NULL AUTO_INCREMENT COMMENT '菜单ID',
+  `menuName` varchar(255) NOT NULL COMMENT '菜单名称',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  `menuLevel` int(11) DEFAULT NULL COMMENT '菜单级别',
+  `iconStyle` varchar(255) DEFAULT NULL COMMENT '图标风格',
+  `url` varchar(255) DEFAULT NULL COMMENT 'url',
+  PRIMARY KEY (`menuID`)
+) CHARSET=utf8;
+
+/*菜单元素*/
+DROP TABLE IF EXISTS `permission_element`;
+CREATE TABLE `permission_element` (
+  `elementID` int(11) NOT NULL AUTO_INCREMENT COMMENT '元素ID',
+  `elementName` varchar(255) NOT NULL COMMENT '元素名称',
+  `elementFunction` varchar(255) NOT NULL COMMENT '元素函数',
+  `elementStyle` varchar(255) DEFAULT NULL COMMENT '元素风格',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`elementID`)
+) CHARSET=utf8;
