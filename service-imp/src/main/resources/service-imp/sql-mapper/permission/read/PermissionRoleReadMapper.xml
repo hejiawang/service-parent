@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionRoleReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionRoleEntity">
+		<id column="roleID" property="roleID" jdbcType="INTEGER"/>
+		<result column="roleName" property="roleName" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		roleID, roleName, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionRoleParam">
+		select
+			a.roleID, a.roleName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_role a
+		<where>
+			a.isDelete=1
+			<if test="roleName != null and roleName !=''">
+				and a.roleName like '%${roleName}%'
+			</if>
+		</where>
+		order by a.sortNum asc 
+	</select>
+	
+	<select id="getRoleByID" resultType="java.util.Map">
+		select
+			a.roleID, a.roleName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_role a
+		where a.isDelete=1 and a.roleID = #{roleID ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="checkExistRoleName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionRoleParam">
+		select count(*)
+		from permission_role
+		<where>
+			isDelete = 1
+			and roleName = #{roleName ,jdbcType=VARCHAR}
+			<if test="roleID != null and roleID !=''">
+				and roleID != #{roleID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
+</mapper>

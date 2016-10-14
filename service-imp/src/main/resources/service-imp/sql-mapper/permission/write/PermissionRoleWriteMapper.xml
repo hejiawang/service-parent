@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionRoleWriteDao">
+		
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionRoleEntity">
+		<id column="roleID" property="roleID" jdbcType="INTEGER"/>
+		<result column="roleName" property="roleName" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		roleID, roleName, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+  	
+  	<update id="deleteRoleByID">
+  		update 
+  			permission_role
+  		set  
+  			isDelete = 0
+		where 
+			roleID = #{roleID,jdbcType=INTEGER} 
+  	</update>
+  	
+  	<insert id="addRole" parameterType="com.wang.service.param.permission.PermissionRoleParam">
+  		insert into permission_role ( 
+  			roleName, sortNum, 
+  			isCurrent, isDelete, theNote
+  		) values ( 
+  			#{roleName,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER},
+  			1, 1, #{theNote,jdbcType=VARCHAR}
+  		)
+  	</insert>
+  	
+  	<update id="updateRole" parameterType="com.wang.service.param.permission.PermissionRoleParam">
+  		update 
+  			permission_role
+  		set  
+  			roleName = #{roleName,jdbcType=VARCHAR}, sortNum = #{sortNum,jdbcType=INTEGER}, 
+  			theNote = #{theNote,jdbcType=VARCHAR}
+		where 
+			roleID = #{roleID,jdbcType=INTEGER} 
+  	</update>
+  	
+</mapper>
