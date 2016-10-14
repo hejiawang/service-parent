@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
-import com.wang.core.util.WebConstants;
 import com.wang.service.param.permission.PermissionPostParam;
 import com.wang.serviceimp.dao.permission.read.PermissionPostReadDao;
 import com.wang.serviceimp.dao.permission.write.PermissionPostWriteDao;

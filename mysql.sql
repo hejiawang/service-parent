@@ -125,3 +125,43 @@ CREATE TABLE `permission_app` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`appID`)
 ) CHARSET=utf8;
+
+/*系统资源——SYS_APP、SYS_MENU、SYS_ELEMENTS*/
+CREATE TABLE `permission_resource` (
+  `resourceID` int(11) NOT NULL AUTO_INCREMENT COMMENT '资源ID',
+  `selfID` int(11) NOT NULL COMMENT '本身ID',
+  `selfType` varchar(255) NOT NULL COMMENT '本身类型',
+  `parentID` int(11) NOT NULL COMMENT '上级ID',
+  `parentType` varchar(255) NOT NULL COMMENT '上级职位类型',
+  PRIMARY KEY (`resourceID`)
+) CHARSET=utf8;
+
+/*权限——系统资源与可用操作关联表*/
+CREATE TABLE `permission_permission` (
+  `permissionID` int(11) NOT NULL AUTO_INCREMENT COMMENT '权限Id',
+  `operationID` int(11) NOT NULL COMMENT '操作ID',
+  `resourceID` int(11) NOT NULL COMMENT '资源ID',
+  PRIMARY KEY (`permissionID`)
+) CHARSET=utf8;
+
+
+/*可用操作*/
+CREATE TABLE `permission_operation` (
+  `operationID` int(11) NOT NULL AUTO_INCREMENT COMMENT '操作ID',
+  `typeCode` varchar(255) NOT NULL COMMENT '类型编码',
+  `operationName` varchar(255) NOT NULL COMMENT '操作名称',
+  `fun` varchar(255) NOT NULL COMMENT '方法名称',
+  PRIMARY KEY (`operationID`)
+) CHARSET=utf8;
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1001, SYS_APP, 可用, doVisit);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1002, SYS_APP, 删除, doDelete);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1003, SYS_APP, 修改, doUpdate);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1004, SYS_APP, 授权, doGrant);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1005, SYS_MENU, 可用, doVisit);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1006, SYS_MENU, 删除, doDelete);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1007, SYS_MENU, 修改, doUpdate);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1008, SYS_MENU, 授权, doGrant);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1009, SYS_ELEMENTS, 可用, doVisit);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1010, SYS_ELEMENTS, 删除, doDelete);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1011, SYS_ELEMENTS, 修改, doUpdate);
+INSERT permission_operation (operationID, typeCode, operationName, fun) values (1012, SYS_ELEMENTS, 授权, doGrant);
