@@ -16,5 +16,63 @@
 	<sql id="getAllColumn">
 		rankID, rankName, rankLevel, parentRankID, sortNum, isCurrent, isDelete, theNote
     </sql> 
+    
+    <select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionRankParam">
+		select
+			a.rankID as rankID, a.rankName as rankName,
+			a.rankLevel as rankLevel, a.parentrankID as parentrankID, a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.theNote as theNote, b.rankName as parentRankName
+		from permission_rank a
+		left join permission_rank b on a.parentRankID = b.rankID
+		<where>
+			a.isDelete=1
+			<if test="rankID != null and rankID !=''">
+				and ( a.rankID = #{rankID ,jdbcType=INTEGER} or a.parentRankID = #{rankID ,jdbcType=INTEGER} )
+			</if>
+			<if test="rankName != null and rankName !=''">
+				and a.rankName like '%${rankName}%'
+			</if>
+		</where>
+		order by a.sortNum asc 
+	</select>
+	
+	<select id="findRankForTree" resultType="com.wang.service.param.permission.PermissionRankParam">
+		select a.rankID as rankID, a.rankName as rankName,
+			(select count(*) from permission_rank where isDelete=1 and parentRankID = a.rankID) as isParent 
+		from  permission_rank a 
+		where a.isDelete = 1 and a.parentRankID = #{parentRankID ,jdbcType=INTEGER} 
+		order by a.sortNum asc
+	</select>
+	
+	<select id="checkRankFromParentRank" resultType="java.lang.Integer">
+		select count(*)
+		from permission_rank 
+		where parentRankID = #{rankID ,jdbcType=INTEGER} and isDelete = 1
+	</select>
+	
+	<select id="checkExistRankName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionRankParam">
+		select count(*)
+		from permission_rank 
+		<where>
+			isDelete = 1
+			and parentRankID = #{parentRankID ,jdbcType=INTEGER}
+			and rankName = #{rankName ,jdbcType=VARCHAR}
+			<if test="rankID != null and rankID !=''">
+				and rankID != #{rankID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
+	<select id="getRankByID" resultType="java.util.Map">
+		select
+			a.rankID as rankID, a.rankName as rankName,
+			a.rankLevel as rankLevel, a.parentRankID as parentRankID, 
+			a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.theNote as theNote,
+			b.rankName as parentRankName
+		from permission_rank a
+		left join permission_rank b on a.parentRankID = b.rankID
+		where a.isDelete=1 and a.rankID = #{rankID ,jdbcType=INTEGER}
+	</select>
 	
 </mapper>

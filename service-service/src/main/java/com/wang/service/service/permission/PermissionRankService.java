@@ -49,4 +49,22 @@ public interface PermissionRankService {
 	 */
 	ServiceResult<Void> deleteRankByID(Integer rankID);
 
+	/**
+	 * 新增职级
+	 * @param rank 职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	ServiceResult<Void> addRank(PermissionRankParam rank);
+
+	/**
+	 * 修改职级
+	 * @param  rank	职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	ServiceResult<Void> updateRank(PermissionRankParam rank);
+
 }

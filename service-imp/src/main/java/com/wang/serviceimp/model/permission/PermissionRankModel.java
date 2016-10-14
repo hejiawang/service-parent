@@ -106,6 +106,26 @@ public class PermissionRankModel {
 	}
 	
 	/**
+	 * 在同一父职级下，检查职级名称是否重复
+	 * @param rank		职级
+	 * @return 职级名称是否重复——true:重复
+	 * @author HeJiawang
+	 * @date   2016.10.14
+	 */
+	public Boolean checkExistRankName(PermissionRankParam rank) {
+		Assert.notNull(permissionRankReadDao, "Property 'permissionRankReadDao' is required.");
+		if( rank == null ) throw new BusinessException("职级不能为空");
+		if( rank.getParentRankID() == null  ) throw new BusinessException("职级父ID不能为空");
+		
+		Integer checkResult = permissionRankReadDao.checkExistRankName(rank);
+		if( checkResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	/**
 	 * 查看职级
 	 * @param rankID 职级ID
 	 * @return 职级信息
@@ -138,4 +158,39 @@ public class PermissionRankModel {
 			return false;
 		}
 	}
+
+	/**
+	 * 新增职级
+	 * @param rank 职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.14
+	 */
+	public void addRank(PermissionRankParam rank) {
+		Assert.notNull(permissionRankWriteDao, "Property 'permissionRankWriteDao' is required.");
+		if( rank == null ) throw new BusinessException("职级不能为空");
+		
+		permissionRankWriteDao.addRank(rank);
+	}
+
+	/**
+	 * 修改职级
+	 * @param  rank	职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.14
+	 */
+	public Boolean updateRank(PermissionRankParam rank) {
+		Assert.notNull(permissionRankWriteDao, "Property 'permissionRankWriteDao' is required.");
+		if( rank == null ) throw new BusinessException("职级不能为空");
+		if( rank.getRankID() == 1001 ) throw new BusinessException("跟职级不可修改");
+		
+		Integer updateResult = permissionRankWriteDao.updateRank(rank);
+		if( updateResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 }

@@ -44,8 +44,17 @@ public interface PermissionRankReadDao {
 	 * @author HeJiawang
 	 * @date   2016.10.13
 	 */
-	Integer checkRankFromParentRank(Integer rankID);
+	Integer checkRankFromParentRank(@Param("rankID") Integer rankID);
 
+	/**
+	 * 在同一父职级下，检查职级名称是否重复
+	 * @param rank		职级
+	 * @return 职级名称是否重复——true:重复
+	 * @author HeJiawang
+	 * @date   2016.10.14
+	 */
+	Integer checkExistRankName(PermissionRankParam rank);
+	
 	/**
 	 * 查看职级
 	 * @param rankID 职级ID
@@ -53,6 +62,6 @@ public interface PermissionRankReadDao {
 	 * @author HeJiawang
 	 * @date   2016.10.13
 	 */
-	Map<String, Object> getRankByID(Integer rankID);
+	Map<String, Object> getRankByID(@Param("rankID") Integer rankID);
 
 }

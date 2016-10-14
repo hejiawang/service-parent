@@ -150,4 +150,79 @@ public class PermissionRankServiceImp implements PermissionRankService {
 		}
 		return serviceResult;
 	}
+
+	/**
+	 * 新增职级
+	 * @param rank 职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Void> addRank(PermissionRankParam rank) {
+		Assert.notNull(permissionRankModel, "Property 'permissionRankModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			
+			Boolean existName = permissionRankModel.checkExistRankName(rank);	//在同一父职级下，检查职级名称是否重复
+			if( existName ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("职级名称重复,新增职级失败");
+			} else {
+				permissionRankModel.addRank(rank);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("新增职级成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 修改职级
+	 * @param  rank	职级信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	@Override
+	public ServiceResult<Void> updateRank(PermissionRankParam rank) {
+		Assert.notNull(permissionRankModel, "Property 'permissionRankModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			if( rank.getRankID() == 1001 ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("职级树信息不可修改");
+				return serviceResult;
+			}
+			
+			Boolean existName = permissionRankModel.checkExistRankName(rank);	//在同一父职级下，检查职级名称是否重复
+			if( existName ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("职级名称重复,修改职级失败");
+			} else {
+				Boolean updateResult = permissionRankModel.updateRank(rank);
+				if(updateResult){
+					serviceResult.setMessage("修改职级成功");
+				} else {
+					serviceResult.setMessage("修改职级失败");
+				}
+				serviceResult.setSuccess(updateResult);
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
 }

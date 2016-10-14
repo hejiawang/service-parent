@@ -81,6 +81,11 @@ CREATE TABLE `permission_rank` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`rankID`)
 ) DEFAULT CHARSET=utf8;
+/*为职级树添加跟节点*/
+insert into 
+	permission_rank (rankID, rankName, rankLevel, parentRankID, sortNum, isCurrent, isDelete, theNote) 
+values ( 1001, '职级树', 0, 0, 0, 1, 1, '组织机构树根节点，请勿删除');
+
 
 /*角色表*/
 DROP TABLE IF EXISTS `permission_role`;
