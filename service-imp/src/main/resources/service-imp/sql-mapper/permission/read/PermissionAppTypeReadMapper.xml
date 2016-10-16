@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionAppTypeReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionAppTypeEntity">
+		<id column="appTypeID" property="appTypeID" jdbcType="INTEGER"/>
+		<result column="appTypeName" property="appTypeName" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		appTypeID, appTypeName, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionAppTypeParam">
+		select
+			a.appTypeID, a.appTypeName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_apptype a
+		<where>
+			a.isDelete=1
+			<if test="appTypeName != null and appTypeName !=''">
+				and a.appTypeName like '%${appTypeName}%'
+			</if>
+		</where>
+		order by a.sortNum asc 
+	</select>
+	
+	<select id="getAppTypeByID" resultType="java.util.Map">
+		select
+			a.appTypeID, a.appTypeName, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_apptype a
+		where a.isDelete=1 and a.appTypeID = #{appTypeID ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="checkExistAppTypeName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionAppTypeParam">
+		select count(*)
+		from permission_apptype
+		<where>
+			isDelete = 1
+			and appTypeName = #{appTypeName ,jdbcType=VARCHAR}
+			<if test="appTypeID != null and appTypeID !=''">
+				and appTypeID != #{appTypeID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+	</select>
+	
+</mapper>
