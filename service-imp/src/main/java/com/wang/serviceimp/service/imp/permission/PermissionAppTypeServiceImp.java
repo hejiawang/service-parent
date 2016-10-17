@@ -1,5 +1,6 @@
 package com.wang.serviceimp.service.imp.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,6 +12,7 @@ import org.springframework.util.Assert;
 import com.wang.core.Constants;
 import com.wang.core.ServiceResult;
 import com.wang.core.exception.BusinessException;
+import com.wang.service.entity.permission.PermissionAppTypeEntity;
 import com.wang.service.param.permission.PermissionAppTypeParam;
 import com.wang.service.service.permission.PermissionAppTypeService;
 import com.wang.serviceimp.model.permission.PermissionAppTypeModel;
@@ -130,7 +132,7 @@ public class PermissionAppTypeServiceImp implements PermissionAppTypeService {
 				serviceResult.setSuccess(false);
 				serviceResult.setMessage("系统类型名称重复,新增系统类型失败");
 			} else {
-				permissionAppTypeModel.addPost(appType);
+				permissionAppTypeModel.addAppType(appType);
 				serviceResult.setSuccess(true);
 				serviceResult.setMessage("新增系统类型成功");
 			}
@@ -176,4 +178,28 @@ public class PermissionAppTypeServiceImp implements PermissionAppTypeService {
 		}
 		return serviceResult;
 	}
+
+	/**
+	 * 获取系统类型树信息
+	 * @return 系统类型树信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	@Override
+	public ServiceResult<List<PermissionAppTypeEntity>> getAllAppType() {
+		Assert.notNull(permissionAppTypeModel, "Property 'permissionAppTypeModel' is required.");
+		ServiceResult<List<PermissionAppTypeEntity>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionAppTypeModel.getAllAppType());
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

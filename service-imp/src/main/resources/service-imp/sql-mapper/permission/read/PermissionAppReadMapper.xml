@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionAppReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionAppEntity">
+		<id column="appID" property="appID" jdbcType="INTEGER"/>
+		<result column="appTypeID" property="appTypeID" jdbcType="INTEGER"/>
+		<result column="appName" property="appName" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="iconStyle" property="iconStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		appID, appTypeID, appName, url, iconStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionAppParam">
+		select a.appID as appID,a.appTypeID as appTypeID,
+			b.appTypeName as appTypeName, a.appName as appName,
+			a.url as url,a.iconStyle as iconStyle,
+			a.sortNum as sortNum,a.isDelete as isDelete,a.isCurrent as isCurrent,
+			a.theNote as theNote
+		from sys_role_app a 
+		inner join sys_role_appType b on  a.appTypeID = b.appTypeID
+		<where>
+			a.isDelete=1
+			and b.isDelete = 1
+			<if test="appName != null and appName !=''">
+				and a.appName like '%${appName}%'
+			</if>
+		</where>
+		order by a.sortNum desc 
+	</select>
+	
+	<select id="checkExistAppName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionAppParam">
+		select count(*)
+		from permission_app
+		<where>
+			isDelete = 1
+			and appName = #{appName ,jdbcType=VARCHAR}
+			<if test="appID != null and appID !=''">
+				and appID != #{appID ,jdbcType=INTEGER}
+			</if>
+		</where>
+	</select>
+	
+</mapper>

@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.wang.core.repository.myBatis.MyBatisRepository;
+import com.wang.service.entity.permission.PermissionAppTypeEntity;
 import com.wang.service.param.permission.PermissionAppTypeParam;
 
 /**
@@ -45,5 +46,13 @@ public interface PermissionAppTypeReadDao {
 	 * @date   2016.10.16
 	 */
 	Integer checkExistAppTypeName(PermissionAppTypeParam appType);
+
+	/**
+	 * 获取系统类型树信息
+	 * @return 系统类型树信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	List<PermissionAppTypeEntity> getAllAppType();
 
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionAppWriteDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionAppEntity">
+		<id column="appID" property="appID" jdbcType="INTEGER"/>
+		<result column="appTypeID" property="appTypeID" jdbcType="INTEGER"/>
+		<result column="appName" property="appName" jdbcType="VARCHAR"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="iconStyle" property="iconStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		appID, appTypeID, appName, url, iconStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+    
+    <insert id="addApp" parameterType="com.wang.service.param.permission.PermissionAppParam" useGeneratedKeys="true" keyProperty="appID">
+		insert into permission_app (
+			appTypeID,appName,url,
+			iconStyle,sortNum,
+			isDelete,isCurrent,theNote
+		) values(
+			#{appTypeID,jdbcType=INTEGER}, #{appName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
+			#{iconStyle,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER},
+			1,1,#{theNote,jdbcType=VARCHAR}
+		) 
+    </insert>
+    
+</mapper>

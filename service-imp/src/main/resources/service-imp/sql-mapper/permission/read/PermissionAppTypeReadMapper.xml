@@ -47,4 +47,10 @@
 		</where>
 	</select>
 	
+	<select id="getAllAppType" resultMap="BaseResultMap">
+		select *
+		from permission_apptype a 
+		where a.isDelete = 1
+	</select>
+	
 </mapper>

@@ -1,8 +1,10 @@
 package com.wang.service.service.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wang.core.ServiceResult;
+import com.wang.service.entity.permission.PermissionAppTypeEntity;
 import com.wang.service.param.permission.PermissionAppTypeParam;
 
 /**
@@ -56,5 +58,13 @@ public interface PermissionAppTypeService {
 	 * @date   2016.10.16
 	 */
 	ServiceResult<Void> updateAppType(PermissionAppTypeParam appType);
+
+	/**
+	 * 获取系统类型树信息
+	 * @return 系统类型树信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	ServiceResult<List<PermissionAppTypeEntity>> getAllAppType();
 
 }

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
+import com.wang.service.entity.permission.PermissionAppTypeEntity;
 import com.wang.service.param.permission.PermissionAppTypeParam;
 import com.wang.serviceimp.dao.permission.read.PermissionAppTypeReadDao;
 import com.wang.serviceimp.dao.permission.write.PermissionAppTypeWriteDao;
@@ -124,7 +125,7 @@ public class PermissionAppTypeModel {
 	 * @author HeJiawang
 	 * @date   2016.10.16
 	 */
-	public void addPost(PermissionAppTypeParam appType) {
+	public void addAppType(PermissionAppTypeParam appType) {
 		Assert.notNull(permissionAppTypeWriteDao, "Property 'permissionAppTypeWriteDao' is required.");
 		if( appType == null ) throw new BusinessException("系统类型不能为空");
 		
@@ -143,6 +144,18 @@ public class PermissionAppTypeModel {
 		if( appType == null ) throw new BusinessException("系统类型不能为空");
 		
 		permissionAppTypeWriteDao.updateAppType(appType);
+	}
+
+	/**
+	 * 获取系统类型树信息
+	 * @return 系统类型树信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	public List<PermissionAppTypeEntity> getAllAppType() {
+		Assert.notNull(permissionAppTypeReadDao, "Property 'permissionAppTypeReadDao' is required.");
+		
+		return permissionAppTypeReadDao.getAllAppType();
 	}
 	
 }
