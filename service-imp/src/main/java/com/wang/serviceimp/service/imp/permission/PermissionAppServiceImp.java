@@ -27,10 +27,10 @@ public class PermissionAppServiceImp implements PermissionAppService {
 	/**
 	 * log
 	 */
-	private final Logger logger = LoggerFactory.getLogger(PermissionAppTypeServiceImp.class);
+	private final Logger logger = LoggerFactory.getLogger(PermissionAppServiceImp.class);
 	
 	/**
-	 * permissionAppTypeModel
+	 * permissionAppModel
 	 */
 	@Autowired
 	private PermissionAppModel permissionAppModel;
@@ -80,6 +80,92 @@ public class PermissionAppServiceImp implements PermissionAppService {
 				serviceResult.setSuccess(true);
 				serviceResult.setMessage("新增系统成功");
 			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 修改应用系统
+	 * @param app 应用系统信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	@Override
+	public ServiceResult<Void> updateApp(PermissionAppParam app) {
+		Assert.notNull(permissionAppModel, "Property 'permissionAppModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existName = permissionAppModel.checkExistAppName(app);	//检查系统名称是否重复
+			if(existName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("系统名称重复,新增系统失败");
+			} else {
+				permissionAppModel.updateApp(app);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("修改系统成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 删除应用系统
+	 * @param appID 应用系统ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	@Override
+	public ServiceResult<Void> deleteAppByID(Integer appID) {
+		Assert.notNull(permissionAppModel, "Property 'permissionAppModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean deleteResult = permissionAppModel.deleteAppByID(appID);
+			if( deleteResult ){
+				serviceResult.setMessage("删除应用系统成功");
+			}else{
+				serviceResult.setMessage("删除应用系统失败");
+			}
+			serviceResult.setSuccess(deleteResult);
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 应用系统查看
+	 * @param appID 应用系统ID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	@Override
+	public ServiceResult<PermissionAppParam> getApp(Integer appID) {
+		Assert.notNull(permissionAppModel, "Property 'permissionAppModel' is required.");
+		ServiceResult<PermissionAppParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionAppModel.getApp(appID));
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

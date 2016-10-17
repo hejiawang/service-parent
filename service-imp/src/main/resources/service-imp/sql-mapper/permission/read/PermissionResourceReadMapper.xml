@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionResourceWriteDao">
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionResourceReadDao">
 	
   	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionResourceEntity">
 		<id column="resourceID" property="resourceID" jdbcType="INTEGER"/>
@@ -13,13 +13,12 @@
 	<sql id="getAllColumn">
 		resourceID, selfID, selfType, parentID, parentType
     </sql> 
-	
-    <insert id="addAppResource" useGeneratedKeys="true" keyProperty="resourceID">
-		insert into permission_resource(
-			selfID,selfType,parentID,parentType
-		) values(
-			#{selfID,jdbcType=INTEGER},'SYS_APP',0,'SYS_APP'
-		)
-    </insert>
     
+    <select id="getResourceByAppID" resultMap="BaseResultMap">
+    	select * 
+    	from permission_resource 
+    	where selfID = #{selfID ,jdbcType=INTEGER} 
+    	and selfType= 'SYS_APP'
+    </select>
+	
 </mapper>

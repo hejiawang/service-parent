@@ -48,4 +48,12 @@
 		</where>
 	</select>
 	
+	<select id="getApp" resultType = "com.wang.service.param.permission.PermissionAppParam" >
+		select * 
+		from permission_app
+		where 
+			isDelete = 1
+			and appID = #{appID ,jdbcType=INTEGER}
+	</select>
+	
 </mapper>

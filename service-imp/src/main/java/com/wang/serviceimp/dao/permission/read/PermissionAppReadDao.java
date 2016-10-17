@@ -3,6 +3,8 @@ package com.wang.serviceimp.dao.permission.read;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.param.permission.PermissionAppParam;
 
@@ -34,5 +36,14 @@ public interface PermissionAppReadDao {
 	 * @date   2016.10.17
 	 */
 	Integer checkExistAppName(PermissionAppParam app);
+
+	/**
+	 * 获取应用信息基本信息
+	 * @param appID 应用系统ID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	PermissionAppParam getApp( @Param("appID") Integer appID);
 
 }

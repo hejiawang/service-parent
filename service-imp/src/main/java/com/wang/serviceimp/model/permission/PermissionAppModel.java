@@ -15,8 +15,11 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
+import com.wang.service.entity.permission.PermissionResourceEntity;
 import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.serviceimp.dao.permission.read.PermissionAppReadDao;
+import com.wang.serviceimp.dao.permission.read.PermissionOperationReadDao;
+import com.wang.serviceimp.dao.permission.read.PermissionResourceReadDao;
 import com.wang.serviceimp.dao.permission.write.PermissionAppWriteDao;
 import com.wang.serviceimp.dao.permission.write.PermissionPermissionWriteDao;
 import com.wang.serviceimp.dao.permission.write.PermissionResourceWriteDao;
@@ -60,10 +63,20 @@ public class PermissionAppModel {
 	private PermissionResourceWriteDao permissionResourceWriteDao;
 	
 	/**
+	 * permissionResourceReadDao
+	 */
+	private PermissionResourceReadDao permissionResourceReadDao;
+	
+	/**
 	 * permissionPermissionWriteDao
 	 */
 	@Autowired
 	private PermissionPermissionWriteDao permissionPermissionWriteDao;
+	
+	/**
+	 * permissionOperationReadDao
+	 */
+	private PermissionOperationReadDao permissionOperationReadDao;
 	
 	/**
 	 * 获取分页应用系统
@@ -119,6 +132,10 @@ public class PermissionAppModel {
 	 */
 	public void addApp(PermissionAppParam app) {
 		Assert.notNull(permissionAppReadDao, "Property 'permissionAppReadDao' is required.");
+		Assert.notNull(permissionAppWriteDao, "Property 'permissionAppWriteDao' is required.");
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		Assert.notNull(permissionPermissionWriteDao, "Property 'permissionPermissionWriteDao' is required.");
+		Assert.notNull(transactionManagerMember, "Property 'transactionManagerMember' is required.");
 		if( app == null ) throw new BusinessException("系统不能为空");
 		
 		//开始事务
@@ -155,6 +172,109 @@ public class PermissionAppModel {
 			throw new BusinessException("新增应用系统失败!");
 		}
 		
+	}
+
+	/**
+	 * 修改应用系统
+	 * @param app 应用系统信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	public void updateApp(PermissionAppParam app) {
+		Assert.notNull(permissionAppReadDao, "Property 'permissionAppReadDao' is required.");
+		Assert.notNull(permissionAppWriteDao, "Property 'permissionAppWriteDao' is required.");
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		Assert.notNull(permissionPermissionWriteDao, "Property 'permissionPermissionWriteDao' is required.");
+		Assert.notNull(transactionManagerMember, "Property 'transactionManagerMember' is required.");
+		if( app == null ) throw new BusinessException("系统不能为空");
+		
+		//开始事务
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		TransactionStatus status = transactionManagerMember.getTransaction(def);
+		try {
+			/**
+			 * 根据应用系统ID获取该应用系统资源
+			 */
+			PermissionResourceEntity resource = permissionResourceReadDao.getResourceByAppID(app.getAppID());
+			
+			/**
+			 * 删除所有该资源绑定的操作权限
+			 */
+			permissionPermissionWriteDao.deletePermissionByResourceID(resource.getResourceID());
+			
+			/**
+			 * 根据新的操作权限，重新新增
+			 */
+			String[] operationIDs = app.getOperationIDs().split(",");
+			for( String operationID : operationIDs ){
+				/**
+				 * 存储可用的操作
+				 */
+				permissionPermissionWriteDao.addPermission(operationID, resource.getResourceID());
+			}
+			
+			/**
+			 * 更新应用系统基本信息
+			 */
+			permissionAppWriteDao.uodateApp(app);
+			
+			/**
+			 * 事务提交
+			 */
+			transactionManagerMember.commit(status);
+		}catch( Exception e ){
+			/**
+			 * 事务回滚
+			 */
+			transactionManagerMember.rollback(status);
+			throw new BusinessException("新增应用系统失败!");
+		}
+	}
+
+	/**
+	 * 删除应用系统
+	 * @param appID 应用系统ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	public Boolean deleteAppByID(Integer appID) {
+		Assert.notNull(permissionAppWriteDao, "Property 'permissionAppWriteDao' is required.");
+		if( appID == null ) throw new BusinessException("应用系统ID不能为空");
+		
+		Integer deleteResult = permissionAppWriteDao.deleteAppByID(appID);
+		if( deleteResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/**
+	 * 应用系统查看
+	 * @param appID 应用系统ID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	public PermissionAppParam getApp(Integer appID) {
+		Assert.notNull(permissionAppReadDao, "Property 'permissionAppReadDao' is required.");
+		if( appID == null ) throw new BusinessException("应用系统ID不能为空");
+		
+		PermissionAppParam app = permissionAppReadDao.getApp(appID);
+		
+		PermissionResourceEntity resource = permissionResourceReadDao.getResourceByAppID(appID);
+		Map<String, String> map = permissionOperationReadDao.getOperationStringArgsByResourceID(resource.getResourceID());
+		if( ! map.isEmpty() ){
+			String operationIDs = map.get("operationIDs");
+			String operationNames = map.get("operationNames");
+			app.setOperationIDs(operationIDs);
+			app.setOperationNames(operationNames);
+		}
+		
+		return app;
 	}
 	
 }

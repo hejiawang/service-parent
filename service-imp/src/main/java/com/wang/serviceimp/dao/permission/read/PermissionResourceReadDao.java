@@ -1,4 +1,4 @@
-package com.wang.serviceimp.dao.permission.write;
+package com.wang.serviceimp.dao.permission.read;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -7,23 +7,22 @@ import com.wang.service.entity.permission.PermissionResourceEntity;
 
 /**
  * 
- * 资源write dao
+ * 资源read dao
  * 
  * @author HeJiawang
  * @date   2016.10.17
  *
  */
 @MyBatisRepository
-public interface PermissionResourceWriteDao {
+public interface PermissionResourceReadDao {
 
 	/**
-	 * 新增应用系统资源
+	 * 根据应用系统ID获取对对应的资源
 	 * @param selfID 应用系统ID
-	 * @return 资源ID
-	 * 
+	 * @return ServiceResult
 	 * @author HeJiawang
 	 * @date   2016.10.17
 	 */
-	Integer addAppResource( @Param("selfID") Integer selfID );
+	PermissionResourceEntity getResourceByAppID(@Param("selfID")Integer selfID);
 
 }

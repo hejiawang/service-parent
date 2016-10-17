@@ -25,4 +25,12 @@ public interface PermissionPermissionWriteDao {
 	void addPermission(@Param("operationID") String operationID, 
 			@Param("resourceID") Integer resourceID);
 
+	/**
+	 * 删除所有该资源绑定的操作权限
+	 * @param resourceID 资源ID
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	Integer deletePermissionByResourceID(@Param("resourceID") Integer resourceID);
+
 }

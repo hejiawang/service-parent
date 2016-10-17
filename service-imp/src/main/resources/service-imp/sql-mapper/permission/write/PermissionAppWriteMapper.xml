@@ -30,4 +30,25 @@
 		) 
     </insert>
     
+    <update id="updateApp" parameterType="com.wang.service.param.permission.PermissionAppParam">
+    	update 
+    		permission_app 
+    	set 
+    		appTypeID = {appTypeID,jdbcType=INTEGER}, appName = #{appName,jdbcType=VARCHAR},
+    		url = #{url,jdbcType=VARCHAR}, iconStyle = #{iconStyle,jdbcType=VARCHAR},
+    		sortNum = #{sortNum,jdbcType=INTEGER},
+			theNote = #{theNote,jdbcType=VARCHAR}
+		where 
+			appID = #{appID,jdbcType=INTEGER}
+    </update>
+    
+    <update id="deleteAppByID">
+    	update 
+    		permission_app 
+    	set 
+    		isDelete = 0
+		where 
+			appID = #{appID,jdbcType=INTEGER}
+    </update>
+    
 </mapper>

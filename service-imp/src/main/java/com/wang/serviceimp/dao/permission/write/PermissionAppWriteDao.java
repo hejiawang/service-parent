@@ -1,5 +1,7 @@
 package com.wang.serviceimp.dao.permission.write;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.param.permission.PermissionAppParam;
 
@@ -22,5 +24,22 @@ public interface PermissionAppWriteDao {
 	 * @date   2016.10.17
 	 */
 	Integer addApp(PermissionAppParam app);
+
+	/**
+	 * 更新应用系统基本信息
+	 * @param app 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	Integer uodateApp(PermissionAppParam app);
+
+	/**
+	 * 删除应用系统
+	 * @param appID 应用系统ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	Integer deleteAppByID(@Param("appID")Integer appID);
 
 }

@@ -30,4 +30,31 @@ public interface PermissionAppService {
 	 */
 	ServiceResult<Void> addApp(PermissionAppParam app);
 
+	/**
+	 * 修改应用系统
+	 * @param app 应用系统信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	ServiceResult<Void> updateApp(PermissionAppParam app);
+
+	/**
+	 * 删除应用系统
+	 * @param appID 应用系统ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	ServiceResult<Void> deleteAppByID(Integer appID);
+
+	/**
+	 * 应用系统查看
+	 * @param appID 应用系统ID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	ServiceResult<PermissionAppParam> getApp(Integer appID);
+
 }

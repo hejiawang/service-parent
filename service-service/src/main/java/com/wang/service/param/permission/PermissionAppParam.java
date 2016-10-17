@@ -62,6 +62,11 @@ public class PermissionAppParam implements Serializable {
 	private String operationIDs;
 	
 	/**
+	 * 操作ID集合名称
+	 */
+	private String operationNames;
+	
+	/**
 	 * 分页信息
 	 */
 	private Integer pageSize; 
@@ -75,6 +80,14 @@ public class PermissionAppParam implements Serializable {
 	 * 分页信息
 	 */
 	private Integer draw;
+
+	public String getOperationNames() {
+		return operationNames;
+	}
+
+	public void setOperationNames(String operationNames) {
+		this.operationNames = operationNames;
+	}
 
 	public String getOperationIDs() {
 		return operationIDs;

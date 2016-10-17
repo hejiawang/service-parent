@@ -3,11 +3,15 @@
 <mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionPermissionWriteDao">
 	
     <insert id="addPermission">
-		insert into permission_resource(
+		insert into permission_permission(
 			resourceID,operationID
 		) values(
 			#{resourceID},#{operationID}
 		)
     </insert>
+    
+    <delete id="deletePermissionByResourceID">
+    	delete from permission_permission where resourceID = #{resourceID}
+    </delete>
     
 </mapper>
