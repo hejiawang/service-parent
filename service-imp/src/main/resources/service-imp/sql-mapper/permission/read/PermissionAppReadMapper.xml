@@ -24,7 +24,7 @@
 			a.url as url,a.iconStyle as iconStyle,
 			a.sortNum as sortNum,a.isDelete as isDelete,a.isCurrent as isCurrent,
 			a.theNote as theNote
-		from sys_role_app a 
+		from permission_app a 
 		inner join sys_role_appType b on  a.appTypeID = b.appTypeID
 		<where>
 			a.isDelete=1
