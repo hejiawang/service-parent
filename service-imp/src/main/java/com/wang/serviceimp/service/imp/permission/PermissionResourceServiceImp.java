@@ -1,6 +1,6 @@
 package com.wang.serviceimp.service.imp.permission;
 
-import java.util.Map;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import com.wang.core.Constants;
 import com.wang.core.ServiceResult;
 import com.wang.core.exception.BusinessException;
 import com.wang.service.entity.permission.PermissionResourceEntity;
+import com.wang.service.param.permission.PermissionResourceParam;
 import com.wang.service.service.permission.PermissionResourceService;
 import com.wang.serviceimp.model.permission.PermissionResourceModel;
 
@@ -48,6 +49,77 @@ public class PermissionResourceServiceImp implements PermissionResourceService {
 		ServiceResult<PermissionResourceEntity> serviceResult = new ServiceResult<>();
 		try {
 			serviceResult.setResult(permissionResourceModel.getResourceByAppID(appID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据资源ID获取资源信息
+	 * @param resourceID 资源ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	@Override
+	public ServiceResult<PermissionResourceParam> getResourceByID(Integer resourceID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<PermissionResourceParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceByID(resourceID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 获取所有应用系统对应的资源信息
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForApp() {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForApp());
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据父ID(资源父ID)获取菜单资源信息
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForMenu(Integer parentID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForMenu(parentID));
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

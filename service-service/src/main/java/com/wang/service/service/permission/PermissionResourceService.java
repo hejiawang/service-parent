@@ -1,7 +1,10 @@
 package com.wang.service.service.permission;
 
+import java.util.List;
+
 import com.wang.core.ServiceResult;
 import com.wang.service.entity.permission.PermissionResourceEntity;
+import com.wang.service.param.permission.PermissionResourceParam;
 
 /**
  * 资源service
@@ -18,5 +21,31 @@ public interface PermissionResourceService {
 	 * @date   2016.10.17
 	 */
 	ServiceResult<PermissionResourceEntity> getResourceByAppID(Integer appID);
+
+	/**
+	 * 根据资源ID获取资源信息
+	 * @param resourceID 资源ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	ServiceResult<PermissionResourceParam> getResourceByID(Integer resourceID);
+
+	/**
+	 * 获取所有应用系统对应的资源信息
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	ServiceResult<List<PermissionResourceParam>> getResourceForApp();
+
+	/**
+	 * 根据父ID(资源父ID)获取菜单资源信息
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	ServiceResult<List<PermissionResourceParam>> getResourceForMenu(Integer parentID);
 
 }

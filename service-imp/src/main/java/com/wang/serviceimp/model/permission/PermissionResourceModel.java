@@ -1,5 +1,7 @@
 package com.wang.serviceimp.model.permission;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
 import com.wang.service.entity.permission.PermissionResourceEntity;
+import com.wang.service.param.permission.PermissionResourceParam;
 import com.wang.serviceimp.dao.permission.read.PermissionResourceReadDao;
 
 /**
@@ -42,6 +45,46 @@ public class PermissionResourceModel {
 		if( appID == null ) throw new BusinessException("应用系统ID不能为空");
 		
 		return permissionResourceReadDao.getResourceByAppID(appID);
+	}
+
+	/**
+	 * 根据资源ID获取资源信息
+	 * @param resourceID 资源ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	public PermissionResourceParam getResourceByID(Integer resourceID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( resourceID == null ) throw new BusinessException("资源ID不能为空");
+		
+		return permissionResourceReadDao.getResourceByID(resourceID);
+	}
+
+	/**
+	 * 获取所有应用系统对应的资源信息
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	public List<PermissionResourceParam> getResourceForApp() {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		
+		return permissionResourceReadDao.getResourceForApp();
+	}
+
+	/**
+	 * 根据父ID(资源父ID)获取菜单资源信息
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.18
+	 */
+	public List<PermissionResourceParam> getResourceForMenu(Integer parentID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( parentID == null ) throw new BusinessException("资源父ID不能为空");
+		
+		return permissionResourceReadDao.getResourceForMenu(parentID);
 	}
 
 }

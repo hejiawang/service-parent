@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionMenuReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionMenuEntity">
+		<id column="menuID" property="menuID" jdbcType="INTEGER"/>
+		<result column="menuName" property="menuName" jdbcType="VARCHAR"/>
+		<result column="menuLevel" property="menuLevel" jdbcType="INTEGER"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="iconStyle" property="iconStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		menuID, menuName, menuLevel, url, iconStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionMenuParam">
+		SELECT 
+			a.menuID AS menuID,
+			b.resourceID AS resourceID,
+			a.menuName AS menuName,
+			a.url AS url,
+			a.iconStyle AS iconStyle,
+			(
+				SELECT c.menuName
+				FROM permission_menu c
+				WHERE c.menuID = b.parentID
+			) as parentMenuName
+			a.menuLevel AS menuLevel,
+			a.sortNum AS sortNum
+		FROM permission_menu a
+		INNER JOIN permission_resource b ON a.menuID = b.selfID
+		<where>
+			a.isDelete=1
+			AND b.selfType = 'SYS_MENU'
+			<if test="menuName != null and menuName !=''">
+				AND a.menuName like '%${menuName}%'
+			</if>
+			<if test="resourceID != null and resourceID !=''">
+				AND b.resourceID = #{resourceID ,jdbcType=INTEGER}
+			</if>
+		</where>
+		order by a.sortNum desc 
+	</select>
+	
+</mapper>

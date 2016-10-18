@@ -20,5 +20,41 @@
     	where selfID = #{selfID ,jdbcType=INTEGER} 
     	and selfType= 'SYS_APP'
     </select>
+    
+    <select id="getResourceByID" resultType="com.wang.service.param.permission.PermissionResourceParam">
+    	select * 
+    	from permission_resource 
+    	where resourceID = #{resourceID ,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getResourceForApp" resultType="com.wang.service.param.permission.PermissionResourceParam">
+		select 
+			b.resourceID as resourceID,
+			a.appName as selfName,
+			b.selfType as selfType,
+			b.selfID as selfID,
+			(
+				select count(*) 
+				from permission_resource c 
+				inner join permission_menu d on c.selfID = d.menuID
+				where c.parentType='SYS_APP' and c.selfType = 'SYS_MENU' and c.parentId = b.selfId
+			) as isParent
+		from permission_app a 
+		inner join permission_resource b on b.selfID = a.appID
+			and b.selfType='SYS_APP' and b.parentType='SYS_APP'
+    </select>
+    
+    <select id="getResourceForMenu" resultType="com.wang.service.param.permission.PermissionResourceParam">
+		select 
+			a.resourceID as resourceID,
+			b.menuName as selfName,
+			a.selfType as selfType,
+			a.selfID as selfID
+		from permission_resource a 
+		inner join permission_menu b on a.selfID = b.menuID 
+			and a.selfType = 'SYS_MENU'
+			and b.isDelete=1 
+		where a.parentID = #{parentID ,jdbcType=INTEGER}
+    </select>
 	
 </mapper>

@@ -35,6 +35,33 @@ public class PermissionResourceParam implements Serializable {
 	 * 上类型
 	 */
 	private String parentType;
+	
+	/**
+	 * 本身名称
+	 */
+	private String selfName;
+	
+	/**
+	 * 是否为父资源</br>
+	 * 大于0--父资源
+	 */
+	private Integer isParent; 
+	
+	public String getSelfName() {
+		return selfName;
+	}
+
+	public void setSelfName(String selfName) {
+		this.selfName = selfName;
+	}
+
+	public Integer getIsParent() {
+		return isParent;
+	}
+
+	public void setIsParent(Integer isParent) {
+		this.isParent = isParent;
+	}
 
 	public Integer getResourceID() {
 		return resourceID;
