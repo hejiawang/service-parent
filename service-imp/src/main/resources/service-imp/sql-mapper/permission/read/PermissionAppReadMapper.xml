@@ -25,7 +25,7 @@
 			a.sortNum as sortNum,a.isDelete as isDelete,a.isCurrent as isCurrent,
 			a.theNote as theNote
 		from permission_app a 
-		inner join sys_role_appType b on  a.appTypeID = b.appTypeID
+		inner join permission_appType b on  a.appTypeID = b.appTypeID
 		<where>
 			a.isDelete=1
 			and b.isDelete = 1
@@ -49,11 +49,15 @@
 	</select>
 	
 	<select id="getApp" resultType = "com.wang.service.param.permission.PermissionAppParam" >
-		select * 
-		from permission_app
+		select 
+			a.appID, a.appTypeID, a.appName, a.url, a.iconStyle, 
+			a.sortNum, a.isCurrent, a.isDelete, a.theNote,
+			b.appTypeName
+		from permission_app a
+		left join permission_appType b on a.appTypeID = b.appTypeID
 		where 
-			isDelete = 1
-			and appID = #{appID ,jdbcType=INTEGER}
+			a.isDelete = 1
+			and a.appID = #{appID ,jdbcType=INTEGER}
 	</select>
 	
 </mapper>

@@ -18,7 +18,10 @@
 		appID, appTypeID, appName, url, iconStyle, sortNum, isCurrent, isDelete, theNote
     </sql> 
     
-    <insert id="addApp" parameterType="com.wang.service.param.permission.PermissionAppParam" useGeneratedKeys="true" keyProperty="appID">
+    <insert id="addApp" parameterType="com.wang.service.param.permission.PermissionAppParam"> <!-- <useGeneratedKeys="true" keyProperty="appID"> -->
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="appID">
+			SELECT LAST_INSERT_ID() as appID
+		</selectKey>
 		insert into permission_app (
 			appTypeID,appName,url,
 			iconStyle,sortNum,
@@ -34,7 +37,7 @@
     	update 
     		permission_app 
     	set 
-    		appTypeID = {appTypeID,jdbcType=INTEGER}, appName = #{appName,jdbcType=VARCHAR},
+    		appTypeID = #{appTypeID,jdbcType=INTEGER}, appName = #{appName,jdbcType=VARCHAR},
     		url = #{url,jdbcType=VARCHAR}, iconStyle = #{iconStyle,jdbcType=VARCHAR},
     		sortNum = #{sortNum,jdbcType=INTEGER},
 			theNote = #{theNote,jdbcType=VARCHAR}

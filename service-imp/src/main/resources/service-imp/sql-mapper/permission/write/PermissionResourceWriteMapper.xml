@@ -14,11 +14,15 @@
 		resourceID, selfID, selfType, parentID, parentType
     </sql> 
 	
-    <insert id="addAppResource" useGeneratedKeys="true" keyProperty="resourceID">
+    <insert id="addResource"> <!-- useGeneratedKeys="true" keyProperty="resourceID" -->
+		<selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="resourceID">
+			SELECT LAST_INSERT_ID() as resourceID
+		</selectKey>
 		insert into permission_resource(
 			selfID,selfType,parentID,parentType
 		) values(
-			#{selfID,jdbcType=INTEGER},'SYS_APP',0,'SYS_APP'
+			#{selfID,jdbcType=INTEGER},#{selfType,jdbcType=VARCHAR},
+			#{parentID,jdbcType=INTEGER},#{parentType,jdbcType=VARCHAR}
 		)
     </insert>
     

@@ -15,14 +15,14 @@
     
     <select id="getOperationForApp" resultMap="BaseResultMap">
     	select a.operationID as operationID,a.operationName as operationName 
-    	from sys_role_operation a 
+    	from permission_operation a 
     	where a.typeCode = 'SYS_APP'
     </select>
     
     <select id="getOperationIDByResourceID" resultType="java.lang.Integer">
 		select b.operationID as operationID
-		from sys_role_resource a 
-		inner join sys_role_permission b on a.resourceID = b.resourceID 
+		from permission_resource a 
+		inner join permission_permission b on a.resourceID = b.resourceID 
 		where a.resourceID = #{resourceID ,jdbcType=INTEGER}
     </select>
     

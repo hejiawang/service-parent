@@ -17,6 +17,7 @@ import org.springframework.util.Assert;
 import com.wang.core.exception.BusinessException;
 import com.wang.service.entity.permission.PermissionResourceEntity;
 import com.wang.service.param.permission.PermissionAppParam;
+import com.wang.service.param.permission.PermissionResourceParam;
 import com.wang.serviceimp.dao.permission.read.PermissionAppReadDao;
 import com.wang.serviceimp.dao.permission.read.PermissionOperationReadDao;
 import com.wang.serviceimp.dao.permission.read.PermissionResourceReadDao;
@@ -65,6 +66,7 @@ public class PermissionAppModel {
 	/**
 	 * permissionResourceReadDao
 	 */
+	@Autowired
 	private PermissionResourceReadDao permissionResourceReadDao;
 	
 	/**
@@ -76,6 +78,7 @@ public class PermissionAppModel {
 	/**
 	 * permissionOperationReadDao
 	 */
+	@Autowired
 	private PermissionOperationReadDao permissionOperationReadDao;
 	
 	/**
@@ -146,18 +149,24 @@ public class PermissionAppModel {
 			/**
 			 * 存储新增的应用系统,并返回该应用系统ID
 			 */
-			Integer appID = permissionAppWriteDao.addApp(app);
+			permissionAppWriteDao.addApp(app);
+			
 			/**
 			 * 存储该应用系统资源,并返回该资源ID
 			 */
-			Integer resourceID = permissionResourceWriteDao.addAppResource(appID);
+			PermissionResourceParam resource = new PermissionResourceParam();
+			resource.setSelfID(app.getAppID());
+			resource.setSelfType("SYS_APP");
+			resource.setParentID(0);
+			resource.setParentType("SYS_APP");
+			permissionResourceWriteDao.addResource(resource);
 			
 			String[] operationIDs = app.getOperationIDs().split(",");
 			for( String operationID : operationIDs ){
 				/**
 				 * 存储可用的操作
 				 */
-				permissionPermissionWriteDao.addPermission(operationID, resourceID);
+				permissionPermissionWriteDao.addPermission(operationID, resource.getResourceID());
 			}
 			
 			/**
@@ -218,18 +227,19 @@ public class PermissionAppModel {
 			/**
 			 * 更新应用系统基本信息
 			 */
-			permissionAppWriteDao.uodateApp(app);
+			permissionAppWriteDao.updateApp(app);
 			
 			/**
 			 * 事务提交
 			 */
 			transactionManagerMember.commit(status);
 		}catch( Exception e ){
+			logger.error("异常发生在"+this.getClass().getName()+"类的updateApp方法，异常原因是："+e.getMessage(), e.fillInStackTrace());
 			/**
 			 * 事务回滚
 			 */
 			transactionManagerMember.rollback(status);
-			throw new BusinessException("新增应用系统失败!");
+			throw new BusinessException("修改应用系统失败!");
 		}
 	}
 

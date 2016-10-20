@@ -57,6 +57,11 @@ public class PermissionAppParam implements Serializable {
 	private String theNote;
 	
 	/**
+	 * 系统类型名称
+	 */
+	private String appTypeName;
+	
+	/**
 	 * 操作ID集合
 	 */
 	private String operationIDs;
@@ -80,6 +85,14 @@ public class PermissionAppParam implements Serializable {
 	 * 分页信息
 	 */
 	private Integer draw;
+
+	public String getAppTypeName() {
+		return appTypeName;
+	}
+
+	public void setAppTypeName(String appTypeName) {
+		this.appTypeName = appTypeName;
+	}
 
 	public String getOperationNames() {
 		return operationNames;

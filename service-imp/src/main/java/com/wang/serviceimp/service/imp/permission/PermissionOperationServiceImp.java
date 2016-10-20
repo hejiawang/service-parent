@@ -5,6 +5,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.wang.core.Constants;
@@ -19,6 +20,7 @@ import com.wang.serviceimp.model.permission.PermissionOperationModel;
  * @author HeJiawang
  * @date   2016.10.17
  */
+@Service
 public class PermissionOperationServiceImp implements PermissionOperationService {
 	
 	/**

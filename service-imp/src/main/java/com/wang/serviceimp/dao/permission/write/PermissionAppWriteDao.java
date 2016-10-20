@@ -19,7 +19,7 @@ public interface PermissionAppWriteDao {
 	/**
 	 * 新增应用系统
 	 * @param app 应用系统信息
-	 * @return 应用系统ID
+	 * @return app中返回应用系统ID
 	 * @author HeJiawang
 	 * @date   2016.10.17
 	 */
@@ -31,7 +31,7 @@ public interface PermissionAppWriteDao {
 	 * @author HeJiawang
 	 * @date   2016.10.17
 	 */
-	Integer uodateApp(PermissionAppParam app);
+	Integer updateApp(PermissionAppParam app);
 
 	/**
 	 * 删除应用系统
