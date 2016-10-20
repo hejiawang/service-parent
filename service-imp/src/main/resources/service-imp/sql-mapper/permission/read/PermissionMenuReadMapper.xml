@@ -29,7 +29,7 @@
 				SELECT c.menuName
 				FROM permission_menu c
 				WHERE c.menuID = b.parentID
-			) as parentMenuName
+			) as parentMenuName,
 			a.menuLevel AS menuLevel,
 			a.sortNum AS sortNum
 		FROM permission_menu a
@@ -40,9 +40,7 @@
 			<if test="menuName != null and menuName !=''">
 				AND a.menuName like '%${menuName}%'
 			</if>
-			<if test="resourceID != null and resourceID !=''">
-				AND b.resourceID = #{resourceID ,jdbcType=INTEGER}
-			</if>
+			AND b.resourceID = #{resourceID ,jdbcType=INTEGER}
 		</where>
 		order by a.sortNum desc 
 		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}

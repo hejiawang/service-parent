@@ -41,7 +41,7 @@
 			) as isParent
 		from permission_app a 
 		inner join permission_resource b on b.selfID = a.appID
-			and b.selfType='SYS_APP' and b.parentType='SYS_APP'
+			and b.selfType='SYS_APP' and b.parentType='SYS_APP' and a.isDelete = 1
     </select>
     
     <select id="getResourceForMenu" resultType="com.wang.service.param.permission.PermissionResourceParam">
