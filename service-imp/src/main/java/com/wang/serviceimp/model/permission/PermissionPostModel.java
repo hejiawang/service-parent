@@ -50,12 +50,12 @@ public class PermissionPostModel {
 	 */
 	public Map<String, Object> pagePost(PermissionPostParam post) {
 		Assert.notNull(permissionPostReadDao, "Property 'permissionPostReadDao' is required.");
-		if( post.getPageSize() == null || post.getPageNumber() == null || post.getDraw() == null ) 
+		if( post.getPageStart() == null || post.getPageEnd() == null || post.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionPostReadDao.getPageList(post);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionPostReadDao.getPageTotal(post);
 		
 		map.put("draw", post.getDraw());
 		map.put("data", pageLsit);

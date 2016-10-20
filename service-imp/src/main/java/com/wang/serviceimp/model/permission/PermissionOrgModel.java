@@ -51,7 +51,7 @@ public class PermissionOrgModel {
 	 */
 	public Map<String, Object> pageOrg(PermissionOrgParam org) {
 		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
-		if( org.getPageSize() == null || org.getPageNumber() == null || org.getDraw() == null ) 
+		if( org.getPageStart() == null || org.getPageEnd() == null || org.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		//初始页面取跟节点
@@ -61,7 +61,7 @@ public class PermissionOrgModel {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionOrgReadDao.getPageList(org);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionOrgReadDao.getPageTotal(org);
 		
 		map.put("draw", org.getDraw());
 		map.put("data", pageLsit);

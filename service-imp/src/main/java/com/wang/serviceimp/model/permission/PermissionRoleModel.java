@@ -50,12 +50,12 @@ public class PermissionRoleModel {
 	 */
 	public Map<String, Object> pageRole(PermissionRoleParam role) {
 		Assert.notNull(permissionRoleReadDao, "Property 'permissionRoleReadDao' is required.");
-		if( role.getPageSize() == null || role.getPageNumber() == null || role.getDraw() == null ) 
+		if( role.getPageStart() == null || role.getPageEnd() == null || role.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionRoleReadDao.getPageList(role);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionRoleReadDao.getPageTotal(role);
 		
 		map.put("draw", role.getDraw());
 		map.put("data", pageLsit);

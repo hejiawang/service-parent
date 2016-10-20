@@ -40,12 +40,12 @@ public class PermissionMenuModel {
 	 */
 	public Map<String, Object> pageMenu(PermissionMenuParam menu) {
 		Assert.notNull(permissionMenuReadDao, "Property 'permissionMenuReadDao' is required.");
-		if( menu.getPageSize() == null || menu.getPageNumber() == null || menu.getDraw() == null ) 
+		if( menu.getPageStart() == null || menu.getPageEnd() == null || menu.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionMenuReadDao.getPageList(menu);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionMenuReadDao.getPageTotal(menu);
 		
 		map.put("draw", menu.getDraw());
 		map.put("data", pageLsit);

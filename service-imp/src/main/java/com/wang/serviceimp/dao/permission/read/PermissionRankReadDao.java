@@ -64,4 +64,13 @@ public interface PermissionRankReadDao {
 	 */
 	Map<String, Object> getRankByID(@Param("rankID") Integer rankID);
 
+	/**
+	 * 获取分页职级
+	 * @param rank 职级参数
+	 * @return 职级集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	Integer getPageTotal(PermissionRankParam rank);
+
 }

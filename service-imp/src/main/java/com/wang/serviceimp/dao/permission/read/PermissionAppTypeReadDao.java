@@ -55,4 +55,13 @@ public interface PermissionAppTypeReadDao {
 	 */
 	List<PermissionAppTypeEntity> getAllAppType();
 
+	/**
+	 * 获取分页条数
+	 * @param appType  系统类型参数
+	 * @return     系统类型集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.16
+	 */
+	Integer getPageTotal(PermissionAppTypeParam appType);
+
 }

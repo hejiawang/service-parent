@@ -45,5 +45,14 @@ public interface PermissionAppReadDao {
 	 * @date   2016.10.16
 	 */
 	PermissionAppParam getApp( @Param("appID") Integer appID);
+	
+	/**
+	 * 获取应用系统条数
+	 * @param app 应用系统参数
+	 * @return 应用系统集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	Integer getPageTotal(PermissionAppParam app);
 
 }

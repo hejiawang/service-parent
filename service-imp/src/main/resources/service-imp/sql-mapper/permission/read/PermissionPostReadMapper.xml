@@ -26,6 +26,18 @@
 			</if>
 		</where>
 		order by a.sortNum asc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionPostParam">
+		select count(1)
+		from permission_post a
+		<where>
+			a.isDelete=1
+			<if test="postName != null and postName !=''">
+				and a.postName like '%${postName}%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="getPostByID" resultType="java.util.Map">

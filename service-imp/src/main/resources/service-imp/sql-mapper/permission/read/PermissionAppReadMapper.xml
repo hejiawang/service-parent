@@ -34,6 +34,20 @@
 			</if>
 		</where>
 		order by a.sortNum desc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionAppParam">
+		select count(1)
+		from permission_app a 
+		inner join permission_appType b on  a.appTypeID = b.appTypeID
+		<where>
+			a.isDelete=1
+			and b.isDelete = 1
+			<if test="appName != null and appName !=''">
+				and a.appName like '%${appName}%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="checkExistAppName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionAppParam">

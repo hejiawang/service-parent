@@ -45,6 +45,23 @@
 			</if>
 		</where>
 		order by a.sortNum desc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionMenuParam">
+		SELECT count(1) 
+		FROM permission_menu a
+		INNER JOIN permission_resource b ON a.menuID = b.selfID
+		<where>
+			a.isDelete=1
+			AND b.selfType = 'SYS_MENU'
+			<if test="menuName != null and menuName !=''">
+				AND a.menuName like '%${menuName}%'
+			</if>
+			<if test="resourceID != null and resourceID !=''">
+				AND b.resourceID = #{resourceID ,jdbcType=INTEGER}
+			</if>
+		</where>
 	</select>
 	
 </mapper>

@@ -59,12 +59,12 @@ public class PermissionRankParam implements Serializable {
 	/**
 	 * 分页信息
 	 */
-	private Integer pageSize; 
+	private Integer pageStart; 
 	
 	/**
 	 * 分页信息
 	 */
-	private Integer pageNumber;
+	private Integer pageEnd;
 	
 	/**
 	 * 分页信息
@@ -150,20 +150,20 @@ public class PermissionRankParam implements Serializable {
 		this.parentRankName = parentRankName;
 	}
 
-	public Integer getPageSize() {
-		return pageSize;
+	public Integer getPageStart() {
+		return pageStart;
 	}
 
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	public void setPageStart(Integer pageStart) {
+		this.pageStart = pageStart;
 	}
 
-	public Integer getPageNumber() {
-		return pageNumber;
+	public Integer getPageEnd() {
+		return pageEnd;
 	}
 
-	public void setPageNumber(Integer pageNumber) {
-		this.pageNumber = pageNumber;
+	public void setPageEnd(Integer pageEnd) {
+		this.pageEnd = pageEnd;
 	}
 
 	public Integer getDraw() {

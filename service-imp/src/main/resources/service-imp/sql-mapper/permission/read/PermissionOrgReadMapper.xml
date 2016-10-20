@@ -40,6 +40,25 @@
 			</if>
 		</where>
 		order by a.sortNum asc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select count(1)
+		from permission_org a
+		left join permission_org b on a.parentOrgID = b.orgID
+		<where>
+			a.isDelete=1
+			<if test="orgID != null and orgID !=''">
+				and ( a.orgID = #{orgID ,jdbcType=INTEGER} or a.parentOrgID = #{orgID ,jdbcType=INTEGER} )
+			</if>
+			<if test="orgCode != null and orgCode !=''">
+				and a.orgCode like '%${orgCode}%'
+			</if>
+			<if test="orgName != null and orgName !=''">
+				and a.orgName like '%${orgName}%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="getOrgByID" resultType="java.util.Map">

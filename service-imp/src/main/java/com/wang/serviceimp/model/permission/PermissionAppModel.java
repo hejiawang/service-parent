@@ -90,12 +90,12 @@ public class PermissionAppModel {
 	 */
 	public Map<String, Object> pageApp(PermissionAppParam app) {
 		Assert.notNull(permissionAppReadDao, "Property 'permissionAppReadDao' is required.");
-		if( app.getPageSize() == null || app.getPageNumber() == null || app.getDraw() == null ) 
+		if( app.getPageStart() == null || app.getPageEnd() == null || app.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionAppReadDao.getPageList(app);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionAppReadDao.getPageTotal(app);
 		
 		map.put("draw", app.getDraw());
 		map.put("data", pageLsit);

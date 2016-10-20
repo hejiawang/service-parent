@@ -26,6 +26,18 @@
 			</if>
 		</where>
 		order by a.sortNum asc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionRoleParam">
+		select count(1)
+		from permission_role a
+		<where>
+			a.isDelete=1
+			<if test="roleName != null and roleName !=''">
+				and a.roleName like '%${roleName}%'
+			</if>
+		</where>
 	</select>
 	
 	<select id="getRoleByID" resultType="java.util.Map">

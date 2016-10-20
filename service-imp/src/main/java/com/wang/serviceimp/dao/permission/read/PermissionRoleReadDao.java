@@ -46,4 +46,13 @@ public interface PermissionRoleReadDao {
 	 */
 	Integer checkExistRoleName(PermissionRoleParam role);
 
+	/**
+	 * 获取分页角色
+	 * @param role  角色参数
+	 * @return     角色集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.14
+	 */
+	Integer getPageTotal(PermissionRoleParam role);
+
 }

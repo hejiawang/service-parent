@@ -73,4 +73,13 @@ public interface PermissionOrgReadDao {
 	 */
 	List<PermissionOrgParam> findOrgForTree( @Param("parentOrgID") Integer parentOrgID);
 
+	/**
+	 * 获取分页条数
+	 * @param org  机构参数
+	 * @return     机构集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.10
+	 */
+	Integer getPageTotal(PermissionOrgParam org);
+
 }

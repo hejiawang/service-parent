@@ -51,7 +51,7 @@ public class PermissionRankModel {
 	 */
 	public Map<String, Object> pageRank(PermissionRankParam rank) {
 		Assert.notNull(permissionRankReadDao, "Property 'permissionRankReadDao' is required.");
-		if( rank.getPageSize() == null || rank.getPageNumber() == null || rank.getDraw() == null ) 
+		if( rank.getPageStart() == null || rank.getPageEnd() == null || rank.getDraw() == null ) 
 			throw new BusinessException("分页信息不能为空");
 		
 		//初始页面取跟节点
@@ -61,7 +61,7 @@ public class PermissionRankModel {
 		
 		Map<String,Object> map = new HashMap<String,Object>();
 		List<Map<String,Object>> pageLsit = permissionRankReadDao.getPageList(rank);
-		Integer recordsTotal = pageLsit.size();
+		Integer recordsTotal = permissionRankReadDao.getPageTotal(rank);
 		
 		map.put("draw", rank.getDraw());
 		map.put("data", pageLsit);

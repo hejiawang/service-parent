@@ -46,4 +46,13 @@ public interface PermissionPostReadDao {
 	 */
 	Integer checkExistPostName(PermissionPostParam post);
 
+	/**
+	 * 获取分页条数
+	 * @param post  岗位参数
+	 * @return     岗位集合及分页信息
+	 * @author HeJiawang
+	 * @date   2016.10.13
+	 */
+	Integer getPageTotal(PermissionPostParam post);
+
 }
