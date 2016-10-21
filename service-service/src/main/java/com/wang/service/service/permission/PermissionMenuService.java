@@ -21,4 +21,31 @@ public interface PermissionMenuService {
 	 */
 	ServiceResult<Map<String,Object>> pageMenu(PermissionMenuParam menu);
 
+	/**
+	 * 新增菜单
+	 * @param  menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	ServiceResult<Void> addMenu(PermissionMenuParam menu);
+
+	/**
+	 * 根据菜单ID获取菜单信息
+	 * @param menuID menuID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	ServiceResult<PermissionMenuParam> getMenuByID(Integer menuID);
+
+	/**
+	 * 删除menu
+	 * @param menuID menuID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	ServiceResult<Void> deleteMenuByID(Integer menuID);
+
 }

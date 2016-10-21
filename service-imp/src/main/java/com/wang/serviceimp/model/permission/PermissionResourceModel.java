@@ -48,6 +48,20 @@ public class PermissionResourceModel {
 	}
 
 	/**
+	 * 根据菜单ID获取对对应的资源
+	 * @param menuID 菜单ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	public PermissionResourceEntity getResourceByMenuID(Integer menuID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( menuID == null ) throw new BusinessException("菜单ID不能为空");
+		
+		return permissionResourceReadDao.getResourceByMenuID(menuID);
+	}
+
+	/**
 	 * 根据资源ID获取资源信息
 	 * @param resourceID 资源ID
 	 * @return 资源信息

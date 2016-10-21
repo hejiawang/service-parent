@@ -58,4 +58,90 @@ public class PermissionMenuServiceImp implements PermissionMenuService {
 		return serviceResult;
 	}
 
+	/**
+	 * 新增菜单
+	 * @param  menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	@Override
+	public ServiceResult<Void> addMenu(PermissionMenuParam menu) {
+		Assert.notNull(permissionMenuModel, "Property 'permissionMenuModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existName = permissionMenuModel.checkExistMenuName(menu);	//在同一父菜单下，检查菜单名称是否重复
+			if(existName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("菜单名称重复,新增菜单失败");
+			} else {
+				permissionMenuModel.addMenu(menu);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("新增菜单成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据菜单ID获取菜单信息
+	 * @param menuID menuID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	@Override
+	public ServiceResult<PermissionMenuParam> getMenuByID(Integer menuID) {
+		Assert.notNull(permissionMenuModel, "Property 'permissionMenuModel' is required.");
+		ServiceResult<PermissionMenuParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionMenuModel.getMenuByID(menuID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 删除menu
+	 * @param menuID menuID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	@Override
+	public ServiceResult<Void> deleteMenuByID(Integer menuID) {
+		Assert.notNull(permissionMenuModel, "Property 'permissionMenuModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean deleteResult = permissionMenuModel.deleteMenuByID(menuID);
+			if( deleteResult ){
+				serviceResult.setMessage("删除菜单成功");
+			}else{
+				serviceResult.setMessage("删除菜单失败");
+			}
+			serviceResult.setSuccess(deleteResult);
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionMenuWriteDao">
+		
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionMenuEntity">
+		<id column="menuID" property="menuID" jdbcType="INTEGER"/>
+		<result column="menuName" property="menuName" jdbcType="VARCHAR"/>
+		<result column="menuLevel" property="menuLevel" jdbcType="INTEGER"/>
+		<result column="url" property="url" jdbcType="VARCHAR"/>
+		<result column="iconStyle" property="iconStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		menuID, menuName, menuLevel, url, iconStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+    
+    <insert id="addMenu" parameterType="com.wang.service.param.permission.PermissionMenuParam" useGeneratedKeys="true" keyProperty="menuID"> 
+		insert into permission_menu (
+			menuName,menuLevel,url,
+			iconStyle,sortNum,
+			isDelete,isCurrent,theNote
+		) values(
+			#{menuName,jdbcType=VARCHAR}, #{menuLevel,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR},
+			#{iconStyle,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER},
+			1,1,#{theNote,jdbcType=VARCHAR}
+		) 
+    </insert>
+    
+    <update id="deleteMenuByID">
+		update 
+  			permission_menu
+  		set  
+  			isDelete = 0
+		where 
+			menuID = #{menuID,jdbcType=INTEGER} 
+    </update>
+  	
+</mapper>

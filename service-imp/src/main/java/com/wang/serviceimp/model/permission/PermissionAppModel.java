@@ -174,6 +174,7 @@ public class PermissionAppModel {
 			 */
 			transactionManagerMember.commit(status);
 		}catch( Exception e ){
+			logger.error("异常发生在"+this.getClass().getName()+"类的addApp方法，异常原因是："+e.getMessage(), e.fillInStackTrace());
 			/**
 			 * 事务回滚
 			 */

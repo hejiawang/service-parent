@@ -21,6 +21,13 @@
     	and selfType= 'SYS_APP'
     </select>
     
+    <select id="getResourceByMenuID" resultMap="BaseResultMap">
+    	select * 
+    	from permission_resource 
+    	where selfID = #{selfID ,jdbcType=INTEGER} 
+    	and selfType= 'SYS_MENU'
+    </select>
+    
     <select id="getResourceByID" resultType="com.wang.service.param.permission.PermissionResourceParam">
     	select * 
     	from permission_resource 

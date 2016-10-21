@@ -46,6 +46,18 @@ public class PermissionOperationModel {
 	}
 
 	/**
+	 * 获取菜单可用的操作
+	 * @return 菜单可用的操作
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	public List<PermissionOperationEntity> getOperationForMenu() {
+		Assert.notNull(permissionOperationReadDao, "Property 'permissionOperationReadDao' is required.");
+		
+		return permissionOperationReadDao.getOperationForMenu();
+	}
+	
+	/**
 	 * 根据资源ID获取操作ID集合
 	 * @param resourceID 资源ID
 	 * @return ServiceResult

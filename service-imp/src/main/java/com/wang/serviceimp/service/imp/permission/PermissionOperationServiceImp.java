@@ -56,6 +56,29 @@ public class PermissionOperationServiceImp implements PermissionOperationService
 		}
 		return serviceResult;
 	}
+	
+	/**
+	 * 获取菜单可用的操作
+	 * @return 菜单可用的操作
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	@Override
+	public ServiceResult<List<PermissionOperationEntity>> getOperationForMenu() {
+		Assert.notNull(permissionOperationModel, "Property 'permissionOperationModel' is required.");
+		ServiceResult<List<PermissionOperationEntity>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionOperationModel.getOperationForMenu());
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
 
 	/**
 	 * 根据资源ID获取操作ID集合

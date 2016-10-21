@@ -73,14 +73,14 @@ public class PermissionMenuParam implements Serializable {
 	private Integer isParent;
 	
 	/**
-	 * 父菜单ID集合
+	 * 父菜单ID
 	 */
-	private String  parentIDs;
+	private Integer  parentID;
 	
 	/**
-	 * 父菜单名称集合
+	 * 父菜单名称
 	 */
-	private String  parentNames;
+	private String  parentName;
 	
 	/**
 	 * 父菜单类型
@@ -165,20 +165,20 @@ public class PermissionMenuParam implements Serializable {
 		this.isParent = isParent;
 	}
 
-	public String getParentIDs() {
-		return parentIDs;
+	public Integer getParentID() {
+		return parentID;
 	}
 
-	public void setParentIDs(String parentIDs) {
-		this.parentIDs = parentIDs;
+	public void setParentID(Integer parentID) {
+		this.parentID = parentID;
 	}
 
-	public String getParentNames() {
-		return parentNames;
+	public String getParentName() {
+		return parentName;
 	}
 
-	public void setParentNames(String parentNames) {
-		this.parentNames = parentNames;
+	public void setParentName(String parentName) {
+		this.parentName = parentName;
 	}
 
 	public String getParentType() {

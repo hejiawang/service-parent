@@ -61,6 +61,30 @@ public class PermissionResourceServiceImp implements PermissionResourceService {
 	}
 
 	/**
+	 * 根据菜单ID获取对对应的资源
+	 * @param menuID 菜单ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.17
+	 */
+	@Override
+	public ServiceResult<PermissionResourceEntity> getResourceByMenuID(Integer menuID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<PermissionResourceEntity> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceByMenuID(menuID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+	
+	/**
 	 * 根据资源ID获取资源信息
 	 * @param resourceID 资源ID
 	 * @return 资源信息

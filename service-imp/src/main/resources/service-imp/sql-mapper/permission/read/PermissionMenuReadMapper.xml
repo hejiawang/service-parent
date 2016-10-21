@@ -57,9 +57,27 @@
 				AND a.menuName like '%${menuName}%'
 			</if>
 			<if test="resourceID != null and resourceID !=''">
-				AND b.resourceID = #{resourceID ,jdbcType=INTEGER}
+				AND b.resourceID = #{resourceID, jdbcType=INTEGER}
 			</if>
 		</where>
+	</select>
+	
+	<select id="checkExistMenuName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionMenuParam">
+		select count(1)
+		from permission_menu a 
+		inner join permission_resource b on a.menuID = b.selfID
+		where a.isDelete = 1
+			and b.selfType = 'SYS_MENU'
+			and b.parentID = #{parentID, jdbcType=INTEGER }
+			and a.menuName = #{menuName, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getApp" resultType="com.wang.service.param.permission.PermissionMenuParam">
+		select 
+			menuID, menuName, menuLevel, url, iconStyle, sortNum, 
+			isCurrent, isDelete, theNote
+		from permission_menu
+		where isDelete = 1 and menuID = #{menuID, jdbcType=INTEGER}
 	</select>
 	
 </mapper>
