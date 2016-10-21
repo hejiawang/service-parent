@@ -48,4 +48,13 @@ public interface PermissionMenuService {
 	 */
 	ServiceResult<Void> deleteMenuByID(Integer menuID);
 
+	/**
+	 * 通过资源ID获取菜单信息
+	 * @param menuID menuID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	ServiceResult<PermissionMenuParam> getMenuByResourceID(Integer resourceID);
+
 }

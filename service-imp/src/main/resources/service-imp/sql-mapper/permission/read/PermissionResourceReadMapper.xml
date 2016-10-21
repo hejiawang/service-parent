@@ -56,7 +56,13 @@
 			a.resourceID as resourceID,
 			b.menuName as selfName,
 			a.selfType as selfType,
-			a.selfID as selfID
+			a.selfID as selfID,
+			(
+				select count(1)
+				from permission_resource c
+				inner join permission_menu d on c.selfID = d.menuID
+				where  d.isDelete = 1 and c.parentID = a.resourceID and c.selfType = 'SYS_MENU'
+			) as isParent
 		from permission_resource a 
 		inner join permission_menu b on a.selfID = b.menuID 
 			and a.selfType = 'SYS_MENU'

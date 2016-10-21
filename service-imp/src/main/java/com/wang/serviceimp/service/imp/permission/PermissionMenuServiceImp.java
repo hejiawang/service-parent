@@ -144,4 +144,28 @@ public class PermissionMenuServiceImp implements PermissionMenuService {
 		return serviceResult;
 	}
 
+	/**
+	 * 通过资源ID获取菜单信息
+	 * @param menuID menuID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	@Override
+	public ServiceResult<PermissionMenuParam> getMenuByResourceID(Integer resourceID) {
+		Assert.notNull(permissionMenuModel, "Property 'permissionMenuModel' is required.");
+		ServiceResult<PermissionMenuParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionMenuModel.getMenuByResourceID(resourceID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

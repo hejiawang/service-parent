@@ -204,7 +204,7 @@ public class PermissionMenuModel {
 		/**
 		 * 获取自己的信息
 		 */
-		PermissionMenuParam menu = permissionMenuReadDao.getApp(menuID);
+		PermissionMenuParam menu = permissionMenuReadDao.getMenu(menuID);
 		
 		/**
 		 * 获取父资源信息
@@ -215,7 +215,8 @@ public class PermissionMenuModel {
 		 * 获取上级信息
 		 */
 		if( resource.getParentType().equals("SYS_MENU") ){	//上级是菜单
-			PermissionMenuParam menuParent = permissionMenuReadDao.getApp(resource.getParentID());
+			PermissionResourceParam resourceParent = permissionResourceReadDao.getResourceByID(resource.getParentID());
+			PermissionMenuParam menuParent = permissionMenuReadDao.getMenu(resourceParent.getSelfID());
 			menu.setParentName(menuParent.getMenuName());
 		} else {	//上级是应用系统
 			PermissionAppParam menuParent = permissionAppReadDao.getApp(resource.getParentID());
@@ -256,6 +257,22 @@ public class PermissionMenuModel {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * 通过资源ID获取菜单信息
+	 * @param menuID menuID
+	 * @return 应用系统信息
+	 * @author HeJiawang
+	 * @date   2016.10.21
+	 */
+	public PermissionMenuParam getMenuByResourceID(Integer resourceID) {
+		Assert.notNull(permissionMenuReadDao, "Property 'permissionMenuReadDao' is required.");
+		if( resourceID == null ) throw new BusinessException("resourceID不能为空");
+		
+		PermissionResourceParam resourceParent = permissionResourceReadDao.getResourceByID(resourceID);
+		PermissionMenuParam menuParent = permissionMenuReadDao.getMenu(resourceParent.getSelfID());
+		return menuParent;
 	}
 
 }

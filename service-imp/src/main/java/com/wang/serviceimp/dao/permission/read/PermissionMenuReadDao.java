@@ -53,6 +53,6 @@ public interface PermissionMenuReadDao {
 	 * @author HeJiawang
 	 * @date   2016.10.21
 	 */
-	PermissionMenuParam getApp(@Param("menuID")Integer menuID);
+	PermissionMenuParam getMenu(@Param("menuID")Integer menuID);
 
 }
