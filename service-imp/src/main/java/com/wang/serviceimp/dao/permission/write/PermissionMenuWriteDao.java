@@ -34,4 +34,13 @@ public interface PermissionMenuWriteDao {
 	 */
 	Integer deleteMenuByID(@Param("menuID")Integer menuID);
 
+	/**
+	 * 修改菜单
+	 * @param menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.22
+	 */
+	Integer updateMenu(PermissionMenuParam menu);
+
 }

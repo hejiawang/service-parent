@@ -275,4 +275,64 @@ public class PermissionMenuModel {
 		return menuParent;
 	}
 
+	/**
+	 * 修改菜单
+	 * @param menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.22
+	 */
+	public void updateMenu(PermissionMenuParam menu) {
+		Assert.notNull(permissionMenuReadDao, "Property 'permissionMenuReadDao' is required.");
+		Assert.notNull(permissionMenuWriteDao, "Property 'permissionMenuWriteDao' is required.");
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		Assert.notNull(permissionPermissionWriteDao, "Property 'permissionPermissionWriteDao' is required.");
+		Assert.notNull(transactionManagerMember, "Property 'transactionManagerMember' is required.");
+		if( menu == null ) throw new BusinessException("菜单信息不能为空");
+		
+		//开始事务
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		TransactionStatus status = transactionManagerMember.getTransaction(def);
+		try {
+			/**
+			 * 根据menuID获取该菜单资源
+			 */
+			PermissionResourceEntity resource = permissionResourceReadDao.getResourceByMenuID(menu.getMenuID());
+			
+			/**
+			 * 删除所有该资源绑定的操作权限
+			 */
+			permissionPermissionWriteDao.deletePermissionByResourceID(resource.getResourceID());
+			
+			/**
+			 * 根据新的操作权限，重新新增
+			 */
+			String[] operationIDs = menu.getOperationIDs().split(",");
+			for( String operationID : operationIDs ){
+				/**
+				 * 存储可用的操作
+				 */
+				permissionPermissionWriteDao.addPermission(operationID, resource.getResourceID());
+			}
+			
+			/**
+			 * 更新菜单基本信息
+			 */
+			permissionMenuWriteDao.updateMenu(menu);
+			
+			/**
+			 * 事务提交
+			 */
+			transactionManagerMember.commit(status);
+		}catch( Exception e ){
+			logger.error("异常发生在"+this.getClass().getName()+"类的updateMenu方法，异常原因是："+e.getMessage(), e.fillInStackTrace());
+			/**
+			 * 事务回滚
+			 */
+			transactionManagerMember.rollback(status);
+			throw new BusinessException("修改菜单失败!");
+		}
+	}
+
 }

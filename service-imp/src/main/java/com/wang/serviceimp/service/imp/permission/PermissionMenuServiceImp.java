@@ -168,4 +168,36 @@ public class PermissionMenuServiceImp implements PermissionMenuService {
 		return serviceResult;
 	}
 
+	/**
+	 * 修改菜单
+	 * @param menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.22
+	 */
+	@Override
+	public ServiceResult<Void> updateMenu(PermissionMenuParam menu) {
+		Assert.notNull(permissionMenuModel, "Property 'permissionMenuModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existName = permissionMenuModel.checkExistMenuName(menu);	//在同一父菜单下，检查菜单名称是否重复
+			if(existName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("菜单名称重复,修改菜单失败");
+			} else {
+				permissionMenuModel.updateMenu(menu);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("修改菜单成功");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

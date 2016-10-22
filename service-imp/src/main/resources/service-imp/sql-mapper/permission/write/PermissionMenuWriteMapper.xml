@@ -38,5 +38,16 @@
 		where 
 			menuID = #{menuID,jdbcType=INTEGER} 
     </update>
+    
+    <update id="updateMenu" parameterType="com.wang.service.param.permission.PermissionMenuParam">
+    	update 
+    		permission_menu
+    	set 
+    		menuName =#{menuName,jdbcType=VARCHAR}, menuLevel = #{menuLevel,jdbcType=INTEGER}, 
+    		url =#{url,jdbcType=VARCHAR}, iconStyle = #{iconStyle,jdbcType=VARCHAR}, 
+    		sortNum =#{sortNum,jdbcType=INTEGER},theNote = #{theNote,jdbcType=VARCHAR}
+    	where
+    		menuID = #{menuID, jdbcType = INTEGER}	
+    </update>
   	
 </mapper>

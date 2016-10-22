@@ -57,4 +57,13 @@ public interface PermissionMenuService {
 	 */
 	ServiceResult<PermissionMenuParam> getMenuByResourceID(Integer resourceID);
 
+	/**
+	 * 修改菜单
+	 * @param menu 菜单信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.22
+	 */
+	ServiceResult<Void> updateMenu(PermissionMenuParam menu);
+
 }
