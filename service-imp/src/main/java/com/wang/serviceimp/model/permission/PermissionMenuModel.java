@@ -38,7 +38,7 @@ public class PermissionMenuModel {
 	/**
 	 * log
 	 */
-	private final Logger logger = LoggerFactory.getLogger(PermissionAppModel.class);
+	private final Logger logger = LoggerFactory.getLogger(PermissionMenuModel.class);
 
 	/**
 	 * 事务

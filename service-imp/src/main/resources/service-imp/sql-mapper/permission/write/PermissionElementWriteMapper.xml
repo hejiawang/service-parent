@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionElementWriteDao">
+		
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionElementEntity">
+		<id column="elementID" property="elementID" jdbcType="INTEGER"/>
+		<result column="elementName" property="elementName" jdbcType="VARCHAR"/>
+		<result column="elementFunction" property="elementFunction" jdbcType="VARCHAR"/>
+		<result column="elementStyle" property="elementStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		elementID, elementName, elementFunction, elementStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+    
+    <update id="deleteElementByID">
+		update 
+  			permission_element
+  		set  
+  			isDelete = 0
+		where 
+			elementID = #{elementID,jdbcType=INTEGER} 
+    </update>
+    
+    <insert id="addElement" parameterType="com.wang.service.param.permission.PermissionElementParam" useGeneratedKeys="true" keyProperty="elementID"> 
+		insert into permission_element (
+			elementName,elementFunction,
+			elementStyle,sortNum,
+			isDelete,isCurrent,theNote
+		) values(
+			#{elementName,jdbcType=VARCHAR}, #{elementFunction,jdbcType=VARCHAR},
+			#{elementStyle,jdbcType=VARCHAR}, #{sortNum,jdbcType=INTEGER},
+			1,1,#{theNote,jdbcType=VARCHAR}
+		) 
+    </insert>
+    
+    <update id="updateElement" parameterType="com.wang.service.param.permission.PermissionElementParam">
+    	update 
+    		permission_element
+    	set 
+    		elementName =#{elementName,jdbcType=VARCHAR}, elementFunction = #{elementFunction,jdbcType=VARCHAR}, 
+    		elementStyle =#{elementStyle,jdbcType=VARCHAR}, sortNum =#{sortNum,jdbcType=INTEGER},
+    		theNote = #{theNote,jdbcType=VARCHAR}
+    	where
+    		elementID = #{elementID, jdbcType = INTEGER}	
+    </update>
+  	
+</mapper>

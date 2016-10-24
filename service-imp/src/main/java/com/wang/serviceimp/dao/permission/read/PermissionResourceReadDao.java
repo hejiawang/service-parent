@@ -38,6 +38,15 @@ public interface PermissionResourceReadDao {
 	PermissionResourceEntity getResourceByMenuID(@Param("selfID")Integer selfID);
 
 	/**
+	 * 根据页面元素ID获取对对应的资源
+	 * @param elementID 页面元素ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.24
+	 */
+	PermissionResourceEntity getResourceByElementID(@Param("selfID")Integer elementID);
+
+	/**
 	 * 根据资源ID获取资源信息
 	 * @param resourceID 资源ID
 	 * @return 资源信息

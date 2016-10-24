@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionElementReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionElementEntity">
+		<id column="elementID" property="elementID" jdbcType="INTEGER"/>
+		<result column="elementName" property="elementName" jdbcType="VARCHAR"/>
+		<result column="elementFunction" property="elementFunction" jdbcType="VARCHAR"/>
+		<result column="elementStyle" property="elementStyle" jdbcType="VARCHAR"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		elementID, elementName, elementFunction, elementStyle, sortNum, isCurrent, isDelete, theNote
+    </sql> 
+	
+	<select id="getPageList" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionElementParam">
+		select
+			a.elementID, a.elementName, a.elementFunction, a.elementStyle, a.sortNum
+		from permission_element a
+		inner join permission_resource b on a.elementID = b.selfID
+		<where>
+			a.isDelete=1
+			AND b.selfType = 'SYS_ELEMENT'
+			<if test="elementName != null and elementName !=''">
+				AND a.elementName like '%${elementName}%'
+			</if>
+			AND b.parentID = #{resourceID ,jdbcType=INTEGER} 
+		</where>
+		order by a.sortNum desc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getPageTotal" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionElementParam">
+		select
+			count(1)
+		from permission_element a
+		inner join permission_resource b on a.elementID = b.selfID
+		<where>
+			a.isDelete=1
+			AND b.selfType = 'SYS_ELEMENT'
+			<if test="elementName != null and elementName !=''">
+				AND a.elementName like '%${elementName}%'
+			</if>
+			AND b.parentID = #{resourceID ,jdbcType=INTEGER} 
+		</where>
+	</select>
+	
+	<select id="checkExistElementName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionElementParam"> 
+		select count(1)
+		from permission_element a 
+		inner join permission_resource b on a.elementID = b.selfID
+		where a.isDelete = 1
+			and b.selfType = 'SYS_ELEMENT'
+			and b.parentID = #{parentID, jdbcType=INTEGER }
+			and a.elementName = #{elementName, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getElementByID" resultType="com.wang.service.param.permission.PermissionElementParam">
+		select
+			a.elementID, a.elementName, a.elementFunction, a.elementStyle, a.sortNum, a.isCurrent, a.isDelete, a.theNote
+		from permission_element a
+		where a.isDelete = 1 and a.elementID = #{elementID, jdbcType=INTEGER}
+	</select>
+	
+</mapper>
