@@ -34,7 +34,7 @@
 		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
 	</select>
 	
-	<select id="getPageTotal" resultType="java.util.Map" parameterType="com.wang.service.param.permission.PermissionElementParam">
+	<select id="getPageTotal" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionElementParam">
 		select
 			count(1)
 		from permission_element a

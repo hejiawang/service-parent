@@ -210,7 +210,8 @@ public class PermissionElementModel {
 		/**
 		 * 根据资源信息获取所属菜单信息
 		 */
-		PermissionMenuParam menuParent = permissionMenuReadDao.getMenu(resource.getParentID());
+		PermissionResourceParam resourceParent = permissionResourceReadDao.getResourceByID(resource.getParentID());
+		PermissionMenuParam menuParent = permissionMenuReadDao.getMenu(resourceParent.getSelfID());
 		element.setParentID(menuParent.getParentID());
 		element.setParentName(menuParent.getMenuName());
 		
