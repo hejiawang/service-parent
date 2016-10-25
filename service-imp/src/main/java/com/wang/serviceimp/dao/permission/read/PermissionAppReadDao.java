@@ -55,4 +55,11 @@ public interface PermissionAppReadDao {
 	 */
 	Integer getPageTotal(PermissionAppParam app);
 
+	/**
+	 * 根据角色ID集合，获取这些角色有哪些app的权限
+	 * @param roleIDs 
+	 * @return
+	 */
+	List<PermissionAppParam> getAppByRoleIDs(@Param("roleIDs")String roleIDs);
+
 }

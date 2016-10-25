@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionUserInfoReadDao">
+	
+  	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionUserInfoEntity">
+		<id column="userID" property="userID" jdbcType="INTEGER"/>
+		<result column="userCode" property="userCode" jdbcType="VARCHAR"/>
+		<result column="userName" property="userName" jdbcType="VARCHAR"/>
+		<result column="userSex" property="userSex" jdbcType="INTEGER"/>
+		<result column="userTel" property="userTel" jdbcType="VARCHAR"/>
+		<result column="userEmail" property="userEmail" jdbcType="VARCHAR"/>
+		<result column="userBirthday" property="userBirthday" jdbcType="TIMESTAMP"/>
+		<result column="userNation" property="userNation" jdbcType="VARCHAR"/>
+		<result column="userPhotoFile" property="userPhotoFile" jdbcType="VARCHAR"/>
+		<result column="loginName" property="loginName" jdbcType="VARCHAR"/>
+		<result column="passWord" property="passWord" jdbcType="VARCHAR"/>
+		<result column="createDT" property="createDT" jdbcType="TIMESTAMP"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		userID, userCode, userName, userSex, userTel, userEmail, userBirthday, 
+		userNation, userPhotoFile, loginName, passWord, createDT, sortNum, 
+		isCurrent, isDelete, theNote
+    </sql> 
+    
+    <select id="checkExistUserLoginName" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionUserInfoParam">
+    	select count(*)
+		from permission_user_info 
+		<where>
+			isDelete = 1
+			and loginName = #{loginName ,jdbcType=VARCHAR}
+			<if test="userID != null and userID !=''">
+				and userID != #{userID ,jdbcType=INTEGER} 
+			</if>
+		</where>
+    </select>
+	
+</mapper>

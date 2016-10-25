@@ -205,3 +205,157 @@ CREATE TABLE `permission_element` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`elementID`)
 ) CHARSET=utf8;
+
+/*用户信息*/
+DROP TABLE IF EXISTS `permission_user_info`;
+CREATE TABLE `permission_user_info` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `userCode` varchar(255) DEFAULT NULL COMMENT '用户编码',
+  `userName` varchar(1024) NOT NULL COMMENT '用户真实姓名',
+  `userSex` int(11) NOT NULL COMMENT '性别  0：女  1：男',
+  `userTel` varchar(20) NOT NULL COMMENT '手机号码',
+  `userEmail` varchar(50) NOT NULL COMMENT '电子邮件',
+  `userBirthday` varchar(50) DEFAULT NULL COMMENT 'birthday',
+  `userNation` varchar(255) DEFAULT NULL COMMENT '民族',
+  `userPhotoFile` varchar(1024) NOT NULL COMMENT '图片文件名称',
+  `loginName` varchar(255) NOT NULL COMMENT '用户登录帐号',
+  `passWord` varchar(255) NOT NULL COMMENT '密码',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `createDT` datetime NOT NULL COMMENT '创建时间',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`userID`)
+) CHARSET=utf8;
+
+/*用户职级*/
+DROP TABLE IF EXISTS `permission_user_rank`;
+CREATE TABLE `permission_user_rank` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `rankID` int(11) DEFAULT NULL COMMENT '职级ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户岗位*/
+DROP TABLE IF EXISTS `permission_user_post`;
+CREATE TABLE `permission_user_post` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `postID` int(11) NOT NULL COMMENT '岗位Id',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户机构*/
+DROP TABLE IF EXISTS `permission_user_org`;
+CREATE TABLE `permission_user_org` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `orgID` int(11) NOT NULL COMMENT '机构ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户角色*/
+DROP TABLE IF EXISTS `permission_user_role`;
+CREATE TABLE `permission_account_role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  `roleID` int(11) NOT NULL COMMENT '角色Id',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户APP*/
+DROP TABLE IF EXISTS `permission_user_app`;
+CREATE TABLE `permission_account_app` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  `appTypeID` int(11) NOT NULL COMMENT 'appTypeID',
+  `appID` int(11) NOT NULL COMMENT 'appID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*
+
+用户——账号
+
+/*用户信息*/
+DROP TABLE IF EXISTS `permission_user_info`;
+CREATE TABLE `permission_user_info` (
+  `userID` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `userCode` varchar(255) DEFAULT NULL COMMENT '用户编码',
+  `userName` varchar(1024) NOT NULL COMMENT '用户真实姓名',
+  `userSex` int(11) NOT NULL COMMENT '性别  0：女  1：男',
+  `userTel` varchar(20) NOT NULL COMMENT '手机号码',
+  `Email` varchar(50) NOT NULL COMMENT '电子邮件',
+  `userBirthday` varchar(50) DEFAULT NULL COMMENT 'birthday',
+  `userNation` varchar(255) DEFAULT NULL COMMENT '民族',
+  `userPhotoFile` varchar(1024) NOT NULL COMMENT '图片文件名称',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `sortNum` int(11) NOT NULL COMMENT '顺序',
+  `createDT` datetime NOT NULL COMMENT '创建时间',
+  `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`userID`)
+) CHARSET=utf8;
+
+/*账号*/
+DROP TABLE IF EXISTS `permission_account`;
+CREATE TABLE `permission_account` (
+  `accountID` int(11) NOT NULL AUTO_INCREMENT COMMENT '账号ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  `loginName` varchar(255) NOT NULL COMMENT '用户登录帐号',
+  `passWords` varchar(255) NOT NULL COMMENT '密码',
+  `createDT` datetime NOT NULL COMMENT '创建时间',
+  `isDelete` int(11) NOT NULL COMMENT '是否删除 默认1 未删除， 0 删除',
+  `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',
+  PRIMARY KEY (`accountID`),
+  UNIQUE KEY `AK_loginName` (`loginName`)
+) CHARSET=utf8;
+
+/*用户职级*/
+DROP TABLE IF EXISTS `permission_user_rank`;
+CREATE TABLE `permission_user_rank` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `rankID` int(11) DEFAULT NULL COMMENT '职级ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户岗位*/
+DROP TABLE IF EXISTS `permission_user_post`;
+CREATE TABLE `permission_user_post` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `postID` int(11) NOT NULL COMMENT '岗位Id',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*用户机构*/
+DROP TABLE IF EXISTS `permission_user_org`;
+CREATE TABLE `permission_user_org` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `orgID` int(11) NOT NULL COMMENT '机构ID',
+  `userID` int(11) NOT NULL COMMENT '用户ID',
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+/*账号角色*/
+DROP TABLE IF EXISTS `permission_account_role`;
+CREATE TABLE `permission_account_role` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `accountID` int(11) NOT NULL COMMENT '账号ID',
+  `roleID` int(11) NOT NULL COMMENT '角色Id',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+/*账号APP*/
+DROP TABLE IF EXISTS `permission_account_role`;
+CREATE TABLE `permission_account_app` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
+  `accountID` int(11) NOT NULL COMMENT '账号ID',
+  `appTypeID` int(11) NOT NULL COMMENT 'appTypeID',
+  `appID` int(11) NOT NULL COMMENT 'appID',
+  PRIMARY KEY (`ID`)
+) CHARSET=utf8;
+
+*/

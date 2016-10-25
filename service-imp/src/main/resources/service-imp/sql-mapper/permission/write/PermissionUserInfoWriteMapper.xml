@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionUserInfoWriteDao">
+		
+	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionUserInfoEntity">
+		<id column="userID" property="userID" jdbcType="INTEGER"/>
+		<result column="userCode" property="userCode" jdbcType="VARCHAR"/>
+		<result column="userName" property="userName" jdbcType="VARCHAR"/>
+		<result column="userSex" property="userSex" jdbcType="INTEGER"/>
+		<result column="userTel" property="userTel" jdbcType="VARCHAR"/>
+		<result column="userEmail" property="userEmail" jdbcType="VARCHAR"/>
+		<result column="userBirthday" property="userBirthday" jdbcType="TIMESTAMP"/>
+		<result column="userNation" property="userNation" jdbcType="VARCHAR"/>
+		<result column="userPhotoFile" property="userPhotoFile" jdbcType="VARCHAR"/>
+		<result column="loginName" property="loginName" jdbcType="VARCHAR"/>
+		<result column="passWord" property="passWord" jdbcType="VARCHAR"/>
+		<result column="createDT" property="createDT" jdbcType="TIMESTAMP"/>
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER"/>
+		<result column="isCurrent" property="isCurrent" jdbcType="INTEGER"/>
+		<result column="isDelete" property="isDelete" jdbcType="INTEGER"/>
+		<result column="theNote" property="theNote" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		userID, userCode, userName, userSex, userTel, userEmail, userBirthday, 
+		userNation, userPhotoFile, loginName, passWord, createDT, sortNum, 
+		isCurrent, isDelete, theNote
+    </sql> 
+    
+	<insert id="addUserInfo" parameterType="com.wang.service.param.permission.PermissionUserInfoParam">
+		insert into permission_user_info (
+			userCode, userName, userSex, 
+			userTel, userEmail, userBirthday, 
+			userNation, userPhotoFile, loginName, 
+			passWord, createDT, sortNum, 
+			isCurrent, isDelete, theNote
+		) values (
+			#{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{userSex, jdbcType=INTEGER},
+			#{userTel, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR}, #{userBirthday, jdbcType=TIMESTAMP},
+			#{userNation, jdbcType=VARCHAR}, #{userPhotoFile, jdbcType=VARCHAR}, #{loginName, jdbcType=VARCHAR},
+			#{passWord, jdbcType=VARCHAR}, #{createDT, jdbcType=TIMESTAMP}, #{sortNum, jdbcType=INTEGER},
+			1, 1, #{theNote, jdbcType=VARCHAR},
+		)
+	</insert>   
+	
+	<insert id="addUserOrg">
+		insert into permission_user_org(
+			orgID, userID
+		) values (
+			#{orgID, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
+		)
+	</insert> 
+	
+	<insert id="addUserPost">
+		insert into permission_user_post(
+			postID, userID
+		) values (
+			#{postID, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
+		)
+	</insert> 
+	
+	<insert id="addUserRank">
+		insert into permission_user_rank(
+			rankID, userID
+		) values (
+			#{rankID, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
+		)
+	</insert> 
+	
+	<insert id="addUserRole">
+		insert into permission_user_role(
+			roleID, userID
+		) values (
+			#{roleID, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
+		)
+	</insert> 
+	
+	<insert id="addUserApp">
+		insert into permission_user_app(
+			appID, appType, userID
+		) values (
+			#{appID, jdbcType=INTEGER}, #{appType, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
+		)
+	</insert> 
+    
+</mapper>

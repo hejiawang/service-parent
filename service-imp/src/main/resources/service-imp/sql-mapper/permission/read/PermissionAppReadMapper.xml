@@ -74,4 +74,22 @@
 			and a.appID = #{appID ,jdbcType=INTEGER}
 	</select>
 	
+	<select id="getAppByRoleIDs" resultType="com.wang.service.param.permission.PermissionAppParam">
+		select d.appID,d.appTypeID 
+		from permission_resource c 
+		inner join permission_app d on c.selfID=d.appID
+		where c.selfType='SYS_APP' 
+			and c.resourceID in
+			(
+				select b.resourceID 
+				from permission_permission b 
+				where b.permissionID in
+				(
+					select a.permissionID 
+					from permission_role_permission a 
+					where a.roleID in (${roleIDs})
+				)
+			)	
+	</select>
+	
 </mapper>
