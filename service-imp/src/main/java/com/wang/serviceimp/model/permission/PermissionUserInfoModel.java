@@ -151,4 +151,17 @@ public class PermissionUserInfoModel {
 		}
 	}
 
+	/**
+	 * 根据用户ID获取该用户角色ID集合
+	 * @param userID 用户ID
+	 * @return 角色ID集合
+	 * @author HeJiawang
+	 * @date   2016.10.25
+	 */
+	public List<Integer> getRoleIDListByUserID(Integer userID) {
+		Assert.notNull(permissionUserInfoReadDao, "Property 'permissionUserInfoReadDao' is required.");
+		if( userID == null ) throw new BusinessException("用户ID不能为空");
+		return permissionUserInfoReadDao.getRoleIDListByUserID(userID);
+	}
+
 }

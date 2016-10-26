@@ -101,4 +101,18 @@ public class PermissionResourceModel {
 		return permissionResourceReadDao.getResourceForMenu(parentID);
 	}
 
+	/**
+	 * 根据父ID(资源父ID)获取页面元素资源信息
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.26
+	 */
+	public List<PermissionResourceParam> getResourceForElement(Integer parentID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( parentID == null ) throw new BusinessException("资源父ID不能为空");
+		
+		return permissionResourceReadDao.getResourceForElement(parentID);
+	}
+
 }

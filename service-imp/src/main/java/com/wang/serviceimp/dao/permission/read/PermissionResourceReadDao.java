@@ -72,4 +72,13 @@ public interface PermissionResourceReadDao {
 	 */
 	List<PermissionResourceParam> getResourceForMenu( @Param("parentID") Integer parentID);
 
+	/**
+	 * 根据父ID(资源父ID)获取页面元素资源信息
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.26
+	 */
+	List<PermissionResourceParam> getResourceForElement( @Param("parentID") Integer parentID);
+
 }

@@ -1,5 +1,9 @@
 package com.wang.serviceimp.dao.permission.read;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 
@@ -22,5 +26,14 @@ public interface PermissionUserInfoReadDao {
 	 * @date   2016.10.25
 	 */
 	Integer checkExistUserLoginName(PermissionUserInfoParam userInfo);
+
+	/**
+	 * 根据用户ID获取该用户角色ID集合
+	 * @param userID 用户ID
+	 * @return 角色ID集合
+	 * @author HeJiawang
+	 * @date   2016.10.25
+	 */
+	List<Integer> getRoleIDListByUserID(@Param("userID")Integer userID);
 
 }

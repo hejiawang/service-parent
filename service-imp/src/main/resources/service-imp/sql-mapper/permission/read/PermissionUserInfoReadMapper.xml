@@ -38,5 +38,11 @@
 			</if>
 		</where>
     </select>
+    
+    <select id="getRoleIDListByUserID" resultType="java.lang.Integer">
+    	select roleID
+    	from permission_user_role
+    	where userID = #{userID ,jdbcType=INTEGER} 
+    </select>
 	
 </mapper>

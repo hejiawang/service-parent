@@ -76,5 +76,19 @@
 			and b.isDelete=1 
 		where a.parentID = #{parentID ,jdbcType=INTEGER}
     </select>
+    
+    <select id="getResourceForElement" resultType="com.wang.service.param.permission.PermissionResourceParam">
+		select 
+			a.resourceID as resourceID,
+			b.elementName as selfName,
+			a.selfType as selfType,
+			a.selfID as selfID,
+			0 as isParent
+		from permission_resource a 
+		inner join permission_element b on a.selfID = b.elementID 
+			and a.selfType = 'SYS_ELEMENT'
+			and b.isDelete=1 
+		where a.parentID = #{parentID ,jdbcType=INTEGER}
+    </select>
 	
 </mapper>
