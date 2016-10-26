@@ -179,4 +179,29 @@ public class PermissionResourceServiceImp implements PermissionResourceService {
 		return serviceResult;
 	}
 
+	/**
+	 * 根据父ID(资源父ID)获取菜单资源信息<br>
+	 * 菜单下有页面元素信息时，为父资源
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.26
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForMenuElement(Integer parentID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForMenuElement(parentID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

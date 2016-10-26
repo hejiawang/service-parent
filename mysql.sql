@@ -98,6 +98,13 @@ CREATE TABLE `permission_role` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`roleID`)
 ) DEFAULT CHARSET=utf8;
+/*首先加入系统超级管理员角色,ID为1*/
+insert into permission_role(
+	roleID, roleName, sortNum, isCurrent, isDelete, theNote
+) values (
+	1, '超级管理员', 1, 1, 1, '在这个系统里，无所不能'
+)
+
 
 /*角色权限*/
 DROP TABLE IF EXISTS `permission_role_permission`;
@@ -227,6 +234,14 @@ CREATE TABLE `permission_user_info` (
   `theNote` varchar(1024) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`userID`)
 ) CHARSET=utf8;
+/*插入系统超级管理员数据,ID为1, 密码123456*/
+insert into permission_user_info (
+	userID, userCode, userName, userSex, userTel, userEmail, userBirthday, userNation,
+	userPhotoFile, loginName, passWord, isCurrent, isDelete, sortNum, createDT, theNote
+) values (
+	1, 'admin', '超级管理员', 1, '13889259343', '952327407@qq.om', now(), '汉族',
+	'', 'admin', '92894219EF3E7B6D752F058D31C5166C', 1, 1, 1, now(), '超级管理员'
+)
 
 /*用户职级*/
 DROP TABLE IF EXISTS `permission_user_rank`;
@@ -257,16 +272,22 @@ CREATE TABLE `permission_user_org` (
 
 /*用户角色*/
 DROP TABLE IF EXISTS `permission_user_role`;
-CREATE TABLE `permission_account_role` (
+CREATE TABLE `permission_user_role` (
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `roleID` int(11) NOT NULL COMMENT '角色Id',
   PRIMARY KEY (`ID`)
 ) CHARSET=utf8;
+/*为系统超级管理员用户绑定超级管理员角色*/
+insert into permission_user_role (
+	ID, userID, roleID
+) values (
+	1, 1, 1
+)
 
 /*用户APP*/
 DROP TABLE IF EXISTS `permission_user_app`;
-CREATE TABLE `permission_account_app` (
+CREATE TABLE `permission_user_app` (
   `ID` int(11) NOT NULL AUTO_INCREMENT COMMENT 'ID',
   `userID` int(11) NOT NULL COMMENT '用户ID',
   `appTypeID` int(11) NOT NULL COMMENT 'appTypeID',

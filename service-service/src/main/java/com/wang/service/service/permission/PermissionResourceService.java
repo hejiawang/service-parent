@@ -66,4 +66,14 @@ public interface PermissionResourceService {
 	 */
 	ServiceResult<List<PermissionResourceParam>> getResourceForElement(Integer parentID);
 
+	/**
+	 * 根据父ID(资源父ID)获取菜单资源信息<br>
+	 * 菜单下有页面元素信息时，为父资源
+	 * @param parentID 资源父ID
+	 * @return 资源信息
+	 * @author HeJiawang
+	 * @date   2016.10.26
+	 */
+	ServiceResult<List<PermissionResourceParam>> getResourceForMenuElement(Integer parentID);
+
 }

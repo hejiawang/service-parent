@@ -10,8 +10,8 @@ import com.wang.core.Constants;
 import com.wang.core.ServiceResult;
 import com.wang.core.exception.BusinessException;
 import com.wang.service.entity.permission.PermissionUserInfoEntity;
-import com.wang.service.service.permission.LoginService;
-import com.wang.serviceimp.model.permission.LoginModel;
+import com.wang.service.service.permission.PermissionLoginService;
+import com.wang.serviceimp.model.permission.PermissionLoginModel;
 
 /**
  * 
@@ -22,12 +22,12 @@ import com.wang.serviceimp.model.permission.LoginModel;
  *
  */
 @Service
-public class LoginServiceImp implements LoginService {
+public class PermissionLoginServiceImp implements PermissionLoginService {
 
-	private final Logger logger = LoggerFactory.getLogger(LoginServiceImp.class);
+	private final Logger logger = LoggerFactory.getLogger(PermissionLoginServiceImp.class);
 	
 	@Autowired
-	private LoginModel loginModel;
+	private PermissionLoginModel loginModel;
 	
 	/**
 	 * 用户登录

@@ -10,7 +10,7 @@ import org.springframework.util.Assert;
 import com.wang.core.exception.BusinessException;
 import com.wang.core.util.MD5;
 import com.wang.service.entity.permission.PermissionUserInfoEntity;
-import com.wang.serviceimp.dao.permission.read.LoginReadDao;
+import com.wang.serviceimp.dao.permission.read.PermissionLoginReadDao;
 
 /**
  * 
@@ -21,12 +21,12 @@ import com.wang.serviceimp.dao.permission.read.LoginReadDao;
  *
  */
 @Service
-public class LoginModel {
+public class PermissionLoginModel {
 
-	private final Logger logger = LoggerFactory.getLogger(LoginModel.class);
+	private final Logger logger = LoggerFactory.getLogger(PermissionLoginModel.class);
 	
 	@Autowired
-	private LoginReadDao loginReadDao;
+	private PermissionLoginReadDao loginReadDao;
 	
 	/**
 	 * 用户登录

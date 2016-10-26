@@ -91,4 +91,23 @@
 		where a.parentID = #{parentID ,jdbcType=INTEGER}
     </select>
 	
+	<select id="getResourceForMenuElement" resultType="com.wang.service.param.permission.PermissionResourceParam">
+		select 
+			a.resourceID as resourceID,
+			b.menuName as selfName,
+			a.selfType as selfType,
+			a.selfID as selfID,
+			(
+				select count(1)
+				from permission_resource c
+				inner join permission_menu d on c.selfID = d.menuID
+				where  d.isDelete = 1 and c.parentID = a.resourceID and ( c.selfType = 'SYS_MENU' or c.selfType = 'SYS_ELEMENT' )
+			) as isParent
+		from permission_resource a 
+		inner join permission_menu b on a.selfID = b.menuID 
+			and a.selfType = 'SYS_MENU'
+			and b.isDelete=1 
+		where a.parentID = #{parentID ,jdbcType=INTEGER}
+    </select>
+	
 </mapper>

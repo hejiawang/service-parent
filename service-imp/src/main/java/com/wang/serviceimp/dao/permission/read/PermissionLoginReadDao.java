@@ -14,7 +14,7 @@ import com.wang.service.entity.permission.PermissionUserInfoEntity;
  *
  */
 @MyBatisRepository
-public interface LoginReadDao {
+public interface PermissionLoginReadDao {
 
 	/**
 	 * 用户登录

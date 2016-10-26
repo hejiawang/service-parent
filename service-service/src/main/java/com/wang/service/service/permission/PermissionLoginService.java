@@ -11,7 +11,7 @@ import com.wang.service.entity.permission.PermissionUserInfoEntity;
  * @date   2016.09.21
  *
  */
-public interface LoginService {
+public interface PermissionLoginService {
 
 	/**
 	 * 用户登录
