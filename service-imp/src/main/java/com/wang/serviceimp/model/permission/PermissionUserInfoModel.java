@@ -13,6 +13,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
+import com.wang.core.util.MD5;
 import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 import com.wang.serviceimp.dao.permission.read.PermissionAppReadDao;
@@ -95,6 +96,7 @@ public class PermissionUserInfoModel {
 			/**
 			 * 存储用户基本信息,并在实体中返回用户ID
 			 */
+			userInfo.setPassWord(MD5.getInstrance().getMD5String4(userInfo.getPassWord()));
 			permissionUserInfoWriteDao.addUserInfo(userInfo);
 			Integer userID = userInfo.getUserID();
 			
