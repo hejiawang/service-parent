@@ -55,6 +55,32 @@ public class PermissionRoleParam implements Serializable {
 	 * 分页信息
 	 */
 	private Integer draw;
+	
+	/**
+	 * 为角色分配权限时的资源ID
+	 */
+	private Integer resourceID;
+	
+	/**
+	 * 为角色分配权限时的操作权限ID集合
+	 */
+	private String permissionIDs;
+
+	public Integer getResourceID() {
+		return resourceID;
+	}
+
+	public void setResourceID(Integer resourceID) {
+		this.resourceID = resourceID;
+	}
+
+	public String getPermissionIDs() {
+		return permissionIDs;
+	}
+
+	public void setPermissionIDs(String permissionIDs) {
+		this.permissionIDs = permissionIDs;
+	}
 
 	public Integer getRoleID() {
 		return roleID;

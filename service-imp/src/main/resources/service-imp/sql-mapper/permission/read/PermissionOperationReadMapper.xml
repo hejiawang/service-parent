@@ -40,5 +40,19 @@
 		LEFT JOIN permission_permission b ON a.operationID = b.operationID
 		WHERE b.resourceID = #{resourceID ,jdbcType=INTEGER}
     </select>
+    
+    <select id="getOperationByRoleIDAndResourceID" resultType="java.lang.Integer">
+    	select a.permissionID
+    	from permission_permission a
+    	inner join permission_role_permission b on a.permissionID = b.permissionID
+    	where a.resourceID = #{resourceID ,jdbcType=INTEGER} and b.roleID = #{roleID ,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getOperationAndPermissionByResourceID" resultType="com.wang.service.param.permission.PermissionPermissionOperationParam"> 
+		select a.operationID , a.operationName, b.permissionID
+		from permission_operation a
+		inner join permission_permission b on a.operationID = b.operationID
+		where b.resourceID = #{resourceID ,jdbcType=INTEGER}
+    </select>
 	
 </mapper>

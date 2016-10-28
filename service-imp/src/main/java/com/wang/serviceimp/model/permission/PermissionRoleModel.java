@@ -1,5 +1,7 @@
 package com.wang.serviceimp.model.permission;
 
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -7,7 +9,11 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionDefinition;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
@@ -40,6 +46,12 @@ public class PermissionRoleModel {
 	 */
 	@Autowired
 	private PermissionRoleWriteDao permissionRoleWriteDao;
+	
+	/**
+	 * 事务
+	 */
+	@Autowired
+	private DataSourceTransactionManager transactionManagerMember;
 
 	/**
 	 * 获取分页角色
@@ -143,5 +155,49 @@ public class PermissionRoleModel {
 		if( role == null ) throw new BusinessException("角色不能为空");
 		
 		permissionRoleWriteDao.updateRole(role);
+	}
+
+	/**
+	 * 为角色分配权限
+	 * @param role 角色信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	public Boolean raisePermission(PermissionRoleParam role) {
+		Assert.notNull(permissionRoleWriteDao, "Property 'permissionRoleWriteDao' is required.");
+		if( role == null ) throw new BusinessException("角色不能为空");
+		
+		//开始事务
+		DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+		def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
+		TransactionStatus status = transactionManagerMember.getTransaction(def);
+		try {
+			List<String> permissionIDList = Arrays.asList(role.getPermissionIDs().split(","));
+			
+			/**
+			 * 删除该角色的所有权限
+			 */
+			permissionRoleWriteDao.deleteRolePermissionByReaourceID(role.getRoleID(), role.getResourceID());
+			
+			/**
+			 * 为该角色增加新的权限
+			 */
+			for( String permissionID : permissionIDList ){
+				
+				permissionRoleWriteDao.addRolePermissionByReaourceID(role.getRoleID() ,permissionID);
+			}
+			
+			transactionManagerMember.commit(status);
+		} catch ( Exception e ){
+			logger.error("异常发生在"+this.getClass().getName()+"类的addUserInfo方法，异常原因是："+e.getMessage(), e.fillInStackTrace());
+			/**
+			 * 事务回滚
+			 */
+			transactionManagerMember.rollback(status);
+			throw new BusinessException("授权失败!");
+		}
+		
+		return true;
 	}
 }

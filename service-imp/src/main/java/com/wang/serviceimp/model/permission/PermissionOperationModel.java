@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
 import com.wang.service.entity.permission.PermissionOperationEntity;
+import com.wang.service.param.permission.PermissionPermissionOperationParam;
 import com.wang.serviceimp.dao.permission.read.PermissionOperationReadDao;
 
 /**
@@ -69,6 +70,35 @@ public class PermissionOperationModel {
 		if( resourceID == null ) throw new BusinessException("资源ID不能为空");
 		
 		return permissionOperationReadDao.getOperationIDByResourceID(resourceID);
+	}
+
+	/**
+	 * 角色所有的资源的操作权限ID
+	 * @param roleID 角色ID
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	public List<Integer> getOperationByRoleIDAndResourceID(Integer roleID, Integer resourceID) {
+		Assert.notNull(permissionOperationReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( resourceID == null ) throw new BusinessException("资源ID不能为空");
+		
+		return permissionOperationReadDao.getOperationByRoleIDAndResourceID(roleID, resourceID);
+	}
+
+	/**
+	 * 获取操作和操作权限
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	public List<PermissionPermissionOperationParam> getOperationAndPermissionByResourceID(Integer resourceID) {
+		Assert.notNull(permissionOperationReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( resourceID == null ) throw new BusinessException("资源ID不能为空");
+		
+		return permissionOperationReadDao.getOperationAndPermissionByResourceID(resourceID);
 	}
 
 }

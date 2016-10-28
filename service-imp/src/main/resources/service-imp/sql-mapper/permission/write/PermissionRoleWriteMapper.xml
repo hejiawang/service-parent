@@ -44,4 +44,22 @@
 			roleID = #{roleID,jdbcType=INTEGER} 
   	</update>
   	
+  	<delete id="deleteRolePermissionByReaourceID">
+  		delete from permission_role_permission 
+  		where roleID = #{roleID,jdbcType=INTEGER} 
+  		and permissionID in (
+  			select permissionID 
+  			from permission_permission 
+  			where resourceID = #{resourceID,jdbcType=INTEGER} 
+  		)
+  	</delete>
+  	
+  	<insert id="addRolePermissionByReaourceID">
+  		insert permission_role_permission (
+  			roleID, permissionID
+  		) values (
+  			#{roleID,jdbcType=INTEGER}, #{permissionID}
+  		)
+  	</insert>
+  	
 </mapper>

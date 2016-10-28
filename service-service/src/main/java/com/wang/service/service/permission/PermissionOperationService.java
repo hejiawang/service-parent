@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.wang.core.ServiceResult;
 import com.wang.service.entity.permission.PermissionOperationEntity;
+import com.wang.service.param.permission.PermissionPermissionOperationParam;
 
 /**
  * 操作service
@@ -36,5 +37,24 @@ public interface PermissionOperationService {
 	 * @date   2016.10.17
 	 */
 	ServiceResult<List<Integer>> getOperationIDByResourceID(Integer resourceID);
+
+	/**
+	 * 角色所有的资源的操作权限ID
+	 * @param roleID 角色ID
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	ServiceResult<List<Integer>> getOperationByRoleIDAndResourceID(Integer roleID, Integer resourceID);
+
+	/**
+	 * 获取操作和操作权限
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	ServiceResult<List<PermissionPermissionOperationParam>> getOperationAndPermissionByResourceID(Integer resourceID);
 
 }

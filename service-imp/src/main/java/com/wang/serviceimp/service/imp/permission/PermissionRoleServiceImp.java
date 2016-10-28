@@ -177,4 +177,33 @@ public class PermissionRoleServiceImp implements PermissionRoleService {
 		return serviceResult;
 	}
 
+	/**
+	 * 为角色分配权限
+	 * @param role 角色信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	@Override
+	public ServiceResult<Void> raisePermission(PermissionRoleParam role) {
+		Assert.notNull(permissionRoleModel, "Property 'permissionRoleModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean success = permissionRoleModel.raisePermission(role);
+			if(success){
+				serviceResult.setMessage("授权成功");
+			} else {
+				serviceResult.setMessage("授权失败");
+			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }

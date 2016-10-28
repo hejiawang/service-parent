@@ -57,4 +57,13 @@ public interface PermissionRoleService {
 	 */
 	ServiceResult<Void> updateRole(PermissionRoleParam role);
 
+	/**
+	 * 为角色分配权限
+	 * @param role 角色信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	ServiceResult<Void> raisePermission(PermissionRoleParam role);
+
 }

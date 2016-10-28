@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.entity.permission.PermissionOperationEntity;
+import com.wang.service.param.permission.PermissionPermissionOperationParam;
 
 /**
  * 
@@ -52,5 +53,24 @@ public interface PermissionOperationReadDao {
 	 * @date   2016.10.16
 	 */
 	Map<String, String> getOperationStringArgsByResourceID( @Param("resourceID") Integer resourceID);
+
+	/**
+	 * 角色所有的资源的操作权限ID
+	 * @param roleID 角色ID
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	List<Integer> getOperationByRoleIDAndResourceID(@Param("roleID")Integer roleID, @Param("resourceID")Integer resourceID);
+
+	/**
+	 * 获取操作和操作权限
+	 * @param resourceID 资源ID
+	 * @return 操作权限ID
+ 	 * @author HeJiawang
+	 * @date   2016.10.28
+	 */
+	List<PermissionPermissionOperationParam> getOperationAndPermissionByResourceID(@Param("resourceID")Integer resourceID);
 
 }
