@@ -90,5 +90,36 @@ public interface PermissionResourceReadDao {
 	 * @date   2016.10.26
 	 */
 	List<PermissionResourceParam> getResourceForMenuElement( @Param("parentID") Integer parentID);
+
+	/**
+	 * 根据登陆者的角色,列出该角色权限允许授权的APP信息
+	 * @param userID 登陆者ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	List<PermissionResourceParam> getResourceForAppByUserID(@Param("userID")Integer userID);
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的菜单信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	List<PermissionResourceParam> getResourceForMenuElementByUserID(@Param("userID")Integer userID,
+			@Param("parentID") Integer parentID);
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的页面元素信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	List<PermissionResourceParam> getResourceForElementByUserID(@Param("userID")Integer userID,
+			@Param("parentID") Integer parentID);
 	
 }

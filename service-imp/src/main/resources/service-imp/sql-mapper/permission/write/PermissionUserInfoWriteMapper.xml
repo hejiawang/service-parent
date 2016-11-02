@@ -82,5 +82,14 @@
 			#{appID, jdbcType=INTEGER}, #{appType, jdbcType=INTEGER}, #{userID, jdbcType=INTEGER}
 		)
 	</insert> 
+	
+	<update id="deleteUserByID">
+		update 
+  			permission_user_info
+  		set  
+  			isDelete = 0
+		where 
+			userID = #{userID,jdbcType=INTEGER} 
+	</update>
     
 </mapper>

@@ -55,4 +55,13 @@ public interface PermissionPostReadDao {
 	 */
 	Integer getPageTotal(PermissionPostParam post);
 
+	/**
+	 * 获取岗位树</br>
+	 * 即、全部岗位
+	 * @return 岗位树
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	List<PermissionPostParam> queryPostForTree();
+
 }

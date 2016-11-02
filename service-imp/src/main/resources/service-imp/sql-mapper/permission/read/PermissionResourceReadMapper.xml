@@ -109,5 +109,127 @@
 			and b.isDelete=1 
 		where a.parentID = #{parentID ,jdbcType=INTEGER}
     </select>
+    
+    <select id="getResourceForAppByUserID" resultType="com.wang.service.param.permission.PermissionResourceParam">
+    	select a1.* 
+		from(
+			select 
+				b.resourceID as resourceID,
+				a.appName as selfName,
+				b.selfType as selfType,
+				b.selfID as selfID,
+				(
+					select count(*) 
+					from permission_resource c 
+					inner join permission_menu d on c.selfID = d.menuID
+					where c.parentType='SYS_APP' and c.selfType = 'SYS_MENU' and c.parentId = b.selfId
+				) as isParent
+			from permission_app a 
+			inner join permission_resource b on b.selfID = a.appID
+				and b.selfType='SYS_APP' and b.parentType='SYS_APP' and a.isDelete = 1
+		) AS a1
+		inner join (
+			SELECT * 
+			FROM permission_resource
+			WHERE resourceID in (
+				SELECT resourceID
+				FROM permission_permission
+				WHERE permissionID in (
+					select permissionID 
+					from permission_role_permission 
+					where roleID in (
+						SELECT roleID
+						FROM permission_user_role
+						WHERE userID = #{userID ,jdbcType=INTEGER}
+					)
+				) AND permissionID in (
+					SELECT permissionID
+					FROM permission_operation
+					WHERE fun = 'doGrant' AND typeCode = 'SYS_APP'
+				)
+			)
+		) AS a2 ON a1.resourceID = a2.resourceID
+    </select>
 	
+    <select id="getResourceForMenuElementByUserID" resultType="com.wang.service.param.permission.PermissionResourceParam">
+    	select a1.* 
+		from(
+			select 
+				a.resourceID as resourceID,
+				b.menuName as selfName,
+				a.selfType as selfType,
+				a.selfID as selfID,
+				(
+					select count(1)
+					from permission_resource c
+					inner join permission_menu d on c.selfID = d.menuID
+					where  d.isDelete = 1 and c.parentID = a.resourceID and ( c.selfType = 'SYS_MENU' or c.selfType = 'SYS_ELEMENT' )
+				) as isParent
+			from permission_resource a 
+			inner join permission_menu b on a.selfID = b.menuID 
+				and a.selfType = 'SYS_MENU'
+				and b.isDelete=1 
+			where a.parentID = #{parentID ,jdbcType=INTEGER}
+		) AS a1
+		inner join (
+			SELECT * 
+			FROM permission_resource
+			WHERE resourceID in (
+				SELECT resourceID
+				FROM permission_permission
+				WHERE permissionID in (
+					select permissionID 
+					from permission_role_permission 
+					where roleID in (
+						SELECT roleID
+						FROM permission_user_role
+						WHERE userID = #{userID ,jdbcType=INTEGER}
+					)
+				) AND permissionID in (
+					SELECT permissionID
+					FROM permission_operation
+					WHERE fun = 'doGrant' AND typeCode = 'SYS_MENU'
+				)
+			)
+		) AS a2 ON a1.resourceID = a2.resourceID
+    </select>
+    
+    <select id="getResourceForElementByUserID" resultType="com.wang.service.param.permission.PermissionResourceParam">
+    	select a1.* 
+		from(
+			select 
+				a.resourceID as resourceID,
+				b.elementName as selfName,
+				a.selfType as selfType,
+				a.selfID as selfID,
+				0 as isParent
+			from permission_resource a 
+			inner join permission_element b on a.selfID = b.elementID 
+				and a.selfType = 'SYS_ELEMENT'
+				and b.isDelete=1 
+			where a.parentID = #{parentID ,jdbcType=INTEGER}
+		) AS a1
+		inner join (
+			SELECT * 
+			FROM permission_resource
+			WHERE resourceID in (
+				SELECT resourceID
+				FROM permission_permission
+				WHERE permissionID in (
+					select permissionID 
+					from permission_role_permission 
+					where roleID in (
+						SELECT roleID
+						FROM permission_user_role
+						WHERE userID = #{userID ,jdbcType=INTEGER}
+					)
+				) AND permissionID in (
+					SELECT permissionID
+					FROM permission_operation
+					WHERE fun = 'doGrant' AND typeCode = 'SYS_MENU'
+				)
+			)
+		) AS a2 ON a1.resourceID = a2.resourceID
+    </select>
+    
 </mapper>

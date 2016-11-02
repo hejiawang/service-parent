@@ -241,7 +241,7 @@ insert into permission_user_info (
 ) values (
 	1, 'admin', '超级管理员', 1, '13889259343', '952327407@qq.om', now(), '汉族',
 	'', 'admin', '92894219EF3E7B6D752F058D31C5166C', 1, 1, 1, now(), '超级管理员'
-)
+);
 
 /*用户职级*/
 DROP TABLE IF EXISTS `permission_user_rank`;
@@ -283,7 +283,7 @@ insert into permission_user_role (
 	ID, userID, roleID
 ) values (
 	1, 1, 1
-)
+);
 
 /*用户APP*/
 DROP TABLE IF EXISTS `permission_user_app`;

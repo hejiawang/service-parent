@@ -59,4 +59,11 @@
 		</where>
 	</select>
 	
+	<select id="queryPostForTree" resultType="com.wang.service.param.permission.PermissionPostParam">
+		select 
+			a.postID, a.postName
+		from permission_post a
+		where a.isDelete = 1
+	</select>
+	
 </mapper>

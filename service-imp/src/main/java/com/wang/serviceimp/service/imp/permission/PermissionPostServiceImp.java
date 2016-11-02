@@ -1,5 +1,6 @@
 package com.wang.serviceimp.service.imp.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -166,6 +167,31 @@ public class PermissionPostServiceImp implements PermissionPostService {
 				serviceResult.setSuccess(true);
 				serviceResult.setMessage("新增岗位成功");
 			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+
+	/**
+	 * 获取岗位树</br>
+	 * 即、全部岗位
+	 * @return 岗位树
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	@Override
+	public ServiceResult<List<PermissionPostParam>> queryPostForTree() {
+		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
+		ServiceResult<List<PermissionPostParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionpostModel.queryPostForTree());
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

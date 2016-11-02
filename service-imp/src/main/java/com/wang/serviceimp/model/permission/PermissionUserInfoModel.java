@@ -1,6 +1,8 @@
 package com.wang.serviceimp.model.permission;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,6 +59,30 @@ public class PermissionUserInfoModel {
 	 */
 	@Autowired
 	private DataSourceTransactionManager transactionManagerMember;
+	
+	/**
+	 * 获取分页用户信息
+	 * @param userInfo 用户信息
+	 * @param start 分页——起始条数
+	 * @param length 分页——条数
+	 * @return 分页数据
+	 */
+	public Map<String, Object> pageUserInfo(PermissionUserInfoParam userInfo) {
+		Assert.notNull(permissionUserInfoReadDao, "Property 'permissionUserInfoReadDao' is required.");
+		if( userInfo.getPageStart() == null || userInfo.getPageEnd() == null || userInfo.getDraw() == null ) 
+			throw new BusinessException("分页信息不能为空");
+		
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<Map<String,Object>> pageLsit = permissionUserInfoReadDao.getPageList(userInfo);
+		Integer recordsTotal = permissionUserInfoReadDao.getPageTotal(userInfo);
+		
+		map.put("draw", userInfo.getDraw());
+		map.put("data", pageLsit);
+		map.put("recordsTotal", recordsTotal);
+		map.put("recordsFiltered",  recordsTotal);
+		
+		return map;
+	}
 	
 	/**
 	 * 检查用户登录名时候重复
@@ -161,7 +187,27 @@ public class PermissionUserInfoModel {
 	public List<Integer> getRoleIDListByUserID(Integer userID) {
 		Assert.notNull(permissionUserInfoReadDao, "Property 'permissionUserInfoReadDao' is required.");
 		if( userID == null ) throw new BusinessException("用户ID不能为空");
+		
 		return permissionUserInfoReadDao.getRoleIDListByUserID(userID);
+	}
+
+	/**
+	 * 删除用户
+	 * @param userID 用户ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	public Boolean deleteUserByID(Integer userID) {
+		Assert.notNull(permissionUserInfoReadDao, "Property 'permissionUserInfoReadDao' is required.");
+		if( userID == null ) throw new BusinessException("用户ID不能为空");
+		
+		Integer deleteResult = permissionUserInfoWriteDao.deleteUserByID(userID);
+		if( deleteResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

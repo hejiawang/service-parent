@@ -1,5 +1,6 @@
 package com.wang.service.service.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wang.core.ServiceResult;
@@ -56,5 +57,14 @@ public interface PermissionPostService {
 	 * @date   2016.10.13
 	 */
 	ServiceResult<Void> updatePost(PermissionPostParam post);
+
+	/**
+	 * 获取岗位树</br>
+	 * 即、全部岗位
+	 * @return 岗位树
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	ServiceResult<List<PermissionPostParam>> queryPostForTree();
 
 }

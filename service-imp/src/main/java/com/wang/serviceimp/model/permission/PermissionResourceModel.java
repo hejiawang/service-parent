@@ -130,4 +130,48 @@ public class PermissionResourceModel {
 		return permissionResourceReadDao.getResourceForMenuElement(parentID);
 	}
 
+	/**
+	 * 根据登陆者的角色,列出该角色权限允许授权的APP信息
+	 * @param userID 登陆者ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	public List<PermissionResourceParam> getResourceForAppByUserID(Integer userID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( userID == null ) throw new BusinessException("userID不能为空");
+		
+		return permissionResourceReadDao.getResourceForAppByUserID(userID);
+	}
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的菜单信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	public List<PermissionResourceParam> getResourceForMenuElementByUserID(Integer userID, Integer parentID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( userID == null ) throw new BusinessException("userID不能为空");
+		
+		return permissionResourceReadDao.getResourceForMenuElementByUserID(userID, parentID);
+	}
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的页面元素信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	public List<PermissionResourceParam> getResourceForElementByUserID(Integer userID, Integer parentID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( userID == null ) throw new BusinessException("userID不能为空");
+		
+		return permissionResourceReadDao.getResourceForElementByUserID(userID, parentID);
+	}
+
 }

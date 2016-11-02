@@ -71,4 +71,13 @@ public interface PermissionUserInfoWriteDao {
 	Integer addUserApp(@Param("userID") Integer userID, @Param("appID") Integer appID,
 			@Param("appTypeID") Integer appTypeID);
 
+	/**
+	 * 删除用户
+	 * @param userID 用户ID
+	 * @return 返回信息
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	Integer deleteUserByID(@Param("userID") Integer userID);
+
 }

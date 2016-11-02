@@ -204,4 +204,78 @@ public class PermissionResourceServiceImp implements PermissionResourceService {
 		return serviceResult;
 	}
 
+	/**
+	 * 根据登陆者的角色,列出该角色权限允许授权的APP信息
+	 * @param userID 登陆者ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForAppByUserID(Integer userID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForAppByUserID(userID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的菜单信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForMenuElementByUserID(Integer userID, Integer parentID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForMenuElementByUserID(userID, parentID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据登陆者的角色列出该角色权限允许授权的页面元素信息
+	 * @param userID 登陆者ID
+	 * @param parentID 资源父ID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.02
+	 */
+	@Override
+	public ServiceResult<List<PermissionResourceParam>> getResourceForElementByUserID(Integer userID, Integer parentID) {
+		Assert.notNull(permissionResourceModel, "Property 'permissionResourceModel' is required.");
+		ServiceResult<List<PermissionResourceParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionResourceModel.getResourceForElementByUserID(userID, parentID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }
