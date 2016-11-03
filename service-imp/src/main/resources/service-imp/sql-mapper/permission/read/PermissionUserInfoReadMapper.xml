@@ -83,37 +83,37 @@
 			a.isCurrent, a.isDelete, a.theNote,
 			c.orgName, c.orgID,
 			(	select   
-			 		GROUP_CONCAT(postName) as postNames,
+			 		GROUP_CONCAT(pp.postName) as postNames
 				 from permission_post pp 
 				 left join permission_user_post p on pp.postID = p.postID
 				 where  p.userID = a.userID
 			) as postNames, 
 			(	select   
-			 		GROUP_CONCAT(postID) as postIDs,
+			 		GROUP_CONCAT(pp.postID) as postIDs
 				 from permission_post pp 
 				 left join permission_user_post p on pp.postID = p.postID
 				 where  p.userID = a.userID
 			) as postIDs,
 			(	select   
-			 		GROUP_CONCAT(rankName) as rankNames,
+			 		GROUP_CONCAT(pr.rankName) as rankNames
 				 from permission_rank pr
 				 left join permission_user_rank r on pr.rankID = r.rankID
 				 where  r.userID = a.userID
 			) as rankNames, 
 			(	select   
-			 		GROUP_CONCAT(rankID) as rankIDs,
+			 		GROUP_CONCAT(pr.rankID) as rankIDs
 				 from permission_rank pr
 				 left join permission_user_rank r on pr.rankID = r.rankID
 				 where  r.userID = a.userID
 			) as rankIDs, 
 			(	select   
-			 		GROUP_CONCAT(roleName) as roleNames,
+			 		GROUP_CONCAT(po.roleName) as roleNames
 				 from permission_role po
 				 left join permission_user_role o on po.roleID = o.roleID
 				 where  o.userID = a.userID
 			) as roleNames, 
 			(	select   
-			 		GROUP_CONCAT(roleID) as roleIDs,
+			 		GROUP_CONCAT(po.roleID) as roleIDs
 				 from permission_role po
 				 left join permission_user_role o on po.roleID = o.roleID
 				 where  o.userID = a.userID

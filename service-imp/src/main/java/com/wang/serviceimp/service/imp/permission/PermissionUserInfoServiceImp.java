@@ -12,6 +12,7 @@ import org.springframework.util.Assert;
 import com.wang.core.Constants;
 import com.wang.core.ServiceResult;
 import com.wang.core.exception.BusinessException;
+import com.wang.core.util.WebConstants;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 import com.wang.service.service.permission.PermissionUserInfoService;
 import com.wang.serviceimp.model.permission.PermissionUserInfoModel;
@@ -128,13 +129,18 @@ public class PermissionUserInfoServiceImp implements PermissionUserInfoService {
 		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
-			Boolean deleteResult = permissionUserInfoModel.deleteUserByID(userID);
-			if( deleteResult ){
-				serviceResult.setMessage("删除用户成功");
-			}else{
-				serviceResult.setMessage("删除用户失败");
+			if( userID == WebConstants.permissionAdminID ){	//系统超级管理员不可删除
+				serviceResult.setMessage("系统超级管理员不可删除");
+				serviceResult.setSuccess(false);
+			} else {
+				Boolean deleteResult = permissionUserInfoModel.deleteUserByID(userID);
+				if( deleteResult ){
+					serviceResult.setMessage("删除用户成功");
+				}else{
+					serviceResult.setMessage("删除用户失败");
+				}
+				serviceResult.setSuccess(deleteResult);
 			}
-			serviceResult.setSuccess(deleteResult);
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);
@@ -182,14 +188,19 @@ public class PermissionUserInfoServiceImp implements PermissionUserInfoService {
 		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
-			Boolean existLoginName = permissionUserInfoModel.checkExistUserLoginName(userInfo);	//检查用户登录名时候重复
-			if(existLoginName){
+			if( userInfo.getUserID() == WebConstants.permissionAdminID ){	//系统超级管理员不可修改
+				serviceResult.setMessage("系统超级管理员不可修改");
 				serviceResult.setSuccess(false);
-				serviceResult.setMessage("登录名重复,修改用户失败");
 			} else {
-				permissionUserInfoModel.updateUserInfo(userInfo);
-				serviceResult.setSuccess(true);
-				serviceResult.setMessage("修改用户成功");
+				Boolean existLoginName = permissionUserInfoModel.checkExistUserLoginName(userInfo);	//检查用户登录名时候重复
+				if(existLoginName){
+					serviceResult.setSuccess(false);
+					serviceResult.setMessage("登录名重复,修改用户失败");
+				} else {
+					permissionUserInfoModel.updateUserInfo(userInfo);
+					serviceResult.setSuccess(true);
+					serviceResult.setMessage("修改用户成功");
+				}
 			}
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
