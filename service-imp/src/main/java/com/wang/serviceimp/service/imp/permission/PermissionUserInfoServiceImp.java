@@ -37,18 +37,18 @@ public class PermissionUserInfoServiceImp implements PermissionUserInfoService {
 	private PermissionUserInfoModel permissionUserInfoModel;
 	
 	/**
-	 * 获取分页用户信息
+	 * 根据当前登录的用户角色,获取分页用户信息
 	 * @param userInfo 用户信息
 	 * @param start 分页——起始条数
 	 * @param length 分页——条数
 	 * @return 分页数据
 	 */
 	@Override
-	public ServiceResult<Map<String, Object>> pageUserInfo(PermissionUserInfoParam userInfo) {
+	public ServiceResult<Map<String, Object>> pageUserInfo(PermissionUserInfoParam userInfo, Integer currentUserID) {
 		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
 		ServiceResult<Map<String, Object>> serviceResult = new ServiceResult<>();
 		try {
-			serviceResult.setResult(permissionUserInfoModel.pageUserInfo(userInfo));
+			serviceResult.setResult(permissionUserInfoModel.pageUserInfo(userInfo, currentUserID));
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);
@@ -135,6 +135,62 @@ public class PermissionUserInfoServiceImp implements PermissionUserInfoService {
 				serviceResult.setMessage("删除用户失败");
 			}
 			serviceResult.setSuccess(deleteResult);
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 查看用户信息
+	 * @param userInfoID 用户ID
+	 * @return 用户信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	@Override
+	public ServiceResult<PermissionUserInfoParam> getUserInfoByID(Integer userID) {
+		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
+		ServiceResult<PermissionUserInfoParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionUserInfoModel.getUserInfoByID(userID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 修改用户信息
+	 * @param userInfo 用户信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	@Override
+	public ServiceResult<Void> updateUserInfo(PermissionUserInfoParam userInfo) {
+		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
+		ServiceResult<Void> serviceResult = new ServiceResult<>();
+		try {
+			Boolean existLoginName = permissionUserInfoModel.checkExistUserLoginName(userInfo);	//检查用户登录名时候重复
+			if(existLoginName){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("登录名重复,修改用户失败");
+			} else {
+				permissionUserInfoModel.updateUserInfo(userInfo);
+				serviceResult.setSuccess(true);
+				serviceResult.setMessage("修改用户成功");
+			}
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

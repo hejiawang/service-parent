@@ -59,4 +59,11 @@
 		</where>
 	</select>
 	
+	<select id="queryRoleForTree" resultType="com.wang.service.param.permission.PermissionRoleParam">
+		select 
+			a.roleID, a.roleName
+		from permission_role a
+		where a.isDelete = 1
+	</select>
+	
 </mapper>

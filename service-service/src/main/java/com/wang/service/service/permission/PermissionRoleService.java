@@ -1,5 +1,6 @@
 package com.wang.service.service.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import com.wang.core.ServiceResult;
@@ -65,5 +66,14 @@ public interface PermissionRoleService {
 	 * @date   2016.10.28
 	 */
 	ServiceResult<Void> raisePermission(PermissionRoleParam role);
+
+	/**
+	 * 获取角色树</br>
+	 * 即、全部角色
+	 * @return 角色树
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	ServiceResult<List<PermissionRoleParam>> queryRoleForTree();
 
 }

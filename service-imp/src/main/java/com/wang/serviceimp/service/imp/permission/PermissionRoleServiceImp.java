@@ -1,5 +1,6 @@
 package com.wang.serviceimp.service.imp.permission;
 
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -195,6 +196,30 @@ public class PermissionRoleServiceImp implements PermissionRoleService {
 			} else {
 				serviceResult.setMessage("授权失败");
 			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 获取角色树</br>
+	 * 即、全部角色
+	 * @return 角色树
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	@Override
+	public ServiceResult<List<PermissionRoleParam>> queryRoleForTree() {
+		Assert.notNull(permissionRoleModel, "Property 'permissionRoleModel' is required.");
+		ServiceResult<List<PermissionRoleParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionRoleModel.queryRoleForTree());
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

@@ -77,5 +77,14 @@ public interface PermissionOrgService {
 	 * @date   2016.10.11
 	 */
 	ServiceResult<List<PermissionOrgParam>> findOrgForTree(Integer parentOrgID);
+	
+	/**
+	 * 根据机构ID获取该机构信息，以及其子孙机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	ServiceResult<List<PermissionOrgParam>> getChildrenOrgByOrgID(Integer orgID);
 
 }

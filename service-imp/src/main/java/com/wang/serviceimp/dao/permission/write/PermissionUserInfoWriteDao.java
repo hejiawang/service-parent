@@ -80,4 +80,49 @@ public interface PermissionUserInfoWriteDao {
 	 */
 	Integer deleteUserByID(@Param("userID") Integer userID);
 
+	/**
+	 * 修改用户信息
+	 * @param userInfo 用户信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	Integer updateUserInfo(PermissionUserInfoParam userInfo);
+	
+	/**
+	 * 删除用户角色关联关系
+	 * @param userID 用户ID
+	 * @return
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	Integer deleteUserRole(@Param("userID") Integer userID);
+
+	/**
+	 * 删除用户岗位关联关系
+	 * @param userID 用户ID
+	 * @return
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	Integer deleteUserPost(@Param("userID") Integer userID);
+
+	/**
+	 * 删除用户职级关联关系
+	 * @param userID 用户ID
+	 * @return
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	Integer deleteUserRank(@Param("userID") Integer userID);
+
+	/**
+	 * 删除用户机构关联关系
+	 * @param userID 用户ID
+	 * @return
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	Integer deleteUserOrg(@Param("userID") Integer userID);
+
 }

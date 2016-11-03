@@ -75,5 +75,94 @@
     	from permission_user_role
     	where userID = #{userID ,jdbcType=INTEGER} 
     </select>
+    
+    <select id="getUserInfoByID" resultType="com.wang.service.param.permission.PermissionUserInfoParam">
+    	select
+			a.userID, a.userCode, a.userName, a.userSex, a.userTel, a.userEmail, a.userBirthday, 
+			a.userNation, a.userPhotoFile, a.loginName, a.passWord, a.createDT, a.sortNum, 
+			a.isCurrent, a.isDelete, a.theNote,
+			c.orgName, c.orgID,
+			(	select   
+			 		GROUP_CONCAT(postName) as postNames,
+				 from permission_post pp 
+				 left join permission_user_post p on pp.postID = p.postID
+				 where  p.userID = a.userID
+			) as postNames, 
+			(	select   
+			 		GROUP_CONCAT(postID) as postIDs,
+				 from permission_post pp 
+				 left join permission_user_post p on pp.postID = p.postID
+				 where  p.userID = a.userID
+			) as postIDs,
+			(	select   
+			 		GROUP_CONCAT(rankName) as rankNames,
+				 from permission_rank pr
+				 left join permission_user_rank r on pr.rankID = r.rankID
+				 where  r.userID = a.userID
+			) as rankNames, 
+			(	select   
+			 		GROUP_CONCAT(rankID) as rankIDs,
+				 from permission_rank pr
+				 left join permission_user_rank r on pr.rankID = r.rankID
+				 where  r.userID = a.userID
+			) as rankIDs, 
+			(	select   
+			 		GROUP_CONCAT(roleName) as roleNames,
+				 from permission_role po
+				 left join permission_user_role o on po.roleID = o.roleID
+				 where  o.userID = a.userID
+			) as roleNames, 
+			(	select   
+			 		GROUP_CONCAT(roleID) as roleIDs,
+				 from permission_role po
+				 left join permission_user_role o on po.roleID = o.roleID
+				 where  o.userID = a.userID
+			) as roleIDs
+		from permission_user_info a
+			left join permission_user_org b on a.userID = b.userID
+			left join permission_org c on b.orgID = c.orgID
+		where a.isDelete=1 and a.userID = #{userID, jdbcType = INTEGER}
+    </select>
+    
+    <select id="getPagePartList" parameterType="java.util.Map" resultType="java.util.Map">
+       	select
+			a.userID, a.userCode, a.userName, a.userSex, a.userTel, a.userEmail, a.userBirthday, 
+			a.userNation, a.userPhotoFile, a.loginName, a.passWord, a.createDT, a.sortNum, 
+			a.isCurrent, a.isDelete, a.theNote,
+			c.orgName
+		from permission_user_info a
+		left join permission_user_org b on a.userID = b.userID
+		left join permission_org c on b.orgID = c.orgID
+		<where>
+			a.isDelete=1
+			<if test="userName != null and userName !=''">
+				and a.userName like '%${userInfo.userName}%'
+			</if>
+			and b.orgID in
+			<foreach item="org" index="index" collection="list" open="(" separator="," close=")">
+                #{org.orgID, jdbcType=INTEGER}
+        	</foreach>
+		</where>
+		order by a.sortNum asc 
+		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getPagePartTotal" parameterType="java.util.Map" resultType="java.lang.Integer">
+       	select
+			count(1)
+		from permission_user_info a
+		left join permission_user_org b on a.userID = b.userID
+		left join permission_org c on b.orgID = c.orgID
+		<where>
+			a.isDelete=1
+			<if test="userName != null and userName !=''">
+				and a.userName like '%${userInfo.userName}%'
+			</if>
+			and b.orgID in
+			<foreach item="org" index="index" collection="list" open="(" separator="," close=")">
+                #{org.orgID, jdbcType=INTEGER}
+        	</foreach>
+		</where>
+    </select>
 	
 </mapper>

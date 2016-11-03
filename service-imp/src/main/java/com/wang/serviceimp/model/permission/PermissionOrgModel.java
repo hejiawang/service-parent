@@ -1,5 +1,6 @@
 package com.wang.serviceimp.model.permission;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,6 +211,32 @@ public class PermissionOrgModel {
 		if( parentOrgID == null ) throw new BusinessException("机构父ID不能为空");
 		
 		return permissionOrgReadDao.findOrgForTree(parentOrgID);
+	}
+
+	/**
+	 * 根据机构ID获取该机构信息，以及其子孙机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	public List<PermissionOrgParam> getChildrenOrgByOrgID(Integer orgID) {
+		Assert.notNull(permissionOrgReadDao, "Property 'permissionOrgReadDao' is required.");
+		if( orgID == null ) throw new BusinessException("机构ID不能为空");
+		
+		List<PermissionOrgParam> orgList = new ArrayList<PermissionOrgParam>();
+		PermissionOrgParam orgParent = permissionOrgReadDao.getOrgParamByID(orgID);
+		orgList.add(orgParent);
+		
+		for( int i=0; i<orgList.size(); i++ ){
+			if( orgList.get(i).getIsParent() > 0 ){
+				Integer orgParentID = orgList.get(i).getOrgID();
+				List<PermissionOrgParam> orgChildrenList = permissionOrgReadDao.getChildrenOrgByOrgID(orgParentID);
+				orgList.addAll(orgChildrenList);
+			}
+		}
+		
+		return orgList;
 	}
 
 }

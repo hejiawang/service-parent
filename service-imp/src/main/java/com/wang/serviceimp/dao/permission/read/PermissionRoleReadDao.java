@@ -55,4 +55,13 @@ public interface PermissionRoleReadDao {
 	 */
 	Integer getPageTotal(PermissionRoleParam role);
 
+	/**
+	 * 获取角色树</br>
+	 * 即、全部角色
+	 * @return 角色树
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	List<PermissionRoleParam> queryRoleForTree();
+
 }

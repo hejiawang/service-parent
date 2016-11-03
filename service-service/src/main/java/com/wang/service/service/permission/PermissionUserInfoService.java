@@ -14,13 +14,13 @@ import com.wang.service.param.permission.PermissionUserInfoParam;
 public interface PermissionUserInfoService {
 
 	/**
-	 * 获取分页用户信息
+	 * 根据当前登录的用户角色,获取分页用户信息
 	 * @param userInfo 用户信息
 	 * @param start 分页——起始条数
 	 * @param length 分页——条数
 	 * @return 分页数据
 	 */
-	ServiceResult<Map<String, Object>> pageUserInfo(PermissionUserInfoParam userInfo);
+	ServiceResult<Map<String, Object>> pageUserInfo(PermissionUserInfoParam userInfo, Integer currentUserID);
 
 	/**
 	 * 新增用户信息
@@ -48,5 +48,23 @@ public interface PermissionUserInfoService {
 	 * @date   2016.11.02
 	 */
 	ServiceResult<Void> deleteUserByID(Integer userID);
+
+	/**
+	 * 查看用户信息
+	 * @param userInfoID 用户ID
+	 * @return 用户信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	ServiceResult<PermissionUserInfoParam> getUserInfoByID(Integer userID);
+
+	/**
+	 * 修改用户信息
+	 * @param userInfo 用户信息
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	ServiceResult<Void> updateUserInfo(PermissionUserInfoParam userInfo);
 
 }

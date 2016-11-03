@@ -91,5 +91,33 @@
 		where 
 			userID = #{userID,jdbcType=INTEGER} 
 	</update>
+	
+	<update id="updateUserInfo" parameterType="com.wang.service.param.permission.PermissionUserInfoParam">
+		update 
+  			permission_user_info
+  		set  
+  			userCode = #{userCode}, userName = #{userName}, userSex = #{userSex}, 
+  			userTel = #{userTel}, userEmail = #{userEmail}, userBirthday = #{userBirthday}, 
+			userNation = #{userNation}, userPhotoFile = #{userPhotoFile}, loginName = #{loginName}, 
+			passWord = #{passWord}, sortNum = #{sortNum}, theNote = #{theNote}
+		where 
+			userID = #{userID,jdbcType=INTEGER} 
+	</update>
+	
+	<delete id="deleteUserRole">
+		delete from permission_user_role where userID = #{userID, jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteUserPost">
+		delete from permission_user_post where userID = #{userID, jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteUserRank">
+		delete from permission_user_rank where userID = #{userID, jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteUserOrg">
+		delete from permission_user_org where userID = #{userID, jdbcType=INTEGER}
+	</delete>
     
 </mapper>

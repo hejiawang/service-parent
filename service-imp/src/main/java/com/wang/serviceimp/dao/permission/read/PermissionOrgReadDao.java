@@ -82,4 +82,22 @@ public interface PermissionOrgReadDao {
 	 */
 	Integer getPageTotal(PermissionOrgParam org);
 
+	/**
+	 * 根据机构ID获取该机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	PermissionOrgParam getOrgParamByID(@Param("orgID")Integer orgID);
+
+	/**
+	 * 根据机构ID获取该机构的子机构信息
+	 * @param orgID 机构ID
+	 * @return 子机构信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	List<PermissionOrgParam> getChildrenOrgByOrgID(@Param("orgID")Integer orgID);
+
 }

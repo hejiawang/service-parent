@@ -200,4 +200,17 @@ public class PermissionRoleModel {
 		
 		return true;
 	}
+
+	/**
+	 * 获取角色树</br>
+	 * 即、全部角色
+	 * @return 角色树
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	public List<PermissionRoleParam> queryRoleForTree() {
+		Assert.notNull(permissionRoleReadDao, "Property 'permissionRoleReadDao' is required.");
+		
+		return permissionRoleReadDao.queryRoleForTree();
+	}
 }

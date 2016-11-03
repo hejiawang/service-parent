@@ -111,4 +111,34 @@
 		order by a.sortNum asc
 	</select>
 	
+	<select id="getOrgParamByID" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select
+			a.orgID as orgID, a.orgCode as orgCode, a.orgName as orgName, a.orgShortName as orgShortName, 
+			a.orgLevel as orgLevel, a.parentOrgID as parentOrgID, a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.createDT as createDT, a.theNote as theNote, b.orgName as parentOrgName,
+			(
+				select count(1)
+				from permission_org c
+				where c.parentOrgID = a.orgID
+			) as isParent
+		from permission_org a
+			left join permission_org b on a.parentOrgID = b.orgID
+		where a.isDelete = 1 and a.orgID = #{orgID, jdbcType=INTEGER}
+	</select>
+	
+	<select id="getChildrenOrgByOrgID" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+		select
+			a.orgID as orgID, a.orgCode as orgCode, a.orgName as orgName, a.orgShortName as orgShortName, 
+			a.orgLevel as orgLevel, a.parentOrgID as parentOrgID, a.sortNum as sortNum, a.isCurrent as isCurrent, 
+			a.isDelete as isDelete, a.createDT as createDT, a.theNote as theNote, b.orgName as parentOrgName,
+			(
+				select count(1)
+				from permission_org c
+				where c.parentOrgID = a.orgID
+			) as isParent
+		from permission_org a
+			left join permission_org b on a.parentOrgID = b.orgID
+		where a.isDelete = 1 and a.parentOrgID = #{orgID, jdbcType=INTEGER}
+	</select>
+	
 </mapper>

@@ -269,4 +269,28 @@ public class PermissionOrgSeriveImp implements PermissionOrgService {
 		return serviceResult;
 	}
 
+	/**
+	 * 根据机构ID获取该机构信息，以及其子孙机构信息
+	 * @param orgID 机构ID
+	 * @return 机构信息
+	 * @author HeJiawang
+	 * @date   2016.11.03
+	 */
+	@Override
+	public ServiceResult<List<PermissionOrgParam>> getChildrenOrgByOrgID(Integer orgID) {
+		Assert.notNull(permissionOrgModel, "Property 'permissionOrgModel' is required.");
+		ServiceResult<List<PermissionOrgParam>> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionOrgModel.getChildrenOrgByOrgID(orgID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }
