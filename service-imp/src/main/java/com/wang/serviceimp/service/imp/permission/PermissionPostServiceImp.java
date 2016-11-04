@@ -96,13 +96,19 @@ public class PermissionPostServiceImp implements PermissionPostService {
 		Assert.notNull(permissionpostModel, "Property 'permissionpostModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
-			Boolean deleteResult = permissionpostModel.deletePostByID(postID);
-			if( deleteResult ){
-				serviceResult.setMessage("删除岗位成功");
-			}else{
-				serviceResult.setMessage("删除岗位失败");
+			Boolean checkResult = permissionpostModel.checkPostByID(postID);
+			if( checkResult ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("该岗位信息被引用,不可删除");
+			} else {
+				Boolean deleteResult = permissionpostModel.deletePostByID(postID);
+				if( deleteResult ){
+					serviceResult.setMessage("删除岗位成功");
+				}else{
+					serviceResult.setMessage("删除岗位失败");
+				}
+				serviceResult.setSuccess(deleteResult);
 			}
-			serviceResult.setSuccess(deleteResult);
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

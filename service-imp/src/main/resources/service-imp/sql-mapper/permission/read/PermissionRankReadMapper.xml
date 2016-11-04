@@ -91,4 +91,11 @@
 		where a.isDelete=1 and a.rankID = #{rankID ,jdbcType=INTEGER}
 	</select>
 	
+	<select id="checkRankFromUserRank" resultType="java.lang.integer">
+		select count(1)
+		from permission_user_rank a
+		left join permission_user_info b on a.userID = b.userID
+		where b.isDelete = 1 and a.rankID = #{rankID, jdbcType=INTEGER}
+	</select>
+	
 </mapper>

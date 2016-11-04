@@ -96,13 +96,19 @@ public class PermissionRoleServiceImp implements PermissionRoleService {
 		Assert.notNull(permissionRoleModel, "Property 'permissionRoleModel' is required.");
 		ServiceResult<Void> serviceResult = new ServiceResult<>();
 		try {
-			Boolean deleteResult = permissionRoleModel.deleteRoleByID(roleID);
-			if( deleteResult ){
-				serviceResult.setMessage("删除角色成功");
-			}else{
-				serviceResult.setMessage("删除角色失败");
+			Boolean checkResult = permissionRoleModel.checkRoleByID(roleID);
+			if( checkResult ){
+				serviceResult.setSuccess(false);
+				serviceResult.setMessage("该角色信息被引用,不可删除");
+			} else {
+				Boolean deleteResult = permissionRoleModel.deleteRoleByID(roleID);
+				if( deleteResult ){
+					serviceResult.setMessage("删除角色成功");
+				}else{
+					serviceResult.setMessage("删除角色失败");
+				}
+				serviceResult.setSuccess(deleteResult);
 			}
-			serviceResult.setSuccess(deleteResult);
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

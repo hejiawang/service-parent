@@ -64,4 +64,13 @@ public interface PermissionRoleReadDao {
 	 */
 	List<PermissionRoleParam> queryRoleForTree();
 
+	/**
+	 * 检查在用户角色关联表中是否被引用
+	 * @param roleID 角色ID
+	 * @return >= 1 被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	Integer checkRoleFromUserRole(@Param("roleID")Integer roleID);
+
 }

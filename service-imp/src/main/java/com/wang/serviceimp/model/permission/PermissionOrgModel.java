@@ -119,7 +119,8 @@ public class PermissionOrgModel {
 		if( orgID == null ) throw new BusinessException("机构ID不能为空");
 		
 		Integer checkResult = permissionOrgReadDao.checkOrgFromParentOrg(orgID);	//检查是否被当做父机构引用
-		if( checkResult >= 1 ){
+		Integer checkUserResult = permissionOrgReadDao.checkOrgFromUserOrg(orgID);	//检查在用户机构关联表中是否被引用
+		if( (checkResult >= 1) || (checkUserResult >= 1)  ){
 			return true;
 		} else {
 			return false;

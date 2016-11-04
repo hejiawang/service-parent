@@ -141,4 +141,11 @@
 		where a.isDelete = 1 and a.parentOrgID = #{orgID, jdbcType=INTEGER}
 	</select>
 	
+	<select id="checkOrgFromUserOrg" resultType="java.lang.Integer">
+		select count(1)
+		from permission_user_org a
+		left join permission_user_info b on a.userID = b.userID
+		where b.isDelete = 1 and a.orgID = #{orgID, jdbcType=INTEGER}
+	</select>
+	
 </mapper>

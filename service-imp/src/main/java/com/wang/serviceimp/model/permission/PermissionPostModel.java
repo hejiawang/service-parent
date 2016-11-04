@@ -157,4 +157,23 @@ public class PermissionPostModel {
 		
 		return permissionPostReadDao.queryPostForTree();
 	}
+
+	/**
+	 * 检查岗位信息是否被应用
+	 * @param postID 岗位ID
+	 * @return true  被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	public Boolean checkPostByID(Integer postID) {
+		Assert.notNull(permissionPostReadDao, "Property 'permissionPostReadDao' is required.");
+		if( postID == null ) throw new BusinessException("岗位ID不能为空");
+		
+		Integer checkUserResult = permissionPostReadDao.checkPostFromUserPost(postID);	//检查在用户岗位关联表中是否被引用
+		if( checkUserResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

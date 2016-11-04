@@ -66,4 +66,11 @@
 		where a.isDelete = 1
 	</select>
 	
+	<select id="checkPostFromUserPost" resultType="java.lang.integer">
+		select count(1)
+		from permission_user_post a
+		left join permission_user_info b on a.userID = b.userID
+		where b.isDelete = 1 and a.postID = #{postID, jdbcType=INTEGER}
+	</select>
+	
 </mapper>

@@ -64,4 +64,13 @@ public interface PermissionPostReadDao {
 	 */
 	List<PermissionPostParam> queryPostForTree();
 
+	/**
+	 * 检查在用户岗位关联表中是否被引用
+	 * @param postID 岗位ID
+	 * @return >= 1 被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	Integer checkPostFromUserPost(@Param("postID")Integer postID);
+
 }

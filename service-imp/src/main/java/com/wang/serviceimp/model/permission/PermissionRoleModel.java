@@ -213,4 +213,23 @@ public class PermissionRoleModel {
 		
 		return permissionRoleReadDao.queryRoleForTree();
 	}
+
+	/**
+	 * 检查角色信息是否被应用
+	 * @param roleID 角色ID
+	 * @return true  被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	public Boolean checkRoleByID(Integer roleID) {
+		Assert.notNull(permissionRoleReadDao, "Property 'permissionRoleReadDao' is required.");
+		if( roleID == null ) throw new BusinessException("角色ID不能为空");
+		
+		Integer checkUserResult = permissionRoleReadDao.checkRoleFromUserRole(roleID);	//检查在用户角色关联表中是否被引用
+		if( checkUserResult >= 1 ){
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

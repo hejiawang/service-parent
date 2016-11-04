@@ -100,4 +100,13 @@ public interface PermissionOrgReadDao {
 	 */
 	List<PermissionOrgParam> getChildrenOrgByOrgID(@Param("orgID")Integer orgID);
 
+	/**
+	 * 检查在用户机构关联表中是否被引用
+	 * @param orgID 机构ID
+	 * @return >= 1 被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	Integer checkOrgFromUserOrg(@Param("orgID")Integer orgID);
+
 }

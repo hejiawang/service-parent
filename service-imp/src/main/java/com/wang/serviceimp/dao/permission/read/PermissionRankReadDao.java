@@ -73,4 +73,13 @@ public interface PermissionRankReadDao {
 	 */
 	Integer getPageTotal(PermissionRankParam rank);
 
+	/**
+	 * 检查在用户职级关联表中是否被引用
+	 * @param rankID 职级ID
+	 * @return >= 1 被引用
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	Integer checkRankFromUserRank(@Param("rankID")Integer rankID);
+
 }
