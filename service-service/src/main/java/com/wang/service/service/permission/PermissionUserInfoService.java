@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.wang.core.ServiceResult;
+import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 
 /**
@@ -66,5 +67,14 @@ public interface PermissionUserInfoService {
 	 * @date   2016.11.03
 	 */
 	ServiceResult<Void> updateUserInfo(PermissionUserInfoParam userInfo);
+
+	/**
+	 * 获取当前登陆者的默认APP
+	 * @param currentUserID 当前的登陆者ID
+	 * @return APP信息
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	ServiceResult<PermissionAppParam> getDefaultAppByUserID(Integer currentUserID);
 
 }

@@ -13,6 +13,7 @@ import com.wang.core.Constants;
 import com.wang.core.ServiceResult;
 import com.wang.core.exception.BusinessException;
 import com.wang.core.util.WebConstants;
+import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 import com.wang.service.service.permission.PermissionUserInfoService;
 import com.wang.serviceimp.model.permission.PermissionUserInfoModel;
@@ -202,6 +203,30 @@ public class PermissionUserInfoServiceImp implements PermissionUserInfoService {
 					serviceResult.setMessage("修改用户成功");
 				}
 			}
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 获取当前登陆者的默认APP
+	 * @param currentUserID 当前的登陆者ID
+	 * @return APP信息
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	@Override
+	public ServiceResult<PermissionAppParam> getDefaultAppByUserID(Integer currentUserID) {
+		Assert.notNull(permissionUserInfoModel, "Property 'permissionUserInfoModel' is required.");
+		ServiceResult<PermissionAppParam> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionUserInfoModel.getDefaultAppByUserID(currentUserID));
 		} catch (BusinessException e) {
 			serviceResult.setMessage(e.getMessage());
 			serviceResult.setSuccess(false);

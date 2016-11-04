@@ -164,5 +164,39 @@
         	</foreach>
 		</where>
     </select>
+    
+    <select id="getDefaultAppByUserID" resultType="com.wang.service.param.permission.PermissionAppParam">
+    	select 
+    		b.appID, b.appTypeID, b.appName, b.url, b.iconStyle, 
+    		b.sortNum, b.isDelete, b.isCurrent, b.theNote
+    	from permission_user_app a
+    	inner join permission_app b on a.appID = b.appID
+    	where a.userID = #{userID ,jdbcType=INTEGER} 
+    </select>
+    
+    <select id="getAppByUserID" resultType="com.wang.service.param.permission.PermissionAppParam">
+    	select 
+    		f.appTypeName, 
+    		e.appID, e.appTypeID, e.appName, e.url, e.iconStyle, 
+    		e.sortNum, e.isDelete, e.isCurrent, e.theNote
+    	from permission_user_role a
+			inner join permission_role_permission b on a.roleID = b.roleID
+			inner join permission_permission c on b.permissionID = c.permissionID
+			inner join permission_resource d on c.resourceID = d.resourceID
+			inner join permission_app e on d.selfID = e.appID	
+			inner join permission_apptype f on e.appTypeID = f.appTypeID
+ 		where a.userID = #{userID ,jdbcType=INTEGER}
+ 			and d.selfType = "SYS_APP"
+ 			and e.isDelete = 1
+ 			and c.operationID in (
+ 				select
+					g.operationID
+				from
+					permission_operation g
+				where
+					g.fun = 'doVisit'
+					and g.typeCode = 'SYS_APP'
+ 			)
+    </select>
 	
 </mapper>

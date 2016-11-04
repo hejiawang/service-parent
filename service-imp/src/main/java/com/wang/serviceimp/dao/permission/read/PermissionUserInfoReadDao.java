@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Param;
 
 import com.wang.core.repository.myBatis.MyBatisRepository;
+import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 
 /**
@@ -86,5 +87,23 @@ public interface PermissionUserInfoReadDao {
 	 * @date   2016.11.03
 	 */
 	Integer getPagePartTotal(Map<String, Object> paramMap);
+
+	/**
+	 * 获取当前登陆者的默认APP
+	 * @param userID 当前的登陆者ID
+	 * @return APP信息
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	PermissionAppParam getDefaultAppByUserID(@Param("userID")Integer userID);
+
+	/**
+	 * 获取当前登陆者权限允许的APP
+	 * @param userID 当前的登陆者ID
+	 * @return APP信息
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	List<PermissionAppParam> getAppByUserID(@Param("userID")Integer userID);
 
 }

@@ -328,4 +328,18 @@ public class PermissionUserInfoModel {
 		}
 	}
 
+	/**
+	 * 获取当前登陆者的默认APP
+	 * @param currentUserID 当前的登陆者ID
+	 * @return APP信息
+	 * @author HeJiawang
+	 * @date   2016.11.04
+	 */
+	public PermissionAppParam getDefaultAppByUserID(Integer currentUserID) {
+		Assert.notNull(permissionUserInfoReadDao, "Property 'permissionUserInfoReadDao' is required.");
+		if( currentUserID == null ) throw new BusinessException("用户ID不能为空");
+		
+		return permissionUserInfoReadDao.getDefaultAppByUserID(currentUserID);
+	}
+
 }
