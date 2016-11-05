@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Param;
 
 import com.wang.core.repository.myBatis.MyBatisRepository;
 import com.wang.service.param.permission.PermissionAppParam;
+import com.wang.service.param.permission.PermissionElementParam;
+import com.wang.service.param.permission.PermissionMenuParam;
 import com.wang.service.param.permission.PermissionUserInfoParam;
 
 /**
@@ -105,5 +107,25 @@ public interface PermissionUserInfoReadDao {
 	 * @date   2016.11.04
 	 */
 	List<PermissionAppParam> getAppByUserID(@Param("userID")Integer userID);
+
+	/**
+	 * 根据当前登录用户ID和上级菜单ID获取菜单集合
+	 * @param userID 用户ID
+	 * @param parentID 上级菜单
+	 * @return List:PermissionMenuParam
+	 * @author HeJiawang
+	 * @date   2016.11.05
+	 */
+	List<PermissionMenuParam> getMenuByUserIDAndParentID(@Param("userID")Integer userID, @Param("parentID")Integer parentID);
+
+	/**
+	 * 根据当前登录者所选择的菜单获取有使用权限的页面元素
+	 * @param userID 当前登陆者ID
+	 * @param menuID 菜单ID
+	 * @return 菜单列表HTML
+	 * @author HeJiawang
+	 * @date   2016.11.05
+	 */
+	List<PermissionElementParam> getElementFromMenuByUserID(@Param("userID")Integer userID, @Param("menuID")Integer menuID);
 
 }

@@ -59,4 +59,54 @@ public class PermissionCoreServiceImp implements PermissionCoreService {
 		return serviceResult;
 	}
 
+	/**
+	 * 初始化当前登录者所在系统的菜单列表
+	 * @param currentUserID 当前登陆者ID
+	 * @param changeApp 所选择的APP信息
+	 * @return 菜单列表HTML
+	 * @author HeJiawang
+	 * @date   2016.11.05
+	 */
+	@Override
+	public ServiceResult<String> changeMenu(PermissionUserInfoEntity userCurrent, PermissionAppParam changeApp) {
+		Assert.notNull(permissionCoreModel, "Property 'permissionCoreModel' is required.");
+		ServiceResult<String> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionCoreModel.changeMenu(userCurrent, changeApp));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
+	/**
+	 * 根据当前登录者所选择的菜单获取有使用权限的页面元素
+	 * @param currentUserID 当前登陆者ID
+	 * @param menuID 菜单ID
+	 * @return 菜单列表HTML
+	 * @author HeJiawang
+	 * @date   2016.11.05
+	 */
+	@Override
+	public ServiceResult<String> getElementFromMenuByUserID(Integer currentUserID, Integer menuID) {
+		Assert.notNull(permissionCoreModel, "Property 'permissionCoreModel' is required.");
+		ServiceResult<String> serviceResult = new ServiceResult<>();
+		try {
+			serviceResult.setResult(permissionCoreModel.getElementFromMenuByUserID(currentUserID, menuID));
+		} catch (BusinessException e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setSuccess(false);
+		} catch (Exception e) {
+			serviceResult.setMessage(e.getMessage());
+			serviceResult.setError(Constants.SERVICE_RESULT_CODE_SYS_ERROR, Constants.SERVICE_RESULT_EXCEPTION_SYS_ERROR);
+			logger.error("发生未知异常!", e);
+		}
+		return serviceResult;
+	}
+
 }
