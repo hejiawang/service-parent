@@ -67,6 +67,11 @@ public class PermissionUserInfoParam implements Serializable {
 	private String passWord;
 	
 	/**
+	 * 重复密码
+	 */
+	private String passWordR;
+	
+	/**
 	 * 0：未启动 1：启用
 	 */
 	private Integer isCurrent;
@@ -160,6 +165,14 @@ public class PermissionUserInfoParam implements Serializable {
 	 */
 	private Integer draw;
 	
+	public String getPassWordR() {
+		return passWordR;
+	}
+
+	public void setPassWordR(String passWordR) {
+		this.passWordR = passWordR;
+	}
+
 	public Integer getPageStart() {
 		return pageStart;
 	}

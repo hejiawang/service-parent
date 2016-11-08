@@ -144,7 +144,7 @@
         	</foreach>
 		</where>
 		order by a.sortNum asc 
-		limit #{pageStart ,jdbcType=INTEGER}, #{pageEnd ,jdbcType=INTEGER}
+		limit #{userInfo.pageStart ,jdbcType=INTEGER}, #{userInfo.pageEnd ,jdbcType=INTEGER}
     </select>
     
     <select id="getPagePartTotal" parameterType="java.util.Map" resultType="java.lang.Integer">

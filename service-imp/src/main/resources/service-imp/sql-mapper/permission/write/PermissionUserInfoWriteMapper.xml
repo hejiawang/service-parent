@@ -39,7 +39,7 @@
 			#{userTel, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR}, #{userBirthday, jdbcType=TIMESTAMP},
 			#{userNation, jdbcType=VARCHAR}, #{userPhotoFile, jdbcType=VARCHAR}, #{loginName, jdbcType=VARCHAR},
 			#{passWord, jdbcType=VARCHAR}, #{createDT, jdbcType=TIMESTAMP}, #{sortNum, jdbcType=INTEGER},
-			1, 1, #{theNote, jdbcType=VARCHAR},
+			1, 1, #{theNote, jdbcType=VARCHAR}
 		)
 	</insert>   
 	
