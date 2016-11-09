@@ -224,7 +224,7 @@ CREATE TABLE `permission_user_info` (
   `userEmail` varchar(50) NOT NULL COMMENT '电子邮件',
   `userBirthday` varchar(50) DEFAULT NULL COMMENT 'birthday',
   `userNation` varchar(255) DEFAULT NULL COMMENT '民族',
-  `userPhotoFile` varchar(1024) NOT NULL COMMENT '图片文件名称',
+  `userPhotoFile` varchar(1024) DEFAULT NULL COMMENT '图片文件名称',
   `loginName` varchar(255) NOT NULL COMMENT '用户登录帐号',
   `passWord` varchar(255) NOT NULL COMMENT '密码',
   `isCurrent` int(11) NOT NULL COMMENT '0：未启动 1：启用',

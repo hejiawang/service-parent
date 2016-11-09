@@ -27,7 +27,7 @@
 		isCurrent, isDelete, theNote
     </sql> 
     
-	<insert id="addUserInfo" parameterType="com.wang.service.param.permission.PermissionUserInfoParam">
+	<insert id="addUserInfo" parameterType="com.wang.service.param.permission.PermissionUserInfoParam" useGeneratedKeys="true" keyProperty="userID">
 		insert into permission_user_info (
 			userCode, userName, userSex, 
 			userTel, userEmail, userBirthday, 
@@ -38,7 +38,7 @@
 			#{userCode, jdbcType=VARCHAR}, #{userName, jdbcType=VARCHAR}, #{userSex, jdbcType=INTEGER},
 			#{userTel, jdbcType=VARCHAR}, #{userEmail, jdbcType=VARCHAR}, #{userBirthday, jdbcType=TIMESTAMP},
 			#{userNation, jdbcType=VARCHAR}, #{userPhotoFile, jdbcType=VARCHAR}, #{loginName, jdbcType=VARCHAR},
-			#{passWord, jdbcType=VARCHAR}, #{createDT, jdbcType=TIMESTAMP}, #{sortNum, jdbcType=INTEGER},
+			#{passWord, jdbcType=VARCHAR}, now(), #{sortNum, jdbcType=INTEGER},
 			1, 1, #{theNote, jdbcType=VARCHAR}
 		)
 	</insert>   
