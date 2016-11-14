@@ -98,13 +98,13 @@ public class PermissionCoreModel {
 			apps.append(value.get(0).getAppTypeName());
 			apps.append("</li>");
 			for (PermissionAppParam roleApp : value) {
-				if(roleApp.getUrl() == null || roleApp.getUrl().equals("#") || roleApp.getUrl().equals("")){
-					apps.append("<li><a href=\"javascript:changeApp("+roleApp.getAppID()+","+key+");\">");
+				//if(roleApp.getUrl() == null || roleApp.getUrl().equals("#") || roleApp.getUrl().equals("")){
+					apps.append("<li><a href=\"javascript:changeApp("+roleApp.getAppID()+");\">");
 					apps.append("<div class=\"clearfix\">");
-				}else{
-					apps.append("<li><a href=\"/pageGoto"+roleApp.getUrl()+"?param_app_id="+roleApp.getAppID()+"\">");
-					apps.append("<div class=\"clearfix\">");
-				}
+				//}else{
+				//	apps.append("<li><a href=\"/pageGoto"+roleApp.getUrl()+"?param_app_id="+roleApp.getAppID()+"\">");
+				//	apps.append("<div class=\"clearfix\">");
+				//}
 				apps.append("<span class=\"pull-left\">"+roleApp.getAppName()+"</span>");
 				if(String.valueOf(roleApp.getAppID()).equals(appID)){
 					apps.append("<span class=\"pull-right badge badge-success\"> √ </span>");
