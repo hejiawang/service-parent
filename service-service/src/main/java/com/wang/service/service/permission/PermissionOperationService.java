@@ -30,6 +30,14 @@ public interface PermissionOperationService {
 	ServiceResult<List<PermissionOperationEntity>> getOperationForMenu();
 	
 	/**
+	 * 获取页面元素可用的操作
+	 * @return 页面元素可用的操作
+	 * @author HeJiawang
+	 * @date   2016.11.14
+	 */
+	ServiceResult<List<PermissionOperationEntity>> getOperationForElement();
+	
+	/**
 	 * 根据资源ID获取操作ID集合
 	 * @param resourceID 资源ID
 	 * @return ServiceResult

@@ -214,12 +214,12 @@ public class PermissionMenuModel {
 		/**
 		 * 获取上级信息
 		 */
+		PermissionResourceParam resourceParent = permissionResourceReadDao.getResourceByID(resource.getParentID());
 		if( resource.getParentType().equals("SYS_MENU") ){	//上级是菜单
-			PermissionResourceParam resourceParent = permissionResourceReadDao.getResourceByID(resource.getParentID());
 			PermissionMenuParam menuParent = permissionMenuReadDao.getMenu(resourceParent.getSelfID());
 			menu.setParentName(menuParent.getMenuName());
 		} else {	//上级是应用系统
-			PermissionAppParam menuParent = permissionAppReadDao.getApp(resource.getParentID());
+			PermissionAppParam menuParent = permissionAppReadDao.getApp(resourceParent.getSelfID());
 			menu.setParentName(menuParent.getAppName());
 		}
 		menu.setParentID(resource.getParentID());

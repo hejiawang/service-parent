@@ -81,7 +81,7 @@ public class PermissionCoreModel {
 		for (Map.Entry<Integer,List<PermissionAppParam>> entry : appMap.entrySet()) {
 			Integer key = entry.getKey();
 			List<PermissionAppParam> value = entry.getValue();
-			if(key.equals(typeID)){
+			if(key == Integer.valueOf(typeID)){
 				apps.append("<li class=\"green\">");
 				apps.append("<a data-toggle=\"dropdown\" class=\"dropdown-toggle\" href=\"#\">");
 				apps.append("<i class=\"ace-icon fa fa-tasks\"></i>");
@@ -102,7 +102,7 @@ public class PermissionCoreModel {
 					apps.append("<li><a href=\"javascript:changeApp("+roleApp.getAppID()+","+key+");\">");
 					apps.append("<div class=\"clearfix\">");
 				}else{
-					apps.append("<li><a href=\""+roleApp.getUrl()+"\">");
+					apps.append("<li><a href=\"/pageGoto"+roleApp.getUrl()+"?param_app_id="+roleApp.getAppID()+"\">");
 					apps.append("<div class=\"clearfix\">");
 				}
 				apps.append("<span class=\"pull-left\">"+roleApp.getAppName()+"</span>");
@@ -121,9 +121,9 @@ public class PermissionCoreModel {
 		apps.append("<span class=\"user-info\"><small>欢迎您,</small>"+userCurrent.getUserName()+"</span>");
 		apps.append("<i class=\"ace-icon fa fa-caret-down\"></i></a>");
 		apps.append("<ul class=\"user-menu dropdown-menu-right dropdown-menu dropdown-menus dropdown-yellow dropdown-caret dropdown-close\">");
-		apps.append("<li><a href=\"main/personal.jsp\"><i class=\"ace-icon fa fa-user\"></i>个人信息</a></li>");
-		apps.append("<li class=\"divider\"></li>");
-		apps.append("<li onclick=\"javascript:logout();\"><a href=\"#\"><i class=\"ace-icon fa fa-power-off\"></i>退出</a></li>");
+		//apps.append("<li><a href=\"main/personal.jsp\"><i class=\"ace-icon fa fa-user\"></i>个人信息</a></li>");
+		//apps.append("<li class=\"divider\"></li>");
+		apps.append("<li><a href=\"logout\"><i class=\"ace-icon fa fa-power-off\"></i>退出</a></li>");
 		apps.append("</ul></li>");			
 		apps.append("</ul>");
 		
@@ -143,11 +143,23 @@ public class PermissionCoreModel {
 		if( userCurrent == null ) throw new BusinessException("当前登录者不能为空");
 		if( changeApp == null ) throw new BusinessException("所选APP信息不能为空");
 		
-		StringBuffer menuStr = new StringBuffer("<li id=\"menu_root\" class=\"active\">");
+		/**
+		 * 获取该用户有权限访问的所在APP的菜单集合
+		 */
+		List<PermissionMenuParam> menuList = permissionUserInfoReadDao.getMenuByUserIDAndParentID(userCurrent.getUserID(), changeApp.getAppID());
+		
+		StringBuffer menuStr = new StringBuffer("");
+		for(PermissionMenuParam menu : menuList){
+			menuStr.append("<li id=\"menu_"+menu.getMenuID()+"\">");
+			menuStr.append("<a href=\"/pageGoto"+menu.getUrl()+"?pid="+changeApp.getAppID()+"&sid="+menu.getMenuID()+"\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\" style=\"font-family: 微软雅黑\">"+menu.getMenuName()+"</span></a><b class=\"arrow\"></b>");
+			menuStr.append("</li>");
+		}
+		 
+		/*StringBuffer menuStr = new StringBuffer("<li id=\"menu_root\" class=\"active\">");
 		menuStr.append("<a href=\"main/index.jsp\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\">我的工作台</span></a><b class=\"arrow\"></b>");
 		this.createViewMenu(userCurrent.getUserID(), changeApp.getAppID(), menuStr);
-		menuStr.append("</li>");
-
+		menuStr.append("</li>");*/
+		
 		return menuStr.toString();
 	}
 	
@@ -208,5 +220,5 @@ public class PermissionCoreModel {
 		elementStr.append("");
 		return elementStr.toString();
 	}
-
+	
 }

@@ -60,6 +60,20 @@ public class PermissionResourceModel {
 		
 		return permissionResourceReadDao.getResourceByMenuID(menuID);
 	}
+	
+	/**
+	 * 根据页面元素ID获取对对应的资源
+	 * @param elementID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.14
+	 */
+	public PermissionResourceEntity getResourceByElementID(Integer elementID) {
+		Assert.notNull(permissionResourceReadDao, "Property 'permissionResourceReadDao' is required.");
+		if( elementID == null ) throw new BusinessException("elementID不能为空");
+		
+		return permissionResourceReadDao.getResourceByElementID(elementID);
+	}
 
 	/**
 	 * 根据资源ID获取资源信息

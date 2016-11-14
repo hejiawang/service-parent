@@ -221,9 +221,10 @@
 			inner join permission_permission c on b.permissionID = c.permissionID
 			inner join permission_resource d on c.resourceID = d.resourceID
 			inner join permission_menu e on d.selfID = e.menuID	
+			INNER JOIN permission_resource f on f.resourceID = d.parentID
  		where a.userID = #{userID ,jdbcType=INTEGER}
  			and d.selfType = "SYS_MENU"
- 			and d.parentID = #{parentID ,jdbcType=INTEGER}
+ 			and f.selfID = #{parentID ,jdbcType=INTEGER}
  			and e.isDelete = 1
  			and c.operationID in (
  				select
@@ -243,7 +244,7 @@
 		from permission_element a
 		inner join permission_resource b on a.elementID = b.selfID
 		inner join permission_resource c on b.parentID = c.resourceID
-		inner join permission_menu d on c.selefID = d.menuID
+		inner join permission_menu d on c.selfID = d.menuID
 		inner join permission_permission e on e.resourceID = b.resourceID
 		inner join permission_role_permission f on f.permissionID = e.permissionID
 		inner join permission_user_role g on g.roleID = f.roleID
@@ -254,12 +255,12 @@
 			and g.userID = #{userID ,jdbcType=INTEGER}
 			and e.operationID in (
  				select
-					g.operationID
+					h.operationID
 				from
 					permission_operation h
 				where
 					h.fun = 'doVisit'
-					and h.typeCode = 'SYS_ELEMENT'
+					and h.typeCode = 'SYS_ELEMENTS'
  			)
 		ORDER BY a.sortNum
 	</select>

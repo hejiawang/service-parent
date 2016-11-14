@@ -32,6 +32,15 @@ public interface PermissionResourceService {
 	ServiceResult<PermissionResourceEntity> getResourceByMenuID(Integer menuID);
 	
 	/**
+	 * 根据页面元素ID获取对对应的资源
+	 * @param elementID
+	 * @return ServiceResult
+	 * @author HeJiawang
+	 * @date   2016.11.14
+	 */
+	ServiceResult<PermissionResourceEntity> getResourceByElementID(Integer elementID);
+	
+	/**
 	 * 根据资源ID获取资源信息
 	 * @param resourceID 资源ID
 	 * @return 资源信息

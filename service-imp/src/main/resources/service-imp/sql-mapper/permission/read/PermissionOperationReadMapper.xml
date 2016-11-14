@@ -25,6 +25,12 @@
     	where a.typeCode = 'SYS_MENU'
     </select>
     
+    <select id="getOperationForElement" resultMap="BaseResultMap">
+    	select a.operationID as operationID,a.operationName as operationName 
+    	from permission_operation a 
+    	where a.typeCode = 'SYS_ELEMENTS'
+    </select>
+    
     <select id="getOperationIDByResourceID" resultType="java.lang.Integer">
 		select b.operationID as operationID
 		from permission_resource a 

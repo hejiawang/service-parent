@@ -17,6 +17,7 @@ import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
 import com.wang.core.util.MD5;
+import com.wang.core.util.StringUtil;
 import com.wang.core.util.WebConstants;
 import com.wang.service.param.permission.PermissionAppParam;
 import com.wang.service.param.permission.PermissionOrgParam;
@@ -151,6 +152,9 @@ public class PermissionUserInfoModel {
 			/**
 			 * 存储用户基本信息,并在实体中返回用户ID
 			 */
+			if( StringUtil.isEmpty( userInfo.getUserPhotoFile() ) ){
+				userInfo.setUserPhotoFile("resources/avatars/user.jpg");
+			}
 			userInfo.setPassWord(MD5.getInstrance().getMD5String4(userInfo.getPassWord()));
 			permissionUserInfoWriteDao.addUserInfo(userInfo);
 			Integer userID = userInfo.getUserID();

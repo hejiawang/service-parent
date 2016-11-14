@@ -17,6 +17,7 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import org.springframework.util.Assert;
 
 import com.wang.core.exception.BusinessException;
+import com.wang.core.util.StringUtil;
 import com.wang.service.param.permission.PermissionRoleParam;
 import com.wang.serviceimp.dao.permission.read.PermissionRoleReadDao;
 import com.wang.serviceimp.dao.permission.write.PermissionRoleWriteDao;
@@ -184,8 +185,9 @@ public class PermissionRoleModel {
 			 * 为该角色增加新的权限
 			 */
 			for( String permissionID : permissionIDList ){
-				
-				permissionRoleWriteDao.addRolePermissionByReaourceID(role.getRoleID() ,permissionID);
+				if( !StringUtil.isEmpty(permissionID) ){
+					permissionRoleWriteDao.addRolePermissionByReaourceID(role.getRoleID() ,permissionID);
+				}
 			}
 			
 			transactionManagerMember.commit(status);

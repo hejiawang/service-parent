@@ -51,7 +51,7 @@
 				select count(*) 
 				from permission_resource c 
 				inner join permission_menu d on c.selfID = d.menuID
-				where c.parentType='SYS_APP' and c.selfType = 'SYS_MENU' and c.parentId = b.selfId
+				where c.parentType='SYS_APP' and c.selfType = 'SYS_MENU' and c.parentId = b.resourceID
 			) as isParent
 		from permission_app a 
 		inner join permission_resource b on b.selfID = a.appID
