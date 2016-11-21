@@ -146,19 +146,19 @@ public class PermissionCoreModel {
 		/**
 		 * 获取该用户有权限访问的所在APP的菜单集合
 		 */
-		List<PermissionMenuParam> menuList = permissionUserInfoReadDao.getMenuByUserIDAndParentID(userCurrent.getUserID(), changeApp.getAppID());
+		//List<PermissionMenuParam> menuList = permissionUserInfoReadDao.getMenuByUserIDAndParentID(userCurrent.getUserID(), changeApp.getAppID());
 		
-		StringBuffer menuStr = new StringBuffer("");
+		/*StringBuffer menuStr = new StringBuffer("");
 		for(PermissionMenuParam menu : menuList){
 			menuStr.append("<li id=\"menu_"+menu.getMenuID()+"\">");
 			menuStr.append("<a href=\"/pageGoto"+menu.getUrl()+"?pid="+changeApp.getAppID()+"&sid="+menu.getMenuID()+"\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\" style=\"font-family: 微软雅黑\">"+menu.getMenuName()+"</span></a><b class=\"arrow\"></b>");
 			menuStr.append("</li>");
-		}
+		}*/
 		 
-		/*StringBuffer menuStr = new StringBuffer("<li id=\"menu_root\" class=\"active\">");
-		menuStr.append("<a href=\"main/index.jsp\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\">我的工作台</span></a><b class=\"arrow\"></b>");
+		StringBuffer menuStr = new StringBuffer("<li id=\"menu_root\" class=\"active\">");
+		menuStr.append("<a href=\"/pageGoto/index\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\">我的工作台</span></a><b class=\"arrow\"></b>");
 		this.createViewMenu(userCurrent.getUserID(), changeApp.getAppID(), menuStr);
-		menuStr.append("</li>");*/
+		menuStr.append("</li>");
 		
 		return menuStr.toString();
 	}
@@ -188,7 +188,8 @@ public class PermissionCoreModel {
 				createViewMenu(userID, menu.getMenuID(), menuStr);
 				menuStr.append("</ul>");
 			}else{
-				menuStr.append("<a href=\""+menu.getUrl()+"?pid="+parentID+"&sid="+menu.getMenuID()+"\"><i class=\"menu-icon fa fa-caret-right\"></i>"+menu.getMenuName()+"</a><b class=\"arrow\"></b>");
+				menuStr.append("<a href=\"/pageGoto"+menu.getUrl()+"?pid="+parentID+"&sid="+menu.getMenuID()+"\"><i class=\"menu-icon fa fa-tachometer\"></i><span class=\"menu-text\" style=\"font-family: 微软雅黑\">"+menu.getMenuName()+"</span></a><b class=\"arrow\"></b>");
+				//menuStr.append("<a href=\""+menu.getUrl()+"?pid="+parentID+"&sid="+menu.getMenuID()+"\"><i class=\"menu-icon fa fa-caret-right\"></i>"+menu.getMenuName()+"</a><b class=\"arrow\"></b>");
 			}
 			menuStr.append("</li>");
 		}
