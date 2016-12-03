@@ -111,7 +111,7 @@
 		order by a.sortNum asc
 	</select>
 	
-	<select id="getOrgParamByID" resultType="java.lang.Integer" parameterType="com.wang.service.param.permission.PermissionOrgParam">
+	<select id="getOrgParamByID" resultType="com.wang.service.param.permission.PermissionOrgParam">
 		select
 			a.orgID as orgID, a.orgCode as orgCode, a.orgName as orgName, a.orgShortName as orgShortName, 
 			a.orgLevel as orgLevel, a.parentOrgID as parentOrgID, a.sortNum as sortNum, a.isCurrent as isCurrent, 

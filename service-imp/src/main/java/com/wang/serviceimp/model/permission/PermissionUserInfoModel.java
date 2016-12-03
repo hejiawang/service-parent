@@ -67,6 +67,7 @@ public class PermissionUserInfoModel {
 	/**
 	 * permissionOrgModel
 	 */
+	@Autowired
 	private PermissionOrgModel permissionOrgModel;
 	
 	/**

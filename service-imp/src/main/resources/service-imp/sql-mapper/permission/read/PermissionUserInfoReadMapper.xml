@@ -75,6 +75,12 @@
     	from permission_user_role
     	where userID = #{userID ,jdbcType=INTEGER} 
     </select>
+   
+   <select id="getOrgIDByUserID" resultType="java.lang.Integer">
+   		select orgID
+    	from permission_user_org
+    	where userID = #{userID ,jdbcType=INTEGER} 
+   </select>
     
     <select id="getUserInfoByID" resultType="com.wang.service.param.permission.PermissionUserInfoParam">
     	select
@@ -139,7 +145,7 @@
 				and a.userName like '%${userInfo.userName}%'
 			</if>
 			and b.orgID in
-			<foreach item="org" index="index" collection="list" open="(" separator="," close=")">
+			<foreach item="org" index="index" collection="org" open="(" separator="," close=")">
                 #{org.orgID, jdbcType=INTEGER}
         	</foreach>
 		</where>
@@ -159,7 +165,7 @@
 				and a.userName like '%${userInfo.userName}%'
 			</if>
 			and b.orgID in
-			<foreach item="org" index="index" collection="list" open="(" separator="," close=")">
+			<foreach item="org" index="index" collection="org" open="(" separator="," close=")">
                 #{org.orgID, jdbcType=INTEGER}
         	</foreach>
 		</where>
