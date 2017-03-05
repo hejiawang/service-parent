@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.write.PermissionAreaWriteDao">
+	
+	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionAreaEntity">
+		<id column="areaID" property="areaID" jdbcType="INTEGER" />
+		<result column="areaCode" property="areaCode" jdbcType="INTEGER" />
+		<result column="areaName" property="areaName" jdbcType="VARCHAR" />
+		<result column="shortName" property="shortName" jdbcType="VARCHAR" />
+		<result column="areaLevel" property="areaLevel" jdbcType="INTEGER" />
+		<result column="parentID" property="parentID" jdbcType="INTEGER" />
+		<result column="isDelete" property="isDelete" jdbcType="VARCHAR" />
+		<result column="isCurrent" property="isCurrent" jdbcType="VARCHAR" />
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER" />
+		<result column="theNote" property="theNote" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		areaID, areaCode, areaName, shortName, areaLevel, 
+		parentID, isDelete, isCurrent, sortNum, theNote
+	</sql>
+	
+	<update id="deleteArea">
+		update soLove_area set isDelete =0 where areaID = #{areaID, jdbcType=INTEGER}
+	</update>
+	
+	<insert id="addArea" parameterType="com.wang.service.param.permission.PermissionAreaParam">
+		insert into soLove_area (
+			areaCode, areaName, shortName, areaLevel, 
+			parentID, isDelete, isCurrent, sortNum, theNote
+		) values (
+			#{areaCode}, #{areaName}, #{shortName}, #{areaLevel},
+			#{parentID}, 1, 1, #{sortNum}, #{theNote}
+		)
+	</insert>
+	
+	<update id="updateArea" parameterType="com.wang.service.param.permission.PermissionAreaParam">
+		update soLove_area set 
+			areaCode = #{areaCode},  areaName = #{areaName},  shortName = #{shortName}, 
+			areaLevel = #{areaLevel},  parentID = #{parentID}, 
+			sortNum = #{sortNum}, theNote = #{theNote}
+		where areaID = #{areaID, jdbcType=INTEGER}
+	</update>
+		
+</mapper>

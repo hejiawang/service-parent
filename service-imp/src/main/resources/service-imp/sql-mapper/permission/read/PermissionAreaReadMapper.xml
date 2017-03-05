@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wang.serviceimp.dao.permission.read.PermissionAreaReadDao">
+	
+	<resultMap id="BaseResultMap" type="com.wang.service.entity.permission.PermissionAreaEntity">
+		<id column="areaID" property="areaID" jdbcType="INTEGER" />
+		<result column="areaCode" property="areaCode" jdbcType="INTEGER" />
+		<result column="areaName" property="areaName" jdbcType="VARCHAR" />
+		<result column="shortName" property="shortName" jdbcType="VARCHAR" />
+		<result column="areaLevel" property="areaLevel" jdbcType="INTEGER" />
+		<result column="parentID" property="parentID" jdbcType="INTEGER" />
+		<result column="isDelete" property="isDelete" jdbcType="VARCHAR" />
+		<result column="isCurrent" property="isCurrent" jdbcType="VARCHAR" />
+		<result column="sortNum" property="sortNum" jdbcType="INTEGER" />
+		<result column="theNote" property="theNote" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="getAllColumn">
+		areaID, areaCode, areaName, shortName, areaLevel, 
+		parentID, isDelete, isCurrent, sortNum, theNote
+	</sql>
+	
+	<select id="getAreaListByParentID" resultMap="BaseResultMap">
+		select
+			<include refid="getAllColumn"/>
+		from solove_area
+		where parentID = #{parentID, jdbcType=INTEGER}
+	</select>
+	
+	<select id="pageAera" parameterType="java.util.Map" resultType="java.util.Map">
+		select
+			a.areaID, a.areaCode, a.areaName, a.shortName, a.areaLevel, 
+			a.parentID, a.isDelete, a.isCurrent, a.sortNum, a.theNote,
+			b.areaName as parentName
+		from solove_area a
+		inner join soLove_area b on a.parentID = b.areaID
+		<where>
+			a.isDelete = 1
+			<if test=" area.parentID!=null and area.parentID!='' ">
+				and a.parentID = #{area.parentID, jdbcType=VARCHAR}
+			</if>
+		</where>
+		order by sortNum
+		limit #{start, jdbcType=INTEGER}, #{end, jdbcType=INTEGER}
+	</select>
+	
+	<select id="pageAreaTotal" parameterType="com.wang.service.param.permission.PermissionAreaParam" resultType="java.lang.Integer">
+		select count(1)
+		from solove_area
+		<where>
+			isDelete = 1
+			<if test=" area.parentID!=null and area.parentID!='' ">
+				and parentID = #{area.parentID, jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>
+	
+	<select id="getAreaTreeData" resultType="com.wang.service.param.permission.PermissionAreaParam">
+		select
+			a.areaID,a.shortName,a.areaLevel,
+			(
+				select count(1) from solove_area b where b.parentID = a.areaID
+			) as isParent
+		from solove_area a
+		where a.isDelete =1 and a.parentID = #{parentID, jdbcType=VARCHAR}
+	</select>
+	
+	<select id="getAreaByID" resultType="com.wang.service.param.permission.PermissionAreaParam">
+		select
+			<include refid="getAllColumn"/>
+		from solove_area
+		where areaID = #{areaID, jdbcType=INTEGER}
+	</select>
+	
+</mapper>
